@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>イベント情報 - スピル</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700">
+    <link rel="stylesheet" href="/css/styles.min.css">
+    <meta name="robots" content="noindex,nofollow,noarchive" />
+</head>
+<body>
+    <div class="highlight-clean">
+        <div class="container">
+            <div class="intro">
+                <h2 class="text-left" style="margin-bottom:0px;"><?= htmlspecialchars($event_date); ?><br></h2>
+                <h2 class="text-left"><?= htmlspecialchars($title); ?></h2>
+                <p class="text-left">
+                    <?= htmlspecialchars($start_time); ?> - <?= htmlspecialchars($end_time); ?><br>
+                    <?= htmlspecialchars($place); ?></p>
+            </div>
+        </div>
+    </div>
+    <div style="margin-right:15px;margin-left:15px;margin-bottom:25px;">
+        <h4 style="font-family:inherit;">参加</h4>
+        <div class="row user-list">
+
+            <?php foreach ($join_member as $member): ?>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 user-item">
+                <div class="user-container">
+                    <a class="user-avatar">
+                        <img class="rounded-circle img-fluid" src="<?= htmlspecialchars($member['picture_url']) ?>/small" alt="Profile of Mark Smith Peterson" width="48" height="48">
+                    </a>
+                    <p class="user-name">
+                        <strong style="color:#5d6569;font-size:22px;"><?= htmlspecialchars($member['display_name']) ?></strong>
+                    </p>
+                </div>
+            </div>
+            <?php endforeach; ?>
+            
+        </div>
+    </div>
+    <div style="margin-right:15px;margin-left:15px;">
+        <h4 style="font-family:inherit;">不参加</h4>
+        <div class="row user-list">
+
+            <?php foreach ($none_join_member as $member): ?>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 user-item">
+                <div class="user-container">
+                    <a class="user-avatar">
+                        <img class="rounded-circle img-fluid" src="<?= htmlspecialchars($member['picture_url']) ?>/small" alt="Profile of Mark Smith Peterson" width="48" height="48">
+                    </a>
+                    <p class="user-name">
+                        <strong style="color:#5d6569;font-size:22px;"><?= htmlspecialchars($member['display_name']) ?></strong>
+                    </p>
+                </div>
+            </div>
+            <?php endforeach; ?>
+
+        </div>
+    </div>
+    <script src="js/jquery.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>

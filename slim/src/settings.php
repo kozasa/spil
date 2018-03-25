@@ -1,4 +1,6 @@
 <?php
+require('settings_param.php');
+
 return [
     'settings' => [
         'displayErrorDetails' => true, // set to false in production
@@ -17,10 +19,10 @@ return [
         ],
 
         'db' => [
-            'host'   => 'mysql713.db.sakura.ne.jp',
-            'user'   => 'kozasa',
-            'pass'   => 'Ko00122320',
-            'dbname' => 'kozasa_spil',
+            'host'   => DB_HOST,
+            'user'   => DB_USER,
+            'pass'   => DB_PASS,
+            'dbname' => DB_DBNAME,
         ]
     ],
 ];

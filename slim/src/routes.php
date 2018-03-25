@@ -4,12 +4,7 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 
 // Routes
-const ACCESS_TOKEN = '8FRJvUP1pkopPJ41hiyiG0mkwPFbJYBf22MCNVX6bljI9C5qUwIW6v/DuMXHkufdWzZEqxog+3J3CDrFQKlTzR965nRNeHKRMVBaIBCdvHJkFpD6Gu2PgV88yVNBPEhKhmKPhb46tt3ph43zevtUIwdB04t89/1O/w1cDnyilFU=';
-const PUSH_URL = 'https://api.line.me/v2/bot/message/push';
-const PROFILE_URL = 'https://api.line.me/v2/profile';
-const GROUP_URL = 'https://api.line.me/v2/bot/group/';
-const GROUP_ID = 'Cf14de01a5ca9e6dd9d522e04421ae47a';
-const PUSH_KEY = 'spil_push';
+require('settings_param.php');
 
 /**
  * トップページアクセス

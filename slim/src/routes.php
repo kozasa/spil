@@ -111,7 +111,7 @@ function push_join_message_seven($info){
             .$info["event_date"].$info["start_time"]."~".$info["end_time"]."\n場所：".$info["place"],
         "template" => array(
             "type" => "buttons",
-            "thumbnailImageUrl" => "https://spil.hetabun.com/img/s_badminton.jpg",
+            "thumbnailImageUrl" => ROOT_URL."/img/s_badminton.jpg",
             "imageAspectRatio" => "rectangle",
             "imageSize" => "cover",
             "imageBackgroundColor" => "#e0c0a0",
@@ -121,7 +121,7 @@ function push_join_message_seven($info){
             "defaultAction" => array(
                 "type" => "uri",
                 "label" => "View detail",
-                "uri" => "https://spil.hetabun.com/event/".$info["event_id"],
+                "uri" => ROOT_URL.'/event/'.$info["event_id"],
                 "area" => array(  
                     "x" => 0,
                     "y" => 0,
@@ -161,7 +161,7 @@ function push_join_message_one($info){
             .$info["event_date"].$info["start_time"]."~".$info["end_time"]."\n場所：".$info["place"],
         "template" => array(
             "type" => "buttons",
-            "thumbnailImageUrl" => "https://spil.hetabun.com/img/illust_badminton.png",
+            "thumbnailImageUrl" => ROOT_URL."/img/illust_badminton.png",
             "imageAspectRatio" => "rectangle",
             "imageSize" => "cover",
             "imageBackgroundColor" => "#e0c0a0",
@@ -171,7 +171,7 @@ function push_join_message_one($info){
             "defaultAction" => array(
                 "type" => "uri",
                 "label" => "View detail",
-                "uri" => "https://spil.hetabun.com/event/".$info["event_id"],
+                "uri" => ROOT_URL."/event/".$info["event_id"],
                 "area" => array(  
                     "x" => 0,
                     "y" => 0,
@@ -183,7 +183,7 @@ function push_join_message_one($info){
                 array(
                     "type" => "uri",
                     "label" => "詳細を確認する",
-                    "uri" => "https://spil.hetabun.com/event/".$info["event_id"]
+                    "uri" => ROOT_URL."/event/".$info["event_id"]
                 )
             )
         )        

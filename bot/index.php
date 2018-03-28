@@ -38,7 +38,7 @@ class MyBot{
      */
     private function db($user_info){
         try {
-            $pdo = new PDO(DB_INFO,DB_USER,DB_PASS,
+            $pdo = new PDO('mysql:host='.DB_HOST.';dbname='.DB_DBNAME.';charset=utf8',DB_USER,DB_PASS,
             array(PDO::ATTR_EMULATE_PREPARES => false));
 
             // ユーザ情報が登録されているか確認
@@ -88,7 +88,7 @@ class MyBot{
      */
     private function offerDb($data,$user_id){
         try {
-            $pdo = new PDO(DB_INFO,DB_USER,DB_PASS,
+            $pdo = new PDO('mysql:host='.DB_HOST.';dbname='.DB_DBNAME.';charset=utf8',DB_USER,DB_PASS,
             array(PDO::ATTR_EMULATE_PREPARES => false));
 
             // 参加、不参加

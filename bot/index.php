@@ -1,10 +1,13 @@
 <?php
 
+require('../slim/src/settings_param.php');
+
 $myclass = new MyBot;
 $myclass->main();
 
 class MyBot{
 
+    /*
     const ACCESS_TOKEN = '8FRJvUP1pkopPJ41hiyiG0mkwPFbJYBf22MCNVX6bljI9C5qUwIW6v/DuMXHkufdWzZEqxog+3J3CDrFQKlTzR965nRNeHKRMVBaIBCdvHJkFpD6Gu2PgV88yVNBPEhKhmKPhb46tt3ph43zevtUIwdB04t89/1O/w1cDnyilFU=';
     const PUSH_URL = 'https://api.line.me/v2/bot/message/push';
     const PROFILE_URL = 'https://api.line.me/v2/profile';
@@ -14,6 +17,7 @@ class MyBot{
     const DB_INFO = 'mysql:host=mysql713.db.sakura.ne.jp;dbname=kozasa_spil;charset=utf8';
     const DB_USER = 'kozasa';
     const DB_PASS = 'Ko00122320';
+    */
 
     /**
      * メインメソッド
@@ -34,7 +38,7 @@ class MyBot{
      */
     private function db($user_info){
         try {
-            $pdo = new PDO(self::DB_INFO,self::DB_USER,self::DB_PASS,
+            $pdo = new PDO(DB_INFO,DB_USER,DB_PASS,
             array(PDO::ATTR_EMULATE_PREPARES => false));
 
             // ユーザ情報が登録されているか確認
@@ -84,7 +88,7 @@ class MyBot{
      */
     private function offerDb($data,$user_id){
         try {
-            $pdo = new PDO(self::DB_INFO,self::DB_USER,self::DB_PASS,
+            $pdo = new PDO(DB_INFO,DB_USER,DB_PASS,
             array(PDO::ATTR_EMULATE_PREPARES => false));
 
             // 参加、不参加
@@ -173,12 +177,12 @@ class MyBot{
      * ユーザ情報を取得
      */
     private function get_user_info($id){
-        $profUrl = self::GROUP_URL . self::GROUP_ID . '/member/' . $id;
+        $profUrl = GROUP_URL . GROUP_ID . '/member/' . $id;
         $ch = curl_init($profUrl);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-            'Authorization: Bearer ' . self::ACCESS_TOKEN
+            'Authorization: Bearer ' . ACCESS_TOKEN
         ));
         $getProfile = curl_exec($ch);
         curl_close($ch);

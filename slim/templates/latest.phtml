@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>直近イベント日時情報 - スピル</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700">
+    <link rel="stylesheet" href="/css/styles.min.css">
+</head>
+<body>
+
+    <?php 
+        // 年月の設定変数初期化
+        $set_year = null;
+        $set_month = null;
+        $count = 0;
+        foreach ($latest_info as $info): 
+            if($set_year !== $info['year'] || $set_month !== $info['month']):
+                $set_year = $info['year'];
+                $set_month = $info['month'];
+    ?>
+    <div class="highlight-clean" <?php if($count>0) echo'style="padding-top:10px;"' ?> >
+        <div class="container">
+            <div class="intro">
+                <p class="text-left" style="margin:10px;"><?= htmlspecialchars($info['year']) ?></p>
+                <h2 class="text-left" style="margin-bottom:0px;"><?= htmlspecialchars(mb_convert_kana($info['month'],"N")) ?>月</h2>
+            </div>
+        </div>
+    </div>
+    <?php 
+            endif; 
+    ?>
+
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 user-item">
+            <div class="d-flex user-container">
+                <div style="width:78px;">
+                    <h3 class="text-center" style="margin-top:10px;"><?= htmlspecialchars($info['day']) ?></h3>
+                    <h5 class="text-center">（<?= htmlspecialchars($info['week']) ?>）</h5>
+                </div>
+                <p class="user-name">
+                    <a href="/event/<?= htmlspecialchars($info['event_id']) ?>"><?= htmlspecialchars($info['title']) ?></a>
+                    <span><?= htmlspecialchars($info['start_time']) ?> - <?= htmlspecialchars($info['end_time']) ?></span>
+                    <span><?= htmlspecialchars($info['place']) ?></span>
+                </p>
+            </div>
+        </div>
+
+    <?php 
+        $count++; 
+        endforeach; 
+    ?> 
+    <script src="/js/jquery.min.js"></script>
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>

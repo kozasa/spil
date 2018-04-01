@@ -38,6 +38,25 @@ $app->get('/event/{id}',function(Request $request,Response $response){
 });
 
 /**
+ * 直近イベント日程画面
+ */
+$app->get('/latest/',function(Request $request,Response $response){
+
+    // DB取得
+    $mapper = new LatestMapper($this->db);
+    $latest_info = $mapper->getLatestInfo();
+
+    // 直近イベント情報ページ表示
+    return $this->renderer->render(
+        $response,
+        'latest.phtml', 
+        array('latest_info'=>$latest_info)
+    );
+    
+    
+});
+
+/**
  * グループ通知機能
  */
 $app->get('/push/{key}',function(Request $request,Response $response){

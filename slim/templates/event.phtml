@@ -23,7 +23,7 @@
         </div>
     </div>
     <div style="margin-right:15px;margin-left:15px;margin-bottom:25px;">
-        <h4 style="font-family:inherit;">参加</h4>
+        <h4 style="font-family:inherit;">参加 (<?= htmlspecialchars(count($join_member)); ?>人)</h4>
         <div class="row user-list">
 
             <?php foreach ($join_member as $member): ?>
@@ -42,7 +42,7 @@
         </div>
     </div>
     <div style="margin-right:15px;margin-left:15px;">
-        <h4 style="font-family:inherit;">不参加</h4>
+        <h4 style="font-family:inherit;">不参加 (<?= htmlspecialchars(count($none_join_member)); ?>人)</h4>
         <div class="row user-list">
 
             <?php foreach ($none_join_member as $member): ?>

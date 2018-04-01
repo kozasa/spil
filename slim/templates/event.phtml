@@ -18,7 +18,8 @@
                 <h2 class="text-left"><?= htmlspecialchars($title); ?></h2>
                 <p class="text-left">
                     <?= htmlspecialchars($start_time); ?> - <?= htmlspecialchars($end_time); ?><br>
-                    <?= htmlspecialchars($place); ?></p>
+                    <?php $map_url = 'https://maps.google.co.jp/maps?q='.urlencode($place); ?>
+                    <a href=<?= htmlspecialchars($map_url);?> target="_blank"><?= htmlspecialchars($place); ?></a></p>
             </div>
         </div>
     </div>

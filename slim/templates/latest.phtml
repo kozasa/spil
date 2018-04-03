@@ -44,7 +44,7 @@
                 <p class="user-name">
                     <a href="/event/<?= htmlspecialchars($info['event_id']) ?>"><?= htmlspecialchars($info['title']) ?></a>
                     <span><?= htmlspecialchars($info['start_time']) ?> - <?= htmlspecialchars($info['end_time']) ?></span>
-                    <?php $map_url = 'https://maps.google.co.jp/maps?q='.urlencode($info[$place]); ?>
+                    <?php $map_url = 'https://maps.google.co.jp/maps?q='.urlencode($info['place']); ?>
                     <span><a href=<?= htmlspecialchars($map_url);?> target="_blank"><?= htmlspecialchars($info['place']); ?></a></span>
                 </p>
             </div>

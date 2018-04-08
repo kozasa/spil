@@ -1,4 +1,5 @@
 <?php
+namespace Classes\Mapper;
 
 class EventMapper extends Mapper
 {
@@ -46,7 +47,7 @@ class EventMapper extends Mapper
 
         $sql = 'SELECT * FROM event WHERE event_id = :event_id';
         $query = $this->db->prepare($sql);
-        $query->bindParam(':event_id', $event_id, PDO::PARAM_STR);
+        $query->bindParam(':event_id', $event_id, \PDO::PARAM_STR);
         $query->execute();
 
         if($row = $query->fetch()){
@@ -62,7 +63,7 @@ class EventMapper extends Mapper
         // 参加者一覧取得
         $sql = 'SELECT * FROM event_participants WHERE event_id = :event_id';
         $query = $this->db->prepare($sql);
-        $query->bindParam(':event_id', $event_id, PDO::PARAM_STR);
+        $query->bindParam(':event_id', $event_id, \PDO::PARAM_STR);
         $query->execute();
 
         $join_member = array();
@@ -142,7 +143,7 @@ class EventMapper extends Mapper
 
         $sql = 'SELECT * FROM event WHERE event_id = :event_id';
         $query = $this->db->prepare($sql);
-        $query->bindParam(':event_id', $event_id, PDO::PARAM_STR);
+        $query->bindParam(':event_id', $event_id, \PDO::PARAM_STR);
         $query->execute();
 
         if($query->rowCount()>0){
@@ -158,7 +159,7 @@ class EventMapper extends Mapper
 
         $sql = 'SELECT * FROM user_mst WHERE user_id = :user_id';
         $query = $this->db->prepare($sql);
-        $query->bindParam(':user_id', $user_id, PDO::PARAM_STR);
+        $query->bindParam(':user_id', $user_id, \PDO::PARAM_STR);
         $query->execute();
 
         $array = array();

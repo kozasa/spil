@@ -1,4 +1,5 @@
 <?php
+namespace Classes\Mapper;
 
 class PushMapper extends Mapper
 {
@@ -65,7 +66,7 @@ class PushMapper extends Mapper
         }
         
         $query = $this->db->prepare($sql);
-        $query->bindParam(':day', $day, PDO::PARAM_STR);
+        $query->bindParam(':day', $day, \PDO::PARAM_STR);
         $query->execute();
 
         //取得件数が０件の場合、falseを返す
@@ -104,7 +105,7 @@ class PushMapper extends Mapper
             $sql = 'UPDATE `event` SET `before_one_day` = true WHERE event_id = :event_id';
         }
         $query = $this->db->prepare($sql);
-        $query->bindParam(':event_id', $event_id, PDO::PARAM_STR);
+        $query->bindParam(':event_id', $event_id, \PDO::PARAM_STR);
         $query->execute();
     }
 }

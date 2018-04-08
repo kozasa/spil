@@ -3,8 +3,8 @@
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-// Routes
-require('settings_param.php');
+use Classes\Utility;
+use Classes\Mapper;
 
 /**
  * トップページアクセス
@@ -26,7 +26,7 @@ $app->get('/event/{id}',function(Request $request,Response $response){
     $id = $request->getAttribute('id');
 
     // DB取得
-    $mapper = new EventMapper($this->db);
+    $mapper = new Mapper\EventMapper($this->db);
     $event_info = $mapper->getEventInfo($id);
     //var_dump($event_info);
     
@@ -43,7 +43,7 @@ $app->get('/event/{id}',function(Request $request,Response $response){
 $app->get('/latest/',function(Request $request,Response $response){
 
     // DB取得
-    $mapper = new LatestMapper($this->db);
+    $mapper = new Mapper\LatestMapper($this->db);
     $latest_info = $mapper->getLatestInfo();
 
     // 直近イベント情報ページ表示
@@ -54,6 +54,53 @@ $app->get('/latest/',function(Request $request,Response $response){
     );
     
     
+});
+
+/**
+ * 管理者画面 ログイン画面
+ */
+$app->get('/admin/',function(Request $request,Response $response){
+    
+    // 管理者ログイン画面表示
+    return $this->renderer->render(
+        $response,
+        'admin_login.phtml', 
+        array('error_msg' => null)
+    );
+
+});
+
+/**
+ * 管理者画面 メニュー画面
+ */
+$app->post('/admin/',function(Request $request,Response $response){
+    
+    // POSTデータ取得
+    $post_data = $request->getParsedBody();
+
+    // ログイン確認処理
+    $result = Utility\Login::isCheck($this->db,$post_data['user'],$post_data['password'],$error_msg);
+
+    if($result)
+    {
+        // 管理者ログイン画面表示
+        return $this->renderer->render(
+            $response,
+            'admin_menu.phtml', 
+            array()
+        );
+    }
+    else
+    {
+        // 管理者ログイン画面表示
+        return $this->renderer->render(
+            $response,
+            'admin_login.phtml', 
+            array('error_msg' => $error_msg)
+        );
+    }
+    
+
 });
 
 /**
@@ -70,7 +117,7 @@ $app->get('/push/{key}',function(Request $request,Response $response){
     }
 
     // 通知するイベント情報を取得
-    $mapper = new PushMapper($this->db);
+    $mapper = new Mapper\PushMapper($this->db);
     $push_info = $mapper->getPushInfo();
 
     var_dump($push_info);

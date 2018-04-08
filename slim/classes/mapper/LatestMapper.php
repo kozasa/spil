@@ -1,4 +1,5 @@
 <?php
+namespace Classes\Mapper;
 
 class LatestMapper extends Mapper
 {

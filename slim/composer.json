@@ -23,6 +23,14 @@
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests/"
+            
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Classes\\": "classes/",
+            "Classes\\Utility\\": "classes/utility/",
+            "Classes\\Mapper\\": "classes/mapper/"
         }
     },
     "config": {

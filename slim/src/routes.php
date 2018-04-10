@@ -151,12 +151,12 @@ $app->post('/admin/eventpost/',function(Request $request,Response $response){
 
     // DB挿入
     $mapper = new Mapper\EventPostMapper($this->db);
-    $result = $mapper->insertEventPost($post_data);
+    $event_id = $mapper->insertEventPost($post_data);
 
-    if($result){
+    if($event_id){
         // 成功した場合、チャットに投稿
-        $message = push_event_info($post_data);
-        Utility\LineBotPush::push();
+        $message = push_event_info($post_data,$event_id);
+        Utility\LineBotPush::push($message);
 
         // メニュー画面へリダイレクト
         return $response->withStatus(302)->withHeader('Location', '../menu/');
@@ -352,11 +352,11 @@ function push_join_message_one($info){
  * @param array $info
  * @return array
  */
-function push_event_info($info){
+function push_event_info($info,$event_id){
 
     return array(
         "type" => "template",
-        "altText" => "イベント情報が追加されました！\n 開催日時："
+        "altText" => "イベントが追加されました！\n 開催日時："
             .$info["event_date"].$info["start_time"]."~".$info["end_time"]."\n場所：".$info["place"],
         "template" => array(
             "type" => "buttons",
@@ -364,13 +364,14 @@ function push_event_info($info){
             "imageAspectRatio" => "rectangle",
             "imageSize" => "cover",
             "imageBackgroundColor" => "#e0c0a0",
-            "title" => "イベント情報が追加されました！",
-            "text" => "開催日時：".$info["event_date"].$info["start_time"]."~".$info["end_time"].
+            "title" => "イベントが追加されました！",
+            "text" => "開催日：".$info["event_date"]."\n".
+                "開催時間：".$info["start_time"]."~".$info["end_time"].
                 "\n場所：".$info["place"],
             "defaultAction" => array(
                 "type" => "uri",
                 "label" => "View detail",
-                "uri" => ROOT_URL."event/".$info["event_id"],
+                "uri" => ROOT_URL."latest/",
                 "area" => array(  
                     "x" => 0,
                     "y" => 0,
@@ -381,7 +382,7 @@ function push_event_info($info){
             "actions" => array(
                 array(
                     "type" => "uri",
-                    "label" => "直近のイベント情報を確認する",
+                    "label" => "直近イベント情報を確認",
                     "uri" => ROOT_URL."latest/"
                 )
             )

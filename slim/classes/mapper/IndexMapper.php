@@ -21,7 +21,7 @@ class IndexMapper extends Mapper
      */
     public function getLatestInfo(){
 
-        $sql = 'SELECT *,year(`event_date`) as year,month(`event_date`) as month ,day(`event_date`) as day FROM `event` WHERE event_date >= now() order by event_date';
+        $sql = 'SELECT * FROM `event` WHERE event_date >= now() order by event_date';
         
         $query = $this->db->prepare($sql);
         $query->execute();
@@ -35,13 +35,9 @@ class IndexMapper extends Mapper
                 'event_id' => $row['event_id'],
                 'title' => $row['title'],
                 'place' => $row['place'],
-                'event_date' => $row['event_date'],
-                'start_time' => $row['start_time'],
-                'end_time' => $row['end_time'],
-                'year' => $row['year'],
-                'month' => $row['month'],
-                'day' => $row['day'],
-                'week' => $this->week[$weekday],
+                'event_date' => date('m月d日 ' ,strtotime($row['event_date'])).'('.$this->week[$weekday].') ',
+                'start_time' => date('H:i' ,strtotime($row['start_time'])),
+                'end_time' => date('H:i' ,strtotime($row['end_time'])),
             );
             array_push($latest_info,$event_info);
             $count += 1;

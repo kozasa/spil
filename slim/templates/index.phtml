@@ -61,10 +61,14 @@
                         <table class="table">
                             <tbody>
                                 <?php foreach ($latest_info as $info):
-                                    $event_day = $info['month'].' 月 '.$info['day'].' 日 '.' ('.$info['week'].') '.$info['start_time'].' - '.$info['end_time']; 
+                                    $event_date = $info['event_date'].$info['start_time'].' - '.$info['end_time'];
+                                    $map_url = 'https://maps.google.co.jp/maps?q='.urlencode($info['place']);
                                 ?>
                                 <tr>
-                                    <td style="font-family:Meiryo;"><?= htmlspecialchars($event_day); ?> &nbsp;<?= htmlspecialchars($info['place'])?> </td>
+                                    <td style="font-family:Meiryo;">
+                                        <?= htmlspecialchars($event_date); ?> &nbsp;
+                                        <a href=<?= htmlspecialchars($map_url);?> target="_blank"style="color:gray;"><?= htmlspecialchars($info['place']); ?></a> 
+                                    </td>
                                 </tr>
                                 <?php endforeach; ?>
                             </tbody>

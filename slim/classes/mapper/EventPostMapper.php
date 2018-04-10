@@ -31,7 +31,7 @@ class EventPostMapper extends Mapper
         $query->bindParam(':fee', $info['fee'], \PDO::PARAM_INT);
         $query->execute();
 
-        return true;
+        return $event_id;
     }
     
     /**

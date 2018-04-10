@@ -53,4 +53,18 @@ class Login
 
         return true;
     }
+
+    /**
+     * ログイン確認
+     *
+     * @param string $user
+     * @return boolean
+     */
+    public static function isCheckAfter($user){
+
+        if(isset($user)){
+            return true;
+        }
+        return false;
+    }
 }

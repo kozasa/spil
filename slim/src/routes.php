@@ -57,7 +57,7 @@ $app->get('/latest/',function(Request $request,Response $response){
 });
 
 /**
- * 管理者画面 ログイン画面
+ * 管理者画面 ログイン画面 get
  */
 $app->get('/admin/',function(Request $request,Response $response){
     
@@ -71,7 +71,7 @@ $app->get('/admin/',function(Request $request,Response $response){
 });
 
 /**
- * 管理者画面 メニュー画面
+ * 管理者画面 ログイン画面 post
  */
 $app->post('/admin/',function(Request $request,Response $response){
     
@@ -83,12 +83,11 @@ $app->post('/admin/',function(Request $request,Response $response){
 
     if($result)
     {
-        // 管理者ログイン画面表示
-        return $this->renderer->render(
-            $response,
-            'admin_menu.phtml', 
-            array()
-        );
+        // セッション格納
+        $_SESSION['user'] = $post_data['user'];
+
+        // 管理者メニュー画面へリダイレクト
+        return $response->withStatus(302)->withHeader('Location', '../admin/menu/');
     }
     else
     {
@@ -99,7 +98,98 @@ $app->post('/admin/',function(Request $request,Response $response){
             array('error_msg' => $error_msg)
         );
     }
+});
+
+/**
+ * 管理者画面 メニュー画面
+ */
+$app->get('/admin/menu/',function(Request $request,Response $response){
+
+    // ログイン認証
+    if(!Utility\Login::isCheckAfter($_SESSION['user'])){
+        return $response->withStatus(302)->withHeader('Location', '../../admin/');
+    }
+
+    // 管理者ログイン画面表示
+    return $this->renderer->render(
+        $response,
+        'admin_menu.phtml', 
+        array()
+    );
+});
+
+/**
+ * 管理者画面 イベント投稿画面 get
+ */
+$app->get('/admin/eventpost/',function(Request $request,Response $response){
+
+    // ログイン認証
+    if(!Utility\Login::isCheckAfter($_SESSION['user'])){
+        return $response->withStatus(302)->withHeader('Location', '../../admin/');
+    }
+
+    // 管理者ログイン画面表示
+    return $this->renderer->render(
+        $response,
+        'admin_event_post.phtml', 
+        array()
+    );
+});
+
+/**
+ * 管理者画面 イベント投稿画面 post
+ */
+$app->post('/admin/eventpost/',function(Request $request,Response $response){
+
+    // ログイン認証
+    if(!Utility\Login::isCheckAfter($_SESSION['user'])){
+        return $response->withStatus(302)->withHeader('Location', '../../admin/');
+    }
+
+    // POSTデータ取得
+    $post_data = $request->getParsedBody();
+
+    // DB挿入
+    $mapper = new Mapper\EventPostMapper($this->db);
+    $result = $mapper->insertEventPost($post_data);
+
+    if($result){
+        // 成功した場合、チャットに投稿
+        $message = push_event_info($post_data);
+        Utility\LineBotPush::push();
+
+        // メニュー画面へリダイレクト
+        return $response->withStatus(302)->withHeader('Location', '../menu/');
+    }else{
+
+        // 失敗した場合、エラー表示
+        return $this->renderer->render(
+            $response,
+            'admin_event_post.phtml', 
+            array('error_msg' => "投稿処理に失敗しました。入力内容を確認してください。")
+        );
+    }
     
+});
+
+/**
+ * 管理者画面 ログアウト
+ */
+$app->get('/admin/logout/',function(Request $request,Response $response){
+
+    // ログイン認証
+    if(!Utility\Login::isCheckAfter($_SESSION['user'])){
+        return $response->withStatus(302)->withHeader('Location', '../../admin/');
+    }
+
+    // セッションの変数のクリア
+    $_SESSION = array();
+
+    // セッション破棄
+    @session_destroy();
+
+    // ログイン画面へリダイレクト
+    return $response->withStatus(302)->withHeader('Location', '../../admin/');
 
 });
 
@@ -256,3 +346,45 @@ function push_join_message_one($info){
     );
 }
 
+/**
+ * イベント情報投稿メッセージ
+ *
+ * @param array $info
+ * @return array
+ */
+function push_event_info($info){
+
+    return array(
+        "type" => "template",
+        "altText" => "イベント情報が追加されました！\n 開催日時："
+            .$info["event_date"].$info["start_time"]."~".$info["end_time"]."\n場所：".$info["place"],
+        "template" => array(
+            "type" => "buttons",
+            "thumbnailImageUrl" => ROOT_URL."img/calender_takujou.png",
+            "imageAspectRatio" => "rectangle",
+            "imageSize" => "cover",
+            "imageBackgroundColor" => "#e0c0a0",
+            "title" => "イベント情報が追加されました！",
+            "text" => "開催日時：".$info["event_date"].$info["start_time"]."~".$info["end_time"].
+                "\n場所：".$info["place"],
+            "defaultAction" => array(
+                "type" => "uri",
+                "label" => "View detail",
+                "uri" => ROOT_URL."event/".$info["event_id"],
+                "area" => array(  
+                    "x" => 0,
+                    "y" => 0,
+                    "width" => 20,
+                    "height" => 100
+                )
+            ),
+            "actions" => array(
+                array(
+                    "type" => "uri",
+                    "label" => "直近のイベント情報を確認する",
+                    "uri" => ROOT_URL."latest/"
+                )
+            )
+        )        
+    );
+}

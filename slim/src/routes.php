@@ -9,12 +9,14 @@ use Classes\Mapper;
 /**
  * トップページアクセス
  */
-$app->get('/[{name}]', function (Request $request, Response $response, array $args) {
-    // Sample log message
-    $this->logger->info("Slim-Skeleton '/' route");
+$app->get('/index/', function (Request $request, Response $response, array $args) {
+    
+    // DB取得
+    $mapper = new Mapper\IndexMapper($this->db);
+    $latest_info = $mapper->getLatestInfo();
 
     // Render index view
-    return $this->renderer->render($response, 'index.phtml', $args);
+    return $this->renderer->render($response, 'index.phtml', array('latest_info'=>$latest_info));
 });
 
 /**

@@ -9,7 +9,7 @@ use Classes\Mapper;
 /**
  * トップページアクセス
  */
-$app->get('/index/', function (Request $request, Response $response, array $args) {
+$app->get('/', function (Request $request, Response $response, array $args) {
     
     // DB取得
     $mapper = new Mapper\IndexMapper($this->db);

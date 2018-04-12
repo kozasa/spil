@@ -88,7 +88,15 @@
     <div class="footer-basic" style="padding-top:0px;padding-bottom:0px;">
         <footer style="background-color:#0099b5;">
                 <div class="social">
-                    <iframe src="https://www.facebook.com/plugins/share_button.php?href=https%3A%2F%2Fspil.hetabun.com%2F&layout=button_count&size=small&mobile_iframe=true&appId=218614678873931&width=72&height=20" width="72" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
+                <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&autoLogAppEvents=1&version=v2.12&appId=218614678873931';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+                    <div class="fb-share-button" data-href="https://spil.hetabun.com/" data-layout="button_count" data-size="small" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fspil.hetabun.com%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
                     <a class="twitter-share-button" href="https://twitter.com/share?url=https://spil.hetabun.com/&text=スピル - 名古屋のバドミントンサークル" data-dnt="true">Tweet</a>
                 </div>
             <p class="copyright">スピル © 2018</p>

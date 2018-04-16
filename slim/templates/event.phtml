@@ -28,16 +28,30 @@
         <div class="row user-list">
 
             <?php foreach ($join_member as $member): ?>
+            <?php if(!$member['new_flag']): // 既存の場合 ?>
             <div class="col-12 col-sm-6 col-md-4 col-lg-3 user-item">
                 <div class="user-container">
                     <a class="user-avatar">
-                        <img class="rounded-circle img-fluid" src="<?= htmlspecialchars($member['picture_url']) ?>/small" alt="Profile of Mark Smith Peterson" width="48" height="48">
+                        <img class="rounded-circle img-fluid" src="<?= htmlspecialchars($member['picture_url']) ?>/small" alt="" width="48" height="48">
                     </a>
                     <p class="user-name">
                         <strong style="color:#5d6569;font-size:22px;"><?= htmlspecialchars($member['display_name']) ?></strong>
                     </p>
                 </div>
             </div>
+            <?php else: // 新規の場合 ?>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 user-item">
+                <div class="user-container">
+                    <a class="user-avatar">
+                        <img class="rounded-circle img-fluid" src="<?= htmlspecialchars($member['picture_url']) ?>" alt="" width="48" height="48">
+                    </a>
+                    <p class="user-name">
+                        <strong style="color:#5d6569;font-size:18px;"><?= htmlspecialchars($member['display_name']) ?></strong>
+                        <?= htmlspecialchars("(".$member['age'].")"); ?>
+                    </p>
+                </div>
+            </div>
+            <?php endif; ?>
             <?php endforeach; ?>
             
         </div>

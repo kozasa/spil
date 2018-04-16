@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新規者登録</title>
+    <link rel="stylesheet" href="/admin/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/admin/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="/admin/fonts/ionicons.min.css">
+    <link rel="stylesheet" href="/admin/css/styles.min.css">
+</head>
+
+<body>
+    <div class="contact-clean" style="background-color:#00829b;">
+        <form method="post">
+            <h2 class="text-center">新規者 登録</h2>
+            <h6 style="color:red"><?= $error_msg; ?></h6>
+            <h4>参加日</h4>
+            <div class="form-group">
+                <select class="form-control form-control-lg" name="join_day">
+                    <optgroup label="参加日">
+                        <?php foreach ($latest_info as $info): ?>
+                        <option value="<?= htmlspecialchars($info['event_id']); ?>"><?= htmlspecialchars($info['event_date'].' ('.$info['week'].')'); ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+            <h4>名前</h4>
+            <div class="form-group"><input class="form-control" type="text" name="name" placeholder="名前"></div>
+            <h4>性別</h4>
+            <div class="form-group"><select class="form-control form-control-lg" name="gender"><optgroup label="性別"><option value="1">男性</option><option value="2">女性</option></optgroup></select></div>
+            <h4>年齢</h4>
+            <div class="form-group"><select class="form-control form-control-lg" name="age"><optgroup label="年齢"><option value="1">１０代</option><option value="2" selected="">２０代</option><option value="3">３０代</option><option value="4">４０代</option><option value="5">５０代</option><option value="6">６０代</option></optgroup></select></div>
+            <br>
+            <div class="form-group"><button class="btn btn-primary btn-block" type="submit">send</button></div>
+    <div class="form-group"><a href="../menu/" style="font-size:20px;">Back</a></div>
+    </form>
+    </div>
+    <script src="/admin/js/jquery.min.js"></script>
+    <script src="/admin/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>

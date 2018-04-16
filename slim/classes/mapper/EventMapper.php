@@ -1,6 +1,8 @@
 <?php
 namespace Classes\Mapper;
 
+use Classes\Utility;
+
 class EventMapper extends Mapper
 {
     private $week = [
@@ -72,13 +74,13 @@ class EventMapper extends Mapper
             if($row['join_flag']==="1"){
                 // 参加者
                 $join_member = array_merge($join_member,array(
-                    array('id'=>$row['member_id'],'new_flag'=>$row['new_flag'])
+                    array('id'=>$row['member_id'],'new_flag'=>$row['new_flag'],'new_name'=>$row['new_name'],'new_gender'=>$row['new_gender'],'new_age'=>$row['new_age'])
                 ));
 
             }else{
                 // 不参加者
                 $none_join_member = array_merge($none_join_member,array(
-                    array('id'=>$row['member_id'],'new_flag'=>$row['new_flag'])
+                    array('id'=>$row['member_id'],'new_flag'=>$row['new_flag'],'new_name'=>$row['new_name'],'new_gender'=>$row['new_gender'],'new_age'=>$row['new_age'])
                 ));
             }
         }
@@ -100,6 +102,20 @@ class EventMapper extends Mapper
                             'new_flag'=>$data['new_flag'],
                             'display_name' => $user_info['display_name'],
                             'picture_url' => $user_info['picture_url'],
+                        )
+                    )
+                );
+            }else{
+                // 新規メンバーの場合
+                $join_member_info = array_merge(
+                    $join_member_info,
+                    array(
+                        array(
+                            'new_flag'=>$data['new_flag'],
+                            'display_name' => $data['new_name'],
+                            'gender' => Utility\NewRegisterEnum::getGender((int)$data['new_gender']),
+                            'age' => Utility\NewRegisterEnum::getAge((int)$data['new_age']),
+                            'picture_url' => Utility\NewRegisterEnum::getImage((int)$data['new_gender']),
                         )
                     )
                 );

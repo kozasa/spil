@@ -175,6 +175,78 @@ $app->post('/admin/eventpost/',function(Request $request,Response $response){
 });
 
 /**
+ * 管理者画面 新規者登録 get
+ */
+$app->get('/admin/newpost/',function(Request $request,Response $response){
+
+    // ログイン認証
+    if(!Utility\Login::isCheckAfter($_SESSION['user'])){
+        return $response->withStatus(302)->withHeader('Location', '../../admin/');
+    }
+
+    // 直近イベント情報取得
+    $mapper = new Mapper\LatestMapper($this->db);
+    $latest_info = $mapper->getLatestInfo();
+
+    // 管理者ログイン画面表示
+    return $this->renderer->render(
+        $response,
+        'admin_new_post.phtml', 
+        array('latest_info' => $latest_info)
+    );
+});
+
+/**
+ * 管理者画面 新規者登録 post
+ */
+$app->post('/admin/newpost/',function(Request $request,Response $response){
+
+    // ログイン認証
+    if(!Utility\Login::isCheckAfter($_SESSION['user'])){
+        return $response->withStatus(302)->withHeader('Location', '../../admin/');
+    }
+
+    // POSTデータ取得
+    $post_data = $request->getParsedBody();
+
+    // DB挿入
+    $mapper = new Mapper\NewPostMapper($this->db);
+    $result = $mapper->insertNewRegistant($post_data);
+
+    // 直近イベント情報取得
+    $mapper_event = new Mapper\LatestMapper($this->db);
+    $latest_info = $mapper_event->getLatestInfo();
+
+    if($result){
+        // 成功した場合、チャットに投稿
+
+        // 日付の情報を取得
+        $date = null;
+        foreach($latest_info as $info){
+            if($info['event_id'] == $post_data['join_day']){
+                $date = $info['event_date'];
+            }
+        }
+
+        $message = push_new_info($post_data,$date);
+        Utility\LineBotPush::push($message);
+
+        // メニュー画面へリダイレクト
+        return $response->withStatus(302)->withHeader('Location', '../menu/');
+    }else{
+
+        // 失敗した場合、エラー表示
+        return $this->renderer->render(
+            $response,
+            'admin_new_post.phtml', 
+            array('latest_info' => $latest_info,
+            'error_msg' => "投稿処理に失敗しました。入力内容を確認してください。")
+        );
+    }
+    
+});
+
+/**
  * 管理者画面 ログアウト
  */
 $app->get('/admin/logout/',function(Request $request,Response $response){
@@ -389,5 +461,19 @@ function push_event_info($info,$event_id){
                 )
             )
         )        
+    );
+}
+
+/**
+ * 新規者情報投稿メッセージ
+ *
+ * @param array $info
+ * @return array
+ */
+function push_new_info($info,$date){
+
+    return array(
+        "type" => "text",
+        "text" => $date."に新しく".$info['name']."さんが参加するよ！"
     );
 }

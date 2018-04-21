@@ -30,7 +30,7 @@ class LatestMapper extends Mapper
      */
     private function getLatestAllInfo(){
 
-        $sql = 'SELECT *,year(`event_date`) as year,month(`event_date`) as month ,day(`event_date`) as day FROM `event` WHERE event_date >= now() order by event_date';
+        $sql = 'SELECT *,year(`event_date`) as year,month(`event_date`) as month ,day(`event_date`) as day FROM `event` WHERE event_date >= CURRENT_DATE() order by event_date';
         $query = $this->db->prepare($sql);
         $query->execute();
 

@@ -139,6 +139,82 @@ $app->get('/admin/eventpost/',function(Request $request,Response $response){
 });
 
 /**
+ * 管理者画面 イベント一覧画面 get
+ */
+$app->get('/admin/eventedit/',function(Request $request,Response $response){
+
+    // ログイン認証
+    if(!Utility\Login::isCheckAfter($_SESSION['user'])){
+        return $response->withStatus(302)->withHeader('Location', '../../admin/');
+    }
+
+    // DB取得
+    $mapper = new Mapper\EventEditMapper($this->db);
+    $monthly_event_list = $mapper->getEventList();
+
+    // 管理者イベント一覧画面表示
+    return $this->renderer->render(
+        $response,
+        'admin_event_list.phtml', 
+        array('monthly_event_list' => $monthly_event_list)
+    );
+    
+});
+
+/**
+ * 管理者画面 イベント編集画面 get
+ */
+$app->get('/admin/eventedit/{id}',function(Request $request,Response $response){
+
+    // ログイン認証
+    if(!Utility\Login::isCheckAfter($_SESSION['user'])){
+        return $response->withStatus(302)->withHeader('Location', '../../admin/');
+    }
+
+    
+    // 管理者ログイン画面表示
+    return $this->renderer->render(
+        $response,
+        'admin_event_post.phtml', 
+        array()
+    );
+});
+
+
+/**
+ * 管理者画面 イベント編集画面 post
+ */
+$app->post('/admin/eventedit/{id}',function(Request $request,Response $response){
+
+    // ログイン認証
+    if(!Utility\Login::isCheckAfter($_SESSION['user'])){
+        return $response->withStatus(302)->withHeader('Location', '../../admin/');
+    }
+
+    // DB挿入
+    $mapper = new Mapper\EventPostMapper($this->db);
+    $event_id = $mapper->insertEventPost($post_data);
+
+    if($event_id){
+        // 成功した場合、チャットに投稿
+        $message = push_event_info($post_data,$event_id);
+        Utility\LineBotPush::push($message);
+
+        // メニュー画面へリダイレクト
+        return $response->withStatus(302)->withHeader('Location', '../menu/');
+    }else{
+
+        // 失敗した場合、エラー表示
+        return $this->renderer->render(
+            $response,
+            'admin_event_post.phtml', 
+            array('error_msg' => "投稿処理に失敗しました。入力内容を確認してください。")
+        );
+    }
+    
+});
+
+/**
  * 管理者画面 イベント投稿画面 post
  */
 $app->post('/admin/eventpost/',function(Request $request,Response $response){

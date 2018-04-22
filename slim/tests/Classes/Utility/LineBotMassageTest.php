@@ -1,18 +1,29 @@
 <?php
+namespace Tests\Classes\Utility;
 
-namespace Classes\Utility;
+use PHPUnit\Framework\TestCase;
+use Classes\Utility;
+use AspectMock\Test as test;
 
-class LineBotMassage
+class LineBotMassageTest extends TestCase
 {
-    /**
-     * 応募メッセージ 7日前
-     *
-     * @param array $info
-     * @return array
-     */
-    public static function push_join_message_seven($info){
 
-        return array(
+    protected function tearDown()
+    {
+        test::clean(); // 登録したテストダブルをすべて削除
+    }
+
+    public function testpush_join_message_seven(){
+        $info = array(
+            'event_date' => date('h-i-s'),
+            'start_time' => '11:11',
+            'end_time' => '22:22',
+            'place' => '場所場所場所',
+            'event_id' => 'event_id'
+
+        );
+
+        $massage = array(
             "type" => "template",
             "altText" => "バドミントンの参加者募集！！\n 開催日時："
                 .$info["event_date"].$info["start_time"]."~".$info["end_time"]."\n場所：".$info["place"],
@@ -50,19 +61,23 @@ class LineBotMassage
                         "displayText" => "不参加"
                     ),
                 )
-            )        
+            )
         );
+        $this->assertEquals($massage,Utility\LineBotMassage::push_join_message_seven($info));
     }
 
-    /**
-     * 応募メッセージ 1日前
-     *
-     * @param array $info
-     * @return array
-     */
-    public static function push_join_message_one($info){
+    public function testpush_join_message_one(){
+        
+        $info = array(
+            'event_date' => date('h-i-s'),
+            'start_time' => '11:11',
+            'end_time' => '22:22',
+            'place' => '場所場所場所',
+            'event_id' => 'event_id'
 
-        return array(
+        );
+
+        $massage = array(
             "type" => "template",
             "altText" => "明日はバドミントン活動日！\n 開催日時："
                 .$info["event_date"].$info["start_time"]."~".$info["end_time"]."\n場所：".$info["place"],
@@ -93,19 +108,22 @@ class LineBotMassage
                         "uri" => ROOT_URL."event/".$info["event_id"]
                     )
                 )
-            )        
+            )
         );
+        $this->assertEquals($massage,Utility\LineBotMassage::push_join_message_one($info));
     }
 
-    /**
-     * イベント情報投稿メッセージ
-     *
-     * @param array $info
-     * @return array
-     */
-    public static function push_event_info($info,$event_id){
+    public function testpush_event_info(){
+        
+        $info = array(
+            'event_date' => date('h-i-s'),
+            'start_time' => '11:11',
+            'end_time' => '22:22',
+            'place' => '場所場所場所',
 
-        return array(
+        );
+        $event_id = 'testevent_id';
+        $massage = array(
             "type" => "template",
             "altText" => "イベントが追加されました！\n 開催日時："
                 .$info["event_date"].$info["start_time"]."~".$info["end_time"]."\n場所：".$info["place"],
@@ -137,21 +155,21 @@ class LineBotMassage
                         "uri" => ROOT_URL."latest/"
                     )
                 )
-            )        
+            ) 
         );
+        $this->assertEquals($massage,Utility\LineBotMassage::push_event_info($info,$event_id));
     }
 
-    /**
-     * 新規者情報投稿メッセージ
-     *
-     * @param array $info
-     * @return array
-     */
-    public static function push_new_info($info,$date){
-
-        return array(
+    public function testpush_new_info(){
+        
+        $info = array('name' => '名前');
+        $date = date('h-i-s');
+        $massage = array(
             "type" => "text",
             "text" => $date."に新しく".$info['name']."さんが参加するよ！"
         );
+
+        $this->assertEquals($massage,Utility\LineBotMassage::push_new_info($info,$date));
     }
+
 }

@@ -25,7 +25,6 @@ class MemberController extends Controller
         // DB取得
         $mapper = new Mapper\EventMapper($this->container->db);
         $event_info = $mapper->getEventInfo($id);
-        //var_dump($event_info);
         
         if($event_info){
             // イベントが存在する場合はイベントページを表示
@@ -52,7 +51,7 @@ class MemberController extends Controller
         return $this->container->renderer->render(
             $response,
             'latest.phtml', 
-            array('latest_info'=>$latest_info)
+            array('latest_info' => $latest_info)
         );
 
     }

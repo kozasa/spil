@@ -279,6 +279,7 @@ class AdminController extends Controller
         }
 
         // 通知するイベント情報を取得
+        // 当日にイベントが開催されている場合は情報を取得せず、通知処理は行わない
         $mapper = new Mapper\PushMapper($this->container->db);
         $push_info = $mapper->getPushInfo();
 

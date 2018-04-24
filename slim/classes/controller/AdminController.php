@@ -109,7 +109,7 @@ class AdminController extends Controller
         return $this->container->renderer->render(
             $response,
             'admin_event_post.phtml', 
-            array()
+            array('error_msg' => null)
         );
     }
 
@@ -177,7 +177,8 @@ class AdminController extends Controller
         return $this->container->renderer->render(
             $response,
             'admin_new_post.phtml', 
-            array('latest_info' => $latest_info)
+            array('latest_info' => $latest_info,
+            'error_msg' => null)
         );
     }
 
@@ -266,7 +267,7 @@ class AdminController extends Controller
      * @param Request $request
      * @param Response $response
      * @param array $args
-     * @return 
+     * @return void
      */
     public function push($request, $response, $args) {
         
@@ -287,7 +288,7 @@ class AdminController extends Controller
 
         // 通知
         if($push_info){
-            Utility\LineBotPush::pushCron($push_info);
+            $result = Utility\LineBotPush::pushCron($push_info);
         }
     }
 }

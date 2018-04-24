@@ -6,12 +6,18 @@ use Classes\Utility;
 
 class NewRegisterEnumTest extends TestCase
 {
+    /**
+     * @group utility
+     */
     public function testgetGender(){
         $this->assertEquals("男性",Utility\NewRegisterEnum::getGender(1));
         $this->assertEquals("女性",Utility\NewRegisterEnum::getGender(2));
         $this->assertEquals(null,Utility\NewRegisterEnum::getGender(3));
     }
 
+    /**
+     * @group utility
+     */
     public function testgetAge(){
         $this->assertEquals("１０代",Utility\NewRegisterEnum::getAge(1));
         $this->assertEquals("２０代",Utility\NewRegisterEnum::getAge(2));
@@ -22,6 +28,9 @@ class NewRegisterEnumTest extends TestCase
         $this->assertEquals(null,Utility\NewRegisterEnum::getAge(7));
     }
 
+    /**
+     * @group utility
+     */
     public function testgetImage(){
         $this->assertEquals("/img/man.png",Utility\NewRegisterEnum::getImage(1));
         $this->assertEquals("/img/woman.png",Utility\NewRegisterEnum::getImage(2));

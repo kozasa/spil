@@ -1,5 +1,5 @@
 <?php
-require('settings_param.php');
+require_once('settings_param.php');
 
 return [
     'settings' => [

@@ -12,6 +12,9 @@ class LoginTest extends TestCase
         test::clean(); // 登録したテストダブルをすべて削除
     }
     
+    /**
+     * @group utility
+     */
     public function testisCheck(){
 
         /**
@@ -82,6 +85,9 @@ class LoginTest extends TestCase
         test::clean();
     }
 
+    /**
+     * @group utility
+     */
     public function testisCheckAfter(){
         $this->assertEquals(true,Utility\Login::isCheckAfter("user01"));
         $this->assertEquals(false,Utility\Login::isCheckAfter(null));

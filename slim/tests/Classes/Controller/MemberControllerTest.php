@@ -4,14 +4,18 @@ namespace Tests\Classes\Controller;
 use PHPUnit\Framework\TestCase;
 use Classes\Controller;
 use AspectMock\Test as test;
+use Tests\Classes as Base;
 
-class MemberControllerTest extends ControllerBaseTestCase
+class MemberControllerTest extends Base\BaseTestCase
 {
     protected function tearDown()
     {
         test::clean(); // 登録したテストダブルをすべて削除
     }
 
+    /**
+     * @group controller
+     */
     public function testevent(){
 
         /**
@@ -57,6 +61,9 @@ class MemberControllerTest extends ControllerBaseTestCase
 
     }
 
+    /**
+     * @group controller
+     */
     public function testlatest(){
 
         $mock1 = test::double('\Classes\Mapper\LatestMapper', ['getLatestInfo' => array( 0 => 

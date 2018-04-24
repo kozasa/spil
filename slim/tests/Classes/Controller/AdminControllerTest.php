@@ -4,14 +4,18 @@ namespace Tests\Classes\Controller;
 use PHPUnit\Framework\TestCase;
 use Classes\Controller;
 use AspectMock\Test as test;
+use Tests\Classes as Base;
 
-class AdminControllerTest extends ControllerBaseTestCase
+class AdminControllerTest extends Base\BaseTestCase
 {
     protected function tearDown()
     {
         test::clean(); // 登録したテストダブルをすべて削除
     }
 
+    /**
+     * @group controller
+     */
     public function testtopGet(){
 
         $response = $this->runApp('GET', '/admin/');
@@ -22,6 +26,9 @@ class AdminControllerTest extends ControllerBaseTestCase
         $this->assertContains('スピル管理者ログインページ', (string)$response->getBody());
     }
 
+    /**
+     * @group controller
+     */
     public function testtopPost(){
 
         /**
@@ -51,6 +58,9 @@ class AdminControllerTest extends ControllerBaseTestCase
         test::clean();
     }
 
+    /**
+     * @group controller
+     */
     public function testmenuGet(){
         
         // ログイン認証NG
@@ -76,6 +86,9 @@ class AdminControllerTest extends ControllerBaseTestCase
 
     }
 
+    /**
+     * @group controller
+     */
     public function testeventPostGet(){
         // ログイン認証NG
         $this->loginNG('GET','/admin/eventpost/');
@@ -100,6 +113,9 @@ class AdminControllerTest extends ControllerBaseTestCase
 
     }
 
+    /**
+     * @group controller
+     */
     public function testeventPostPost(){
         // ログイン認証NG
         $this->loginNG('POST','/admin/eventpost/');
@@ -156,6 +172,9 @@ class AdminControllerTest extends ControllerBaseTestCase
         test::clean();
     }
 
+    /**
+     * @group controller
+     */
     public function testnewPostGet(){
         // ログイン認証NG
         $this->loginNG('GET','/admin/newpost/');
@@ -186,6 +205,9 @@ class AdminControllerTest extends ControllerBaseTestCase
         $this->assertContains('2018-04-25', (string)$response->getBody());
     }
 
+    /**
+     * @group controller
+     */
     public function testnewPostPost(){
         // ログイン認証NG
         $this->loginNG('POST','/admin/newpost/');
@@ -284,6 +306,9 @@ class AdminControllerTest extends ControllerBaseTestCase
 
     }
 
+    /**
+     * @group controller
+     */
     public function testlogout(){
         // ログイン認証NG
         $this->loginNG('GET','/admin/logout/');
@@ -303,6 +328,9 @@ class AdminControllerTest extends ControllerBaseTestCase
         test::clean();
     }
 
+    /**
+     * @group controller
+     */
     public function testpush(){
         /**
          * key失敗
@@ -366,32 +394,4 @@ class AdminControllerTest extends ControllerBaseTestCase
 
         test::clean();
     }
-    /*
-    public function testhome(){
-
-        $mock1 = test::double('\Classes\Mapper\LatestMapper', ['getLatestInfo' => array( 0 => 
-            array(
-                'event_id'=>"b000004",
-                'title'=>"バドミントン１面",
-                'place'=>"富田地区会館",
-                'event_date'=>"2018-04-25",
-                'start_time'=>"18:30:00",
-                'end_time'=>"21:00:00",
-                'year'=>"2018",
-                'month'=>"4",
-                'day'=>"25",
-                'week'=>"水",
-            ),
-        )]);
-        $response = $this->runApp('GET', '/');
-        
-        // ページが正常動作の場合は200となる
-        $this->assertEquals(200, $response->getStatusCode());
-        // タイトル確認
-        $this->assertContains('スピル - 名古屋市内のバドミントンサークル', (string)$response->getBody());
-        // 出力確認
-        $this->assertContains('富田地区会館', (string)$response->getBody());
-
-    }
-    */
 }

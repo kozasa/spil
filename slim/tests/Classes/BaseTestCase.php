@@ -1,5 +1,5 @@
 <?php
-namespace Tests\Classes\Controller;
+namespace Tests\Classes;
 
 use Psr\Container\ContainerInterface;
 use Slim\App;
@@ -8,7 +8,7 @@ use Slim\Http\Response;
 use Slim\Http\Environment;
 use PHPUnit\Framework\TestCase;
 
-class ControllerBaseTestCase extends TestCase
+class BaseTestCase extends TestCase
 {
     /**
      * @var App
@@ -28,11 +28,11 @@ class ControllerBaseTestCase extends TestCase
     {
         parent::setUp();
         // Use the application settings
-        $settings = require __DIR__ . '/../../../src/settings.php';
+        $settings = require __DIR__ . '/../../src/settings.php';
         // Instantiate the application
         $app = new App($settings);
         // Set up dependencies
-        require __DIR__ . '/../../../src/dependencies.php';
+        require __DIR__ . '/../../src/dependencies.php';
         $this->app = $app;
         $this->container = $this->app->getContainer();
     }
@@ -64,10 +64,10 @@ class ControllerBaseTestCase extends TestCase
         $response = new Response();
         // Register middleware
         if ($this->withMiddleware) {
-            require __DIR__ . '/../../../src/middleware.php';
+            require __DIR__ . '/../../src/middleware.php';
         }
         // Register routes
-        require __DIR__ . '/../../../src/routes.php';
+        require __DIR__ . '/../../src/routes.php';
         // Process the application
         $response = $app->process($request, $response);
         // Return the response

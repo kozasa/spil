@@ -12,12 +12,19 @@ class LineBotPushTest extends TestCase
         test::clean(); // 登録したテストダブルをすべて削除
     }
 
+    /**
+     * @group utility
+     */
     public function testpush(){
         // LINEボットのpush機能のため、検証不可
         // LINEボットを実際に手動で動作させて検証する
         $this->assertEquals(true,true);
 
     }
+
+    /**
+     * @group utility
+     */
     public function testpushCron(){
         /**
          * 7日前

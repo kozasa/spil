@@ -13,6 +13,9 @@ class LineBotMassageTest extends TestCase
         test::clean(); // 登録したテストダブルをすべて削除
     }
 
+    /**
+     * @group utility
+     */
     public function testpush_join_message_seven(){
         $info = array(
             'event_date' => date('h-i-s'),
@@ -66,6 +69,9 @@ class LineBotMassageTest extends TestCase
         $this->assertEquals($massage,Utility\LineBotMassage::push_join_message_seven($info));
     }
 
+    /**
+     * @group utility
+     */
     public function testpush_join_message_one(){
         
         $info = array(
@@ -113,6 +119,9 @@ class LineBotMassageTest extends TestCase
         $this->assertEquals($massage,Utility\LineBotMassage::push_join_message_one($info));
     }
 
+    /**
+     * @group utility
+     */
     public function testpush_event_info(){
         
         $info = array(
@@ -160,6 +169,9 @@ class LineBotMassageTest extends TestCase
         $this->assertEquals($massage,Utility\LineBotMassage::push_event_info($info,$event_id));
     }
 
+    /**
+     * @group utility
+     */
     public function testpush_new_info(){
         
         $info = array('name' => '名前');

@@ -2,29 +2,27 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
+<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>イベント情報投稿</title>
-    <link rel="stylesheet" href="/admin/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/admin/fonts/font-awesome.min.css">
-    <link rel="stylesheet" href="/admin/fonts/ionicons.min.css">
-    <link rel="stylesheet" href="/admin/css/styles.min.css">
+    <title>イベント情報編集</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700">
+    <link rel="stylesheet" href="/css/styles.min.css">
 </head>
 
 <body style="background-color:#00829b;">
     <div class="contact-clean" style="background-color:#00829b;">
         
     <?php foreach($monthly_event_list as $month => $event_list): ?>
-        <div class="highlight-clean" >
+        <div class="highlight-clean" style="background-color:#00829b;">
             <div class="container">
                 <div class="intro" style="color:white">
                     <h2 class="text-left" style="margin-bottom:0px;"><?= htmlspecialchars(mb_convert_kana($month,"N")) ?></h2>
                 </div>
             </div>
         </div>
-        <?php foreach ($event_list as $event): ?>
-            <div class="row user-list" style="margin-right:0px;margin-left:0px;margin-bottom:25px;">
-
+        <div class="row user-list" style="margin-right:0px;margin-left:0px;margin-bottom:25px;">
+            <?php foreach ($event_list as $event): ?>
                 <div class="col-12 col-sm-6 col-md-4 col-lg-3 user-item">
                     <div class="d-flex user-container">
                         <div style="width:78px;">
@@ -32,15 +30,19 @@
                             <h5 class="text-center">（<?= htmlspecialchars($event['week']) ?>）</h5>
                         </div>
                         <p class="user-name">
-                            <a href="/event/<?= htmlspecialchars($event['event_id']) ?>"><?= htmlspecialchars($event['title']) ?></a>
+                            <?= htmlspecialchars($event['title']) ?>
                             <span><?= htmlspecialchars($event['start_time']) ?> - <?= htmlspecialchars($event['end_time']) ?></span>
                             
                             <span><?= htmlspecialchars($event['place']); ?></span>
+                            <span style = "color=blue">
+                                <a href="./<?= htmlspecialchars($event['event_id']) ?>">edit</a>
+                                <a href="./<?= htmlspecialchars($event['event_id']) ?>">delete</a>
+                            </span>
                         </p>
                     </div>
                 </div>
-            </div>
-        <?php endforeach; ?>
+            <?php endforeach; ?>
+        </div>
     <?php endforeach; ?>
     </div>
         <script src="/admin/js/jquery.min.js"></script>

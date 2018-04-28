@@ -25,15 +25,15 @@ class EventEditMapper extends Mapper
         $query->execute();
 
         $monthly_event_list = array();
-        $event_list = array();
         
         #イベント情報取得
         while($row = $query -> fetch()){
             $month = date('n月' ,strtotime($row['event_date']));
             $weekday = date('w',strtotime($row['event_date']));
-            
+
             if(!array_key_exists($month, $monthly_event_list)){
                 array_merge($monthly_event_list,array($month => array()));
+                $event_list = array();
             }
             $event_info = array(
                 'event_id' => $row['event_id'],
@@ -49,5 +49,35 @@ class EventEditMapper extends Mapper
         }
 
         return $monthly_event_list;
+    }
+    
+
+    /**
+     * 現在日時以降のイベント情報をイベントの日程順で取得
+     * （当日を含む）
+     *
+     * @return array
+     */
+    public function getEventFromId($event_id){
+        $sql = 'SELECT * FROM event WHERE event_id = :event_id';
+        $query = $this->db->prepare($sql);
+        $query->bindParam(':event_id', $event_id, \PDO::PARAM_STR);
+        $query->execute();
+
+        #イベント情報取得
+        $row = $query -> fetch();
+        $weekday = date('w',strtotime($row['event_date']));
+        $event = array(
+            'event_id' => $row['event_id'],
+            'title' => $row['title'],
+            'place' => $row['place'],
+            'date' => $row['event_date'],
+            'week' => $this->week[$weekday],
+            'fee' => $row['fee'],
+            'start_time' => date('H:i' ,strtotime($row['start_time'])),
+            'end_time' => date('H:i' ,strtotime($row['end_time'])),
+        );
+
+        return $event;
     }
 }

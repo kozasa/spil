@@ -142,7 +142,7 @@ class MyBot{
         error_log(print_r($log_text, TRUE), 3, 'yamato_dbg_log.txt');
 
         // メッセージ確認
-        require_once('../slim/utility/LineBotRecieve.php');
+        require('../slim/utility/LineBotRecieve.php');
 
         $massage_text = $receive['events'][0]["message"]["text"];
         $result = LineBotRecieve::recieveMassage($massage_text);

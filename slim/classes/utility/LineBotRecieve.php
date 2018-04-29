@@ -18,7 +18,7 @@ class LineBotRecieve
 
             // 直近のイベント情報を取得
             $mapper = new \Classes\Mapper\PushMapper($db);
-            $push_info = $mapper->getPushInfo();
+            $push_info = $mapper->getRePushInfo();
 
             // 7日前イベント情報メッセージ取得
             $message = \Classes\Utility\LineBotMassage::push_join_message_seven($push_info);

@@ -142,7 +142,6 @@ class MyBot{
         error_log(print_r($log_text, TRUE), 3, 'yamato_dbg_log.txt');
 
         // メッセージ確認
-        require '/../slim/vendor/autoload.php';
         $settings = require '/../slim/src/settings.php';
         error_log(print_r($settings, TRUE), 3, 'yamato_dbg_log.txt');
         $app = new \Slim\App($settings);

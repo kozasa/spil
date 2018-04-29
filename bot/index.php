@@ -2,6 +2,8 @@
 
 require('../slim/src/settings_param.php');
 require('../slim/utility/LineBotRecieve.php');
+require('../slim/utility/LineBotMassage.php');
+require('../slim/utility/LineBotPush.php');
 
 $myclass = new MyBot;
 $myclass->main();

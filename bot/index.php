@@ -138,6 +138,10 @@ class MyBot{
         $log_text = date('Y/m/d H:i:s') . ":" . $receive['events'][0]["source"]["groupId"].":".$receive['events'][0]['type']."\n";
         error_log(print_r($log_text, TRUE), 3, 'yamato_dbg_log.txt');
 
+        // メッセージ確認
+        $massage_text = $receive['events'][0]["message"]["text"];
+        error_log(print_r($massage_text, TRUE), 3, 'yamato_dbg_log.txt');
+
         // ポストバック
         if($receive['events'][0]['type'] == 'postback')
         {

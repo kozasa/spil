@@ -146,9 +146,6 @@ class MyBot{
         // メッセージ確認
         $pdo = new PDO('mysql:host='.DB_HOST.';dbname='.DB_DBNAME.';charset=utf8',DB_USER,DB_PASS,
             array(PDO::ATTR_EMULATE_PREPARES => false));
-        //$settings = require '/../slim/src/settings.php';
-        //error_log(print_r($settings, TRUE), 3, 'yamato_dbg_log.txt');
-        //$app = new \Slim\App($settings);
 
         $massage_text = $receive['events'][0]["message"]["text"];
         $result = \Classes\Utility\LineBotRecieve::recieveMassage($pdo,$massage_text);

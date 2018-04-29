@@ -145,7 +145,8 @@ class MyBot{
         require_once('../slim/utility/LineBotRecieve.php');
 
         $massage_text = $receive['events'][0]["message"]["text"];
-        LineBotRecieve::recieveMassage($massage_text);
+        $result = LineBotRecieve::recieveMassage($massage_text);
+        error_log(print_r($result, TRUE), 3, 'yamato_dbg_log.txt');
 
         // ポストバック
         if($receive['events'][0]['type'] == 'postback')

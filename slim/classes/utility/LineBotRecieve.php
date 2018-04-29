@@ -17,6 +17,7 @@ class LineBotRecieve
 
         error_log(print_r($massage_text, TRUE), 3, 'yamato_dbg_log.txt');
 
+        return $massage_text;
         /*
         if(!strpos($massage_text,spilMan.'再通知')){
             //スピルくん再通知が含まれている場合

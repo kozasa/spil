@@ -91,8 +91,7 @@ class PushMapper extends Mapper
             ORDER BY id;';
         }elseif($day===0){
             // 0の場合は直近のイベント情報を返す
-            $sql = 'SELECT * FROM `event` WHERE `event_date`  < DATE_ADD( now(), interval :day DAY ) 
-            ORDER BY id;';
+            $sql = 'SELECT * FROM `event` WHERE  `event_date` > DATE_ADD( now(), interval :day DAY ) ORDER BY id;';
         }
         
         $query = $this->db->prepare($sql);

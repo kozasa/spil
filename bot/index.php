@@ -143,7 +143,7 @@ class MyBot{
 
         // メッセージ確認
         $massage_text = $receive['events'][0]["message"]["text"];
-        \Classes\Utility\LineBotRecieve::recieveMassage($massage_text);
+        LineBotRecieve::recieveMassage($massage_text);
 
         // ポストバック
         if($receive['events'][0]['type'] == 'postback')

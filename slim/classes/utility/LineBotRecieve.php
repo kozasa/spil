@@ -23,15 +23,17 @@ class LineBotRecieve
             // 7日前イベント情報メッセージ取得
             $message = \Classes\Utility\LineBotMassage::push_join_message_seven($push_info);
 
-            error_log(print_r("massage::::", TRUE), 3, 'yamato_dbg_log.txt');
             error_log(print_r($message, TRUE), 3, 'yamato_dbg_log.txt');
             
+            /*
             $massage = array(
                 "type" => "text",
                 "text" => "shit"
             );
+            */
+
             // lineメッセージの送信
-            \Classes\Utility\LineBotPush::push($massage);
+            \Classes\Utility\LineBotPush::push($message);
 
         }
         

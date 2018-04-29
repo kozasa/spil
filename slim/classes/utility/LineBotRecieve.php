@@ -16,7 +16,7 @@ class LineBotRecieve
         if(strpos($massage_text,'スピルくん再通知')!== false){
             //スピルくん再通知が含まれている場合
 
-            $mapper = new Mapper\PushMapper($db);
+            $mapper = new \Classes\Mapper\PushMapper($db);
             $push_info = $mapper->getPushInfo();
 
             $massage = array(

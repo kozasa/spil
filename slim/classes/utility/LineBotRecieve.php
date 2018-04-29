@@ -20,10 +20,11 @@ class LineBotRecieve
             $mapper = new \Classes\Mapper\PushMapper($db);
             $push_info = $mapper->getRePushInfo();
 
-            error_log(print_r("aaa", TRUE), 3, 'yamato_dbg_log.txt');
-
             // 7日前イベント情報メッセージ取得
             $message = \Classes\Utility\LineBotMassage::push_join_message_seven($push_info);
+
+            error_log(print_r("massage::::", TRUE), 3, 'yamato_dbg_log.txt');
+            error_log(print_r($message, TRUE), 3, 'yamato_dbg_log.txt');
             
             // lineメッセージの送信
             \Classes\Utility\LineBotPush::push($massage);

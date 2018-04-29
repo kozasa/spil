@@ -5,8 +5,6 @@ namespace Classes\Utility;
 class LineBotRecieve
 {
 
-    const spilMan = 'スピルくん';
-
     /**
      * メッセージ受信
      *
@@ -15,12 +13,12 @@ class LineBotRecieve
      */
     public static function recieveMassage($massage_text){
 
-        if(!strpos($massage_text,'スピルくん再通知')){
+        if(strpos($massage_text,'スピルくん再通知')!== false){
             //スピルくん再通知が含まれている場合
 
             $massage = array(
                 "type" => "text",
-                "text" => "aaaa"
+                "text" => "(´･ω･｀ ) "
             );
             \Classes\Utility\LineBotPush::push($massage);
 

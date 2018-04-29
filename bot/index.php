@@ -144,7 +144,7 @@ class MyBot{
 
         // メッセージ確認
         $massage_text = $receive['events'][0]["message"]["text"];
-        $result = LineBotRecieve::recieveMassage($massage_text);
+        $result = \Classes\Utility\LineBotRecieve::recieveMassage($massage_text);
         error_log(print_r($result, TRUE), 3, 'yamato_dbg_log.txt');
 
         // ポストバック

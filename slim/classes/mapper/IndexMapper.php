@@ -20,7 +20,7 @@ class IndexMapper extends Mapper
      * @return array
      */
     public function getLatestInfo(){
-        $sql = 'SELECT * FROM `event` WHERE event_date >= now() order by event_date';
+        $sql = 'SELECT * FROM `event` WHERE event_date >= CURRENT_DATE() order by event_date';
         $query = $this->db->prepare($sql);
         $query->execute();
 

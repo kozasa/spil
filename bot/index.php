@@ -2,8 +2,8 @@
 
 require('../slim/src/settings_param.php');
 require('../slim/utility/LineBotRecieve.php');
-require('../slim/utility/LineBotMassage.php');
-require('../slim/utility/LineBotPush.php');
+//require('../slim/utility/LineBotMassage.php');
+//require('../slim/utility/LineBotPush.php');
 
 $myclass = new MyBot;
 $myclass->main();
@@ -143,7 +143,7 @@ class MyBot{
 
         // メッセージ確認
         $massage_text = $receive['events'][0]["message"]["text"];
-        LineBotRecieve::recieveMassage($massage_text);
+        Classes\Utility\LineBotRecieve::recieveMassage($massage_text);
 
         // ポストバック
         if($receive['events'][0]['type'] == 'postback')

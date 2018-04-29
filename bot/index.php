@@ -1,9 +1,9 @@
 <?php
 
 require('../slim/src/settings_param.php');
-require('../slim/classes/utility/LineBotRecieve.php');
-require('../slim/classes/utility/LineBotMassage.php');
-require('../slim/classes/utility/LineBotPush.php');
+//require('../slim/classes/utility/LineBotRecieve.php');
+//require('../slim/classes/utility/LineBotMassage.php');
+//require('../slim/classes/utility/LineBotPush.php');
 
 $myclass = new MyBot;
 $myclass->main();
@@ -142,8 +142,12 @@ class MyBot{
         error_log(print_r($log_text, TRUE), 3, 'yamato_dbg_log.txt');
 
         // メッセージ確認
+        require '/../slim/vendor/autoload.php';
+        $settings = require '/../slim/src/settings.php';
+        $app = new \Slim\App($settings);
+
         $massage_text = $receive['events'][0]["message"]["text"];
-        $result = \Classes\Utility\LineBotRecieve::recieveMassage($massage_text);
+        $result = \Classes\Utility\LineBotRecieve::recieveMassage($app->db,$massage_text);
 
         // ポストバック
         if($receive['events'][0]['type'] == 'postback')

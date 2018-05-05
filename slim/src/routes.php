@@ -187,13 +187,13 @@ $app->get('/admin/eventedit/',function(Request $request,Response $response){
 
     // DB取得
     $mapper = new Mapper\EventEditMapper($this->db);
-    $monthly_event_list = $mapper->getEventList();
+    $year_list = $mapper->getEventList();
 
     // 管理者イベント一覧画面表示
     return $this->renderer->render(
         $response,
         'admin_event_list.phtml', 
-        array('monthly_event_list' => $monthly_event_list)
+        array('year_list' => $year_list)
     );
     
 });
@@ -201,7 +201,7 @@ $app->get('/admin/eventedit/',function(Request $request,Response $response){
 /**
  * 管理者画面 イベント編集画面 get
  */
-$app->get('/admin/eventedit/{id}',function(Request $request,Response $response){
+$app->get('/admin/eventedit/update/{event_id}',function(Request $request,Response $response){
 
     // ログイン認証
     if(!Utility\Login::isCheckAfter($_SESSION['user'])){
@@ -209,11 +209,11 @@ $app->get('/admin/eventedit/{id}',function(Request $request,Response $response){
     }
 
     // event id 取得
-    $id = $request->getAttribute('id');
+    $event_id = $request->getAttribute('event_id');
 
     // DB挿入
     $mapper = new Mapper\EventEditMapper($this->db);
-    $event = $mapper->getEventFromId($id);
+    $event = $mapper->getEventFromId($event_id);
     
     // 管理者ログイン画面表示
     return $this->renderer->render(
@@ -227,30 +227,74 @@ $app->get('/admin/eventedit/{id}',function(Request $request,Response $response){
 /**
  * 管理者画面 イベント編集画面 post
  */
-$app->post('/admin/eventedit/{id}',function(Request $request,Response $response){
+$app->post('/admin/eventedit/update/{event_id}',function(Request $request,Response $response){
 
     // ログイン認証
     if(!Utility\Login::isCheckAfter($_SESSION['user'])){
         return $response->withStatus(302)->withHeader('Location', '../../admin/');
     }
 
-    // DB挿入
+    // event id 取得
+    $event_id = $request->getAttribute('event_id');
+
+    // POSTデータ取得
+    $post_data = $request->getParsedBody();
+    $post_data['event_id'] = $event_id;
+    // DB更新
     $mapper = new Mapper\EventEditMapper($this->db);
-    $event_id = $mapper->insertEventPost($post_data);
+    $event_id = $mapper->updateEvent($post_data);
 
     if($event_id){
         // 成功した場合、チャットに投稿
         $message = push_event_info($post_data,$event_id);
+        $message['altText'] = str_replace('追加', '変更', $message['altText']);
+        $message['template']['title'] = 'イベントが変更されました。';
         Utility\LineBotPush::push($message);
 
         // メニュー画面へリダイレクト
-        return $response->withStatus(302)->withHeader('Location', '../menu/');
+        return $response->withStatus(302)->withHeader('Location', '../');
     }else{
 
         // 失敗した場合、エラー表示
         return $this->renderer->render(
             $response,
-            'admin_event_post.phtml', 
+            'admin_event_edit.phtml', 
+            array('error_msg' => "投稿処理に失敗しました。入力内容を確認してください。")
+        );
+    }
+    
+});
+
+
+/**
+ * 管理者画面 イベント編集画面 get
+ */
+$app->get('/admin/eventedit/delete/{event_id}',function(Request $request,Response $response){
+
+    // ログイン認証
+    if(!Utility\Login::isCheckAfter($_SESSION['user'])){
+        return $response->withStatus(302)->withHeader('Location', '../../admin/');
+    }
+
+    // event id 取得
+    $event_id = $request->getAttribute('event_id');
+
+    // DB更新
+    $mapper = new Mapper\EventEditMapper($this->db);
+    $event_id = $mapper->deleteEvent($event_id);
+
+    if($event_id){
+        // 成功した場合、チャットに投稿
+        $message = push_event_info($post_data,$event_id);
+        Utility\LineBotPush::push($message);
+        // イベントリスト画面へリダイレクト
+        return $response->withStatus(302)->withHeader('Location', '../');
+    }else{
+
+        // 失敗した場合、エラー表示
+        return $this->renderer->render(
+            $response,
+            'admin_event_edit.phtml', 
             array('error_msg' => "投稿処理に失敗しました。入力内容を確認してください。")
         );
     }

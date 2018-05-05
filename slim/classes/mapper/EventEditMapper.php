@@ -24,15 +24,23 @@ class EventEditMapper extends Mapper
         $query = $this->db->prepare($sql);
         $query->execute();
 
-        $monthly_event_list = array();
+        $year_list = array();
+        $month_list = array();
         
         #イベント情報取得
         while($row = $query -> fetch()){
+            $year = date('Y年' ,strtotime($row['event_date']));
             $month = date('n月' ,strtotime($row['event_date']));
             $weekday = date('w',strtotime($row['event_date']));
-
-            if(!array_key_exists($month, $monthly_event_list)){
-                array_merge($monthly_event_list,array($month => array()));
+            
+            #年がリスト存在しなければリスト作成、月のリストを初期化
+            if(!array_key_exists($year, $year_list)){
+                array_merge($year_list,array($year => array()));
+                $month_list = array();
+            }
+            #月がリストに存在しなければ、リスト作成、イベントリストを初期化
+            if(!array_key_exists($month, $month_list)){
+                array_merge($month_list,array($month => array()));
                 $event_list = array();
             }
             $event_info = array(
@@ -45,10 +53,10 @@ class EventEditMapper extends Mapper
                 'end_time' => date('H:i' ,strtotime($row['end_time'])),
             );
             array_push($event_list,$event_info);
-            $monthly_event_list[$month] = $event_list;
+            $month_list[$month] = $event_list;
+            $year_list[$year] = $month_list;
         }
-
-        return $monthly_event_list;
+        return $year_list;
     }
     
 
@@ -80,4 +88,62 @@ class EventEditMapper extends Mapper
 
         return $event;
     }
+
+    /**
+     * イベント情報を更新
+     * @param array $info
+     */
+    public function updateEvent($info) {
+
+        // 入力情報の確認
+        if(!$this->checkInfo($info)){
+            return false;
+        }
+        
+        $sql = 'UPDATE event SET title=:title, place=:place, event_date=:event_date, start_time=:start_time, end_time=:end_time, fee=:fee WHERE event_id =:event_id';
+
+        $query = $this->db->prepare($sql);
+        $query->bindParam(':event_id', $info['event_id'], \PDO::PARAM_STR);
+        $query->bindParam(':title', $info['title'], \PDO::PARAM_STR);
+        $query->bindParam(':place', $info['place'], \PDO::PARAM_STR);
+        $query->bindParam(':event_date', $info['event_date'], \PDO::PARAM_STR);
+        $query->bindParam(':start_time', $info['start_time'], \PDO::PARAM_STR);
+        $query->bindParam(':end_time', $info['end_time'], \PDO::PARAM_STR);
+        $query->bindParam(':fee', $info['fee'], \PDO::PARAM_INT);
+        $query->execute();
+
+        return $info['event_id'];
+    }
+
+
+    /**
+     * イベント情報を削除
+     * @param $event_id
+     */
+    public function deleteEvent($event_id) {
+        $sql = 'DELETE FROM event WHERE event_id =:event_id';
+        $query = $this->db->prepare($sql);
+        $query->bindParam(':event_id', $event_id, \PDO::PARAM_STR);
+        $query->execute();
+
+        return $event_id;
+    }
+
+    /**
+     * 入力情報チェック
+     *
+     * @param array $info
+     * @return bool
+     */
+    private function checkInfo($info){
+
+        if(!empty($info['fee']) && !empty($info['title']) 
+        && !empty($info['place']) && !empty($info['event_date'])
+        && !empty($info['start_time']) && !empty($info['end_time']))
+        {
+            return true;
+        }
+        return false;
+    }
+    
 }

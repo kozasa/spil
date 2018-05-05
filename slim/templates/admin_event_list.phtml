@@ -8,15 +8,19 @@
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700">
     <link rel="stylesheet" href="/css/styles.min.css">
+    <link rel="stylesheet" href="/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/Pretty-User-List.css">
 </head>
 
 <body style="background-color:#00829b;">
     <div class="contact-clean" style="background-color:#00829b;">
-        
-    <?php foreach($monthly_event_list as $month => $event_list): ?>
+    
+    <?php foreach($year_list as $year => $month_list): ?>
+    <?php foreach($month_list as $month => $event_list): ?>
         <div class="highlight-clean" style="background-color:#00829b;">
             <div class="container">
                 <div class="intro" style="color:white">
+                    <p class="text-left" style="margin:10px;color:white;"><?= htmlspecialchars($year) ?></p>
                     <h2 class="text-left" style="margin-bottom:0px;"><?= htmlspecialchars(mb_convert_kana($month,"N")) ?></h2>
                 </div>
             </div>
@@ -24,26 +28,37 @@
         <div class="row user-list" style="margin-right:0px;margin-left:0px;margin-bottom:25px;">
             <?php foreach ($event_list as $event): ?>
                 <div class="col-12 col-sm-6 col-md-4 col-lg-3 user-item">
-                    <div class="d-flex user-container">
-                        <div style="width:78px;">
+                    <div class="d-flex user-container" >
+                        <div style="width:78px; margin-left:10px;margin-right:10px;">
                             <h3 class="text-center" style="margin-top:10px;"><?= htmlspecialchars($event['date']) ?></h3>
                             <h5 class="text-center">（<?= htmlspecialchars($event['week']) ?>）</h5>
                         </div>
-                        <p class="user-name">
+                        <p class="user-name" style = "width:100%">
                             <?= htmlspecialchars($event['title']) ?>
                             <span><?= htmlspecialchars($event['start_time']) ?> - <?= htmlspecialchars($event['end_time']) ?></span>
                             
                             <span><?= htmlspecialchars($event['place']); ?></span>
-                            <span style = "color=blue">
-                                <a href="./<?= htmlspecialchars($event['event_id']) ?>">edit</a>
-                                <a href="./<?= htmlspecialchars($event['event_id']) ?>">delete</a>
+                            <span style = "float:left; width:100%;">
+                                <a href="./update/<?= htmlspecialchars($event['event_id']) ?>">
+                                <span style="float:left; width:45%; text-align:center; padding: 2px; margin-right: 5px; margin-bottom: 5px; border: 0px solid #999999; border-radius: 6px; background-color: #00829b;">
+                                    <font style = "color:white;"> edit </font>
+                                </span>
+                                </a>
+                                <!-- <a href="./delete/<?= htmlspecialchars($event['event_id']) ?>"> -->
+                                <span style="float:left; width:45%; text-align:center; padding: 2px; margin-bottom: 5px; border: 0px solid #999999; border-radius: 6px; background-color: #999999;">
+                                    <font style = "color:white;"> delete </font>
+                                </span>
+                                <!-- </a> -->
                             </span>
                         </p>
+                        
                     </div>
                 </div>
             <?php endforeach; ?>
         </div>
     <?php endforeach; ?>
+    <?php endforeach; ?>
+    <div class="form-group"><a href="../menu/" style="margin-left:10px;font-size:20px;color:white;">Back</a></div>
     </div>
         <script src="/admin/js/jquery.min.js"></script>
         <script src="/admin/bootstrap/js/bootstrap.min.js"></script>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>イベント情報編集</title>
+    <link rel="stylesheet" href="/admin/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/admin/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="/admin/fonts/ionicons.min.css">
+    <link rel="stylesheet" href="/admin/css/styles.min.css">
+</head>
+
+<body>
+    <div class="contact-clean" style="background-color:#00829b;">
+        <form method="post">
+            <h2 class="text-center">イベント情報編集</h2>
+            <h6 style="color:red"><?= $error_msg; ?></h3>
+
+            <div class="form-group">
+                <select class="form-control form-control-lg" name="title"><optgroup label="タイトル">
+                <option value="バドミントン1面" <?php if($event['title'] == "バドミントン1面"):?> selected=""<?php endif; ?> >バドミントン1面</option>
+                <option value="バドミントン2面" <?php if($event['title'] == "バドミントン2面"):?> selected=""<?php endif; ?> >バドミントン2面</option>
+                <option value="バドミントン3面" <?php if($event['title'] == "バドミントン3面"):?> selected=""<?php endif; ?> >バドミントン3面</option>
+                </optgroup></select>
+            </div>
+
+            <div class="form-group"><select class="form-control form-control-lg" name="place"><optgroup label="場所">
+                <option value="中村生涯学習センター" <?php if($event['place'] == "中村生涯学習センター"):?> selected=""<?php endif; ?>>中村生涯学習センター</option>
+                <option value="中川生涯学習センター" <?php if($event['place'] == "中川生涯学習センター"):?> selected=""<?php endif; ?>>中川生涯学習センター</option>
+                <option value="港生涯学習センター" <?php if($event['place'] == "港生涯学習センター"):?> selected=""<?php endif; ?>>港生涯学習センター</option>
+                <option value="山田地区会館" <?php if($event['place'] == "山田地区会館"):?> selected=""<?php endif; ?>>山田地区会館</option>
+                <option value="富田地区会館" <?php if($event['place'] == "富田地区会館"):?> selected=""<?php endif; ?>>富田地区会館</option>
+                </optgroup></select>
+            </div>
+            
+            <div class="form-group"><input class="form-control form-control-lg" type="date" name="event_date" value=<?= $event['date'] ?>></div>
+
+            <div class="form-group d-flex">
+                <input class="form-control form-control-lg" type="time" name="start_time" style="width:150px;" value=<?= $event['start_time'] ?>>
+                <h2 style="margin-right:20px;margin-left:20px;margin-bottom:0px;">〜</h2>
+                <input class="form-control form-control-lg" type="time" name="end_time" style="width:150px;" value=<?= $event['end_time'] ?>>
+            </div>
+
+            <div class="form-group"><select class="form-control form-control-lg" name="fee"><optgroup label="料金"><option value="500" selected="">500円</option></optgroup></select></div>
+            
+            <br>
+            <div class="form-group"><button class="btn btn-primary btn-block" type="submit">send </button></div>
+            <div class="form-group"><a href="../" style="font-size:20px;">Back</a></div>
+        </form>
+        </div>
+        <script src="/admin/js/jquery.min.js"></script>
+        <script src="/admin/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>

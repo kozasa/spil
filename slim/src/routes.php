@@ -41,6 +41,18 @@ $app->get('/admin/eventpost/', Controller\AdminController::class. ':eventPostGet
 // 管理者画面 イベント投稿画面 post
 $app->post('/admin/eventpost/', Controller\AdminController::class. ':eventPostPost');
 
+// 管理者画面 イベント編集一覧画面 get
+$app->get('/admin/eventedit/', Controller\AdminController::class. ':eventEditListGet');
+
+// 管理者画面 イベント編集画面 get
+$app->get('/admin/eventedit/update/{event_id}', Controller\AdminController::class. ':eventEditGet');
+
+// 管理者画面 イベント編集画面 post
+$app->post('/admin/eventedit/update/{event_id}', Controller\AdminController::class. ':eventEditPost');
+
+// 管理者画面 イベント削除 get
+$app->get('/admin/eventedit/delete/{event_id}', Controller\AdminController::class. ':eventDeleteGet');
+
 // 管理者画面 新規者登録 get
 $app->get('/admin/newpost/', Controller\AdminController::class. ':newPostGet');
 

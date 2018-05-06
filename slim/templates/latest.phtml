@@ -51,7 +51,7 @@
         </div>
 
     <?php 
-        if($set_year !== $latest_info[$count+1]['year'] || $set_month !== $latest_info[$count+1]['month']):
+        if( isset($latest_info[$count+1]) && ($set_year !== $latest_info[$count+1]['year'] || $set_month !== $latest_info[$count+1]['month'])):
     ?>
     </div>
     <?php

@@ -1,6 +1,8 @@
 <?php
 namespace Classes\Mapper;
 
+use Classes\Utility;
+
 class EventMapper extends Mapper
 {
     private $week = [
@@ -34,6 +36,111 @@ class EventMapper extends Mapper
      */
     private function isEventInfo($event_id){
 
+        // イベントテーブルから情報取得
+        $event_info = $this->getEventTblInfo($event_id);
+
+        // 参加者一覧取得
+        $this->getEventParticipantsInfo($event_id,$join_member,$none_join_member);
+
+        // 参加者一覧からメンバーの情報取得
+        $event_info['join_member'] = $this->getMemberInfo($join_member);
+
+        // 不参加者一覧からメンバー情報の取得
+        $event_info['none_join_member'] = $this->getMemberInfo($none_join_member);
+
+        return $event_info;
+    }
+
+    /**
+     * メンバー情報取得
+     *
+     * @param array $member
+     * @return array
+     */
+    private function getMemberInfo($member){
+
+        $member_info = array();
+        foreach($member as $data){
+
+            if(!intval($data['new_flag'])){
+                // 既存メンバーの場合
+
+                //ユーザマスタからユーザ名と画像URL取得
+                $user_info = $this->isUserInfo($data['id']);
+                $member_info = array_merge(
+                    $member_info,
+                    array(
+                        array(
+                            'id'=>$data['id'],
+                            'new_flag'=>$data['new_flag'],
+                            'display_name' => $user_info['display_name'],
+                            'picture_url' => $user_info['picture_url'],
+                        )
+                    )
+                );
+            }else{
+                // 新規メンバーの場合
+                $member_info = array_merge(
+                    $member_info,
+                    array(
+                        array(
+                            'new_flag'=>$data['new_flag'],
+                            'display_name' => $data['new_name'],
+                            'gender' => Utility\NewRegisterEnum::getGender((int)$data['new_gender']),
+                            'age' => Utility\NewRegisterEnum::getAge((int)$data['new_age']),
+                            'picture_url' => Utility\NewRegisterEnum::getImage((int)$data['new_gender']),
+                        )
+                    )
+                );
+            }
+        }
+
+        return $member_info;
+    }
+
+    /**
+     * イベント参加者テーブルからユーザ情報を取得
+     *
+     * @param array $join_member
+     * @param array $none_join_member
+     * @return bool
+     */
+    public function getEventParticipantsInfo($event_id,&$join_member,&$none_join_member){
+
+        // 参加者一覧取得
+        $sql = 'SELECT * FROM event_participants WHERE event_id = :event_id';
+        $query = $this->db->prepare($sql);
+        $query->bindParam(':event_id', $event_id, \PDO::PARAM_STR);
+        $query->execute();
+
+        $join_member = array();
+        $none_join_member = array();
+        while($row = $query -> fetch()){
+            if($row['join_flag']==="1"){
+                // 参加者
+                $join_member = array_merge($join_member,array(
+                    array('id'=>$row['member_id'],'new_flag'=>$row['new_flag'],'new_name'=>$row['new_name'],'new_gender'=>$row['new_gender'],'new_age'=>$row['new_age'])
+                ));
+
+            }else{
+                // 不参加者
+                $none_join_member = array_merge($none_join_member,array(
+                    array('id'=>$row['member_id'],'new_flag'=>$row['new_flag'],'new_name'=>$row['new_name'],'new_gender'=>$row['new_gender'],'new_age'=>$row['new_age'])
+                ));
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * イベントテーブルから情報を取得
+     *
+     * @param string $event_id
+     * @return array
+     */
+    public function getEventTblInfo($event_id){
+
         $event_info = array(
             'title' => null,
             'place' => null,
@@ -59,81 +166,9 @@ class EventMapper extends Mapper
             $event_info['end_time'] = date('H:i',strtotime($row['end_time']));
             $event_info['fee'] = $row['fee'];
         }
-
-        // 参加者一覧取得
-        $sql = 'SELECT * FROM event_participants WHERE event_id = :event_id';
-        $query = $this->db->prepare($sql);
-        $query->bindParam(':event_id', $event_id, \PDO::PARAM_STR);
-        $query->execute();
-
-        $join_member = array();
-        $none_join_member = array();
-        while($row = $query -> fetch()){
-            if($row['join_flag']==="1"){
-                // 参加者
-                $join_member = array_merge($join_member,array(
-                    array('id'=>$row['member_id'],'new_flag'=>$row['new_flag'])
-                ));
-
-            }else{
-                // 不参加者
-                $none_join_member = array_merge($none_join_member,array(
-                    array('id'=>$row['member_id'],'new_flag'=>$row['new_flag'])
-                ));
-            }
-        }
-
-        // 参加者一覧からメンバーの情報取得
-        $join_member_info = array();
-        foreach($join_member as $data){
-
-            if(!intval($data['new_flag'])){
-                // 既存メンバーの場合
-
-                //ユーザマスタからユーザ名と画像URL取得
-                $user_info = $this->isUserInfo($data['id']);
-                $join_member_info = array_merge(
-                    $join_member_info,
-                    array(
-                        array(
-                            'id'=>$data['id'],
-                            'new_flag'=>$data['new_flag'],
-                            'display_name' => $user_info['display_name'],
-                            'picture_url' => $user_info['picture_url'],
-                        )
-                    )
-                );
-            }
-        }
-
-        // 不参加者一覧からメンバー情報の取得
-        $none_join_member_info = array();
-        foreach($none_join_member as $data){
-
-            if(!intval($data['new_flag'])){
-                // 既存メンバーの場合
-
-                //ユーザマスタからユーザ名と画像URL取得
-                $user_info = $this->isUserInfo($data['id']);
-                $none_join_member_info = array_merge(
-                    $none_join_member_info,
-                    array(
-                        array(
-                            'id'=>$data['id'],
-                            'new_flag'=>$data['new_flag'],
-                            'display_name' => $user_info['display_name'],
-                            'picture_url' => $user_info['picture_url'],
-                        )
-                    )
-                );
-            }
-        }
-
-        $event_info['join_member'] = $join_member_info;
-        $event_info['none_join_member'] = $none_join_member_info;
-
+        
         return $event_info;
-    }
+    } 
 
     /**
      * イベントが存在するか

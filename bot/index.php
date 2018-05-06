@@ -1,6 +1,11 @@
 <?php
 
 require('../slim/src/settings_param.php');
+require('../slim/classes/utility/LineBotRecieve.php');
+require('../slim/classes/utility/LineBotMassage.php');
+require('../slim/classes/utility/LineBotPush.php');
+require('../slim/classes/mapper/Mapper.php');
+require('../slim/classes/mapper/PushMapper.php');
 
 $myclass = new MyBot;
 $myclass->main();
@@ -137,6 +142,13 @@ class MyBot{
         // ログ出力
         $log_text = date('Y/m/d H:i:s') . ":" . $receive['events'][0]["source"]["groupId"].":".$receive['events'][0]['type']."\n";
         error_log(print_r($log_text, TRUE), 3, 'yamato_dbg_log.txt');
+
+        // メッセージ確認
+        $pdo = new PDO('mysql:host='.DB_HOST.';dbname='.DB_DBNAME.';charset=utf8',DB_USER,DB_PASS,
+            array(PDO::ATTR_EMULATE_PREPARES => false));
+
+        $massage_text = $receive['events'][0]["message"]["text"];
+        $result = \Classes\Utility\LineBotRecieve::recieveMassage($pdo,$massage_text);
 
         // ポストバック
         if($receive['events'][0]['type'] == 'postback')

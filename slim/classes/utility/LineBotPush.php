@@ -8,7 +8,7 @@ class LineBotPush
      * メッセージ送信
      *
      * @param array $message
-     * @return void
+     * @return boolean
      */
     static public function push($message){
 
@@ -30,5 +30,26 @@ class LineBotPush
         curl_exec($curl);
         curl_close($curl);
 
+        return true;
+    }
+
+    /**
+    * cronメッセージ送信
+    * @param array $info
+    * @return void
+    */
+    static public function pushCron($info)
+    {
+
+        // 送信するメッセージ作成
+        $message = "";
+        if($info["day"]===7){
+            $message = LineBotMassage::push_join_message_seven($info);
+        }elseif($info["day"]===1){
+            $message = LineBotMassage::push_join_message_one($info);
+        }
+        
+        // メッセージ送信
+        return self::push($message);
     }
 }

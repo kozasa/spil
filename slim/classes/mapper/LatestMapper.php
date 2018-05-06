@@ -14,23 +14,12 @@ class LatestMapper extends Mapper
     ];
 
     /**
-     * 直近のイベント日時情報取得
+     * 現在日時以降のイベント情報をイベントの日程順で取得
+     * （当日を含む）
      */
     public function getLatestInfo() {
         
-        // 直近のデータ全て
-        return $this->getLatestAllInfo();
-    }
-
-    /**
-     * 現在日時以降のイベント情報をイベントの日程順で取得
-     * （当日を含む）
-     *
-     * @return array
-     */
-    private function getLatestAllInfo(){
-
-        $sql = 'SELECT *,year(`event_date`) as year,month(`event_date`) as month ,day(`event_date`) as day FROM `event` WHERE event_date >= now() order by event_date';
+        $sql = 'SELECT *,year(`event_date`) as year,month(`event_date`) as month ,day(`event_date`) as day FROM `event` WHERE event_date >= CURRENT_DATE() order by event_date';
         $query = $this->db->prepare($sql);
         $query->execute();
 

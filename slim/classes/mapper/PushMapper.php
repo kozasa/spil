@@ -18,6 +18,14 @@ class PushMapper extends Mapper
      */
     public function getPushInfo(){
 
+        // 当日イベントがある場合は通知を行わない
+        // 翌日以降にイベント通知とする
+        $isEventToday = $this->isEventToday();
+        if($isEventToday){
+            // 当日にイベントが開催されていた場合、通知しない
+            return false;
+        }
+
         // 開催7日前 かつ 7日前フラグの立っていないイベントを取得
         $isEventInfo7 = $this->isBeforeDaysInfo(7);
         if($isEventInfo7){
@@ -49,6 +57,24 @@ class PushMapper extends Mapper
     }
 
     /**
+     * プッシュする情報を再取得
+     *
+     * @return array
+     */
+    public function getRePushInfo(){
+
+        // 直近のイベント情報を取得
+        $isEventInfo0 = $this->isBeforeDaysInfo(0);
+
+        if($isEventInfo0){
+            // 情報が取得できた場合、取得した情報を返す
+            return $isEventInfo0;
+        }
+        
+        return false;
+    }
+
+    /**
      * 開催●日前 かつ フラグの立っていないイベントを取得
      * @args integer $day
      */
@@ -63,6 +89,9 @@ class PushMapper extends Mapper
             $sql = 'SELECT * FROM `event` WHERE `before_one_day` = false 
             AND `event_date`  < DATE_ADD( now(), interval :day DAY ) 
             ORDER BY id;';
+        }elseif($day===0){
+            // 0の場合は直近のイベント情報を返す
+            $sql = 'SELECT * FROM `event` WHERE  `event_date` > DATE_ADD( now(), interval :day DAY ) ORDER BY id;';
         }
         
         $query = $this->db->prepare($sql);
@@ -88,6 +117,23 @@ class PushMapper extends Mapper
             );
         }
         return $array;
+    }
+
+    /**
+     * 当日イベント確認
+     *
+     * @return boolean
+     */
+    private function isEventToday(){
+        $sql = 'SELECT id FROM `event` WHERE event_date = CURRENT_DATE()';
+        $query = $this->db->prepare($sql);
+        $query->execute();
+
+        //取得件数が０件の場合、falseを返す
+        if($query->rowCount()==0){
+            return false;
+        }
+        return true;
     }
 
     /**

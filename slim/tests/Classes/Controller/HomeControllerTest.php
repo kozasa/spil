@@ -18,7 +18,7 @@ class HomeControllerTest extends Base\BaseTestCase
      */
     public function testhome(){
 
-        $mock1 = test::double('\Classes\Mapper\LatestMapper', ['IndexMapper' => array( 0 => 
+        $mock1 = test::double('\Classes\Mapper\IndexMapper', ['getLatestInfo' => array( 0 => 
             array(
                 'event_id'=>"b000004",
                 'title'=>"バドミントン１面",

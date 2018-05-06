@@ -42,7 +42,7 @@ class IndexMapperTest extends Base\BaseTestCase
             VALUES (99999,'','','',CURRENT_DATE(),'11:11:11','22:22:22',100,0,0,CURRENT_DATE(),CURRENT_DATE())"
         );
 
-        $stmt = $this->container['db']->query('SELECT * FROM `event` WHERE event_date >= now() order by event_date');
+        $stmt = $this->container['db']->query('SELECT * FROM `event` WHERE event_date >= CURRENT_DATE() order by event_date');
 
         // メソッド実行
         $object = new Mapper\IndexMapper($this->container['db']);

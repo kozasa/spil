@@ -24,7 +24,8 @@ class LineBotMassage
                 "imageBackgroundColor" => "#e0c0a0",
                 "title" => "バドミントン参加者募集！",
                 "text" => "開催日時：".$info["event_date"].$info["start_time"]."~".$info["end_time"].
-                    "\n場所：".$info["place"]."\n※参加人数の確認は画像をタップ!",
+                    "\n場所：".$info["place"].
+                    "\nタイトル：".$info["title"],
                 "defaultAction" => array(
                     "type" => "uri",
                     "label" => "View detail",
@@ -45,9 +46,9 @@ class LineBotMassage
                     ),
                     array(
                         "type" => "postback",
-                        "label" => "不参加",
+                        "label" => "参加取り消し",
                         "data" => "action=exit&event_id=".$info["event_id"]."&key=spil_push",
-                        "displayText" => "不参加"
+                        "displayText" => "参加取り消し"
                     ),
                 )
             )        
@@ -74,7 +75,8 @@ class LineBotMassage
                 "imageBackgroundColor" => "#e0c0a0",
                 "title" => "明日はバドミントン活動日！",
                 "text" => "開催日時：".$info["event_date"].$info["start_time"]."~".$info["end_time"].
-                    "\n場所：".$info["place"],
+                    "\n場所：".$info["place"].
+                    "\nタイトル：".$info["title"],
                 "defaultAction" => array(
                     "type" => "uri",
                     "label" => "View detail",

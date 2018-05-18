@@ -12,12 +12,12 @@ pipelines:
           - composer
         script:
           - apt-get update && apt-get install -y unzip
-          - docker-php-ext-install mysqli pdo_mysql mbstring
+          - docker-php-ext-install mysqli pdo_mysql
           - cd slim
           - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
           - php /usr/local/bin/composer install
           - mkdir cache
-          - mysql -u my_app -p secret
+          - /usr/sbin/mysqld -u my_app -p secret
           - echo '<?php const DB_HOST = "localhost";
             const DB_USER = "my_app";
             const DB_PASS = "secret";

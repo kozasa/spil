@@ -11,7 +11,7 @@ pipelines:
         caches:
           - composer
         script:
-          - apt-get update && apt-get install -y unzip
+          - apt-get update && apt-get install -y unzip mysql-client
           - docker-php-ext-install pdo_mysql
           - /usr/bin/mysqld_safe &
           - sleep 5
@@ -39,9 +39,9 @@ pipelines:
 definitions:
   services:
     mysql:
-      image: mysql
+      image: mysql:5.7
       environment:
-        MYSQL_DATABASE: spil
+        MYSQL_DATABASE: 'spil'
         MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
-        MYSQL_USERNAME: my_app
-        MYSQL_PASSWORD: secret
+        MYSQL_USERNAME: 'my_app'
+        MYSQL_PASSWORD: 'secret'

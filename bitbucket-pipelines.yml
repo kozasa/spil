@@ -41,6 +41,6 @@ definitions:
       image: mysql
       environment:
         MYSQL_DATABASE: spil
-        MYSQL_RANDOM_ROOT_PASSWORD: yes
+        MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
         MYSQL_USERNAME: my_app
         MYSQL_PASSWORD: secret

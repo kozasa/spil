@@ -11,10 +11,7 @@ pipelines:
         caches:
           - composer
         script:
-          - apt-get update && apt-get install -y unzip libfreetype6-dev libjpeg62-turbo-dev libpng12-dev
-          - docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
-          - docker-php-ext-install -j$(nproc) gd
-          - docker-php-ext-install mcrypt && docker-php-ext-install pdo_mysql && docker-php-ext-install zip
+          - apt-get update && apt-get install -y unzip
           - cd slim
           - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
           - php /usr/local/bin/composer install

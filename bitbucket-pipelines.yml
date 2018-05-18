@@ -11,9 +11,37 @@ pipelines:
         caches:
           - composer
         script:
-          - apt-get update && apt-get install -y unzip
+          - apt-get update && apt-get install -y unzip libfreetype6-dev libjpeg62-turbo-dev libpng12-dev
+          - docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
+          - docker-php-ext-install -j$(nproc) gd
+          - docker-php-ext-install mcrypt && docker-php-ext-install pdo_mysql && docker-php-ext-install zip
           - cd slim
           - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
           - php /usr/local/bin/composer install
           - mkdir cache
+          - echo '<?php const DB_HOST = "localhost";
+            const DB_USER = "my_app";
+            const DB_PASS = "secret";
+            const DB_DBNAME = "spil";
+
+            const ACCESS_TOKEN = "1111";
+            const PUSH_URL = "https://api.line.me/v2/bot/message/push";
+            const PROFILE_URL = "https://api.line.me/v2/profile";
+            const GROUP_URL = "https://api.line.me/v2/bot/group/";
+            const GROUP_ID = "2222";
+            const PUSH_KEY = "spil_push";
+
+            const ROOT_URL = "https://www.spildev.hetabun.com/"; ' > src/settings_param.php
           - vendor/bin/phpunit
+        services:
+          - mysql
+
+definitions:
+  services:
+    mysql:
+      image: mysql
+      environment:
+        MYSQL_DATABASE: 'spil'
+        MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
+        MYSQL_USER: 'my_app'
+        MYSQL_PASSWORD: 'secret'

@@ -10,6 +10,7 @@ pipelines:
     - step:
         caches:
           - composer
+          - AspectMock
         script:
           - apt-get update && apt-get install -y unzip
           - cd slim

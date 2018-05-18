@@ -11,7 +11,8 @@ pipelines:
         caches:
           - composer
         script:
-          - apt-get update && apt-get install -y unzip php7.1-mysql php7.1-mbstring
+          - apt-get update && apt-get install -y unzip
+          - apt-get install php7.1 php7.1-common
           - cd slim
           - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
           - php /usr/local/bin/composer install

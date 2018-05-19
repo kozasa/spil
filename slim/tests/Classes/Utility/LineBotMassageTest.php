@@ -186,4 +186,48 @@ class LineBotMassageTest extends TestCase
         $this->assertEquals($massage,Utility\LineBotMassage::push_new_info($info,$date));
     }
 
+    /**
+     * @group utility
+     */
+    public function testpush_latest_message(){
+        
+        $info = array(
+            1 => array(
+                'month' => '10',
+                'day' => '20',
+                'week' => '水',
+                'start_time' => '20-11-11',
+                'place' => 'あああああ'
+            ),
+            2 => array(
+                'month' => '11',
+                'day' => '21',
+                'week' => '木',
+                'start_time' => '21-12-12',
+                'place' => 'いいいいいい'
+            ),
+            3 => array(
+                'month' => '12',
+                'day' => '22',
+                'week' => '金',
+                'start_time' => '22-13-13',
+                'place' => 'ううううう'
+            ),
+        );
+        $massage = array(
+            "type" => "text",
+            "text" => "本日はご参加ありがとうございました〜！！\n".
+                        "\n".
+                        "〜直近の活動日〜\n".
+                        $info[1]['month']."月".$info[1]['day']."日"."(".$info[1]['week'].")"." ".date('H:i' ,strtotime($info[1]['start_time']))."〜 ".$info[1]['place']."\n".
+                        $info[2]['month']."月".$info[2]['day']."日"."(".$info[2]['week'].")"." ".date('H:i' ,strtotime($info[2]['start_time']))."〜 ".$info[2]['place']."\n".
+                        $info[3]['month']."月".$info[3]['day']."日"."(".$info[3]['week'].")"." ".date('H:i' ,strtotime($info[3]['start_time']))."〜 ".$info[3]['place']."\n".
+                        "https://spil.hetabun.com/latest/\n".
+                        "\n".
+                        "また空いてる日があったら参加してね！"
+        );
+
+        $this->assertEquals($massage,Utility\LineBotMassage::push_latest_message($info));
+    }
+
 }

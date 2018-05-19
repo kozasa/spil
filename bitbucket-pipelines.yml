@@ -19,6 +19,7 @@ pipelines:
           - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
           - php /usr/local/bin/composer install
           - mkdir cache
+          - /etc/init.d/mysql --host=127.0.0.1 --user=my_app --password secret < mysql/init.sql
           - echo '<?php const DB_HOST = "127.0.0.1";
             const DB_USER = "my_app";
             const DB_PASS = "secret";

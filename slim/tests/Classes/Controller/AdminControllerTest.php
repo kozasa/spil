@@ -374,6 +374,58 @@ class AdminControllerTest extends Base\BaseTestCase
     }
 
     /**
+     * @group controller
+     */
+    public function testlatestpush(){
+        /**
+         * key失敗
+         */
+        $response = $this->runApp('GET', '/latestpush/'."aaa");
+        // ページが正常動作の場合は200となる
+        $this->assertEquals(200, $response->getStatusCode());
+
+        /**
+         * key ok イベント情報 日付違い
+         */
+        $mock1 = test::double('\Classes\Mapper\LatestMapper', ['getLatestInfo' => array(0 => array('event_date' => '1111-11-11'))]);
+        ob_start();
+        $response = $this->runApp('GET', '/latestpush/'.PUSH_KEY);
+        ob_get_clean();
+        // ページが正常動作の場合は200となる
+        $this->assertEquals(200, $response->getStatusCode());
+
+        test::clean();
+
+        /**
+         * key ok イベント情報true
+         */
+        $mock1 = test::double('\Classes\Mapper\LatestMapper', ['getLatestInfo' => array(0 => array('event_date' => date("Y-m-d")))]);
+        $mock2 = test::double('\Classes\Utility\LineBotMassage', ['push_latest_message' => function($arg){
+            if($arg[0]['event_date']===date("Y-m-d")){
+                return true;
+            }else{
+                throw exception;
+            }
+        }]);
+        $mock3 = test::double('\Classes\Utility\LineBotPush', ['push' => function($arg){
+            if($arg===true){
+                return true;
+            }else{
+                throw exception;
+            }
+        }]);
+
+        ob_start();
+        $response = $this->runApp('GET', '/latestpush/'.PUSH_KEY);
+        ob_get_clean();
+
+        // ページが正常動作の場合は200となる
+        $this->assertEquals(200, $response->getStatusCode());
+
+        test::clean();
+    }
+
+    /**
      * ログインNGテスト処理
      *
      * @param [type] $path

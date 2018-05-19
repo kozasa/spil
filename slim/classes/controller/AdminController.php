@@ -438,4 +438,42 @@ class AdminController extends Controller
             $result = Utility\LineBotPush::pushCron($push_info);
         }
     }
+
+    /**
+     * 直近イベント開催通知機能
+     * (イベント開催日の22時ごろにcronで通知)
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param array $args
+     * @return void
+     */
+    public function latestpush($request, $response, $args) {
+        
+        // 引数の取得
+        $key = $request->getAttribute('key');
+
+        // key確認
+        if($key!==PUSH_KEY){
+            return;
+        }
+
+        // 通知するイベント情報(三日分)を取得
+        $mapper = new Mapper\LatestMapper($this->container->db);
+        $push_info = $mapper->getLatestInfo();
+
+        var_dump($push_info);
+
+        // 通知　当日イベント日の場合通知 TODO
+        if($push_info[0]['event_date'] === date("Y-m-d")){
+
+            // 送信するメッセージ作成
+            $message = Utility\LineBotMassage::push_latest_message($push_info);
+
+            // メッセージ送信
+            $result = Utility\LineBotPush::push($message);
+
+        }
+        
+    }
 }

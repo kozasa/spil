@@ -6,36 +6,37 @@
 image: php:7.1.4
 
 pipelines:
-  default:
-    - step:
-        caches:
-          - composer
-        script:
-          - apt-get update && apt-get install -y unzip mysql-client
-          - docker-php-ext-install pdo_mysql
-          - /usr/bin/mysqld_safe &
-          - sleep 5
-          - cd slim
-          - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-          - php /usr/local/bin/composer install
-          - mkdir cache
-          - mysql --host=127.0.0.1 --user=my_app --password=secret < mysql/init.sql
-          - echo '<?php const DB_HOST = "127.0.0.1";
-            const DB_USER = "my_app";
-            const DB_PASS = "secret";
-            const DB_DBNAME = "spil";
+  branches:
+    master:
+      - step:
+          caches:
+            - composer
+          script:
+            - apt-get update && apt-get install -y unzip mysql-client
+            - docker-php-ext-install pdo_mysql
+            - /usr/bin/mysqld_safe &
+            - sleep 5
+            - cd slim
+            - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+            - php /usr/local/bin/composer install
+            - mkdir cache
+            - mysql --host=127.0.0.1 --user=my_app --password=secret < mysql/init.sql
+            - echo '<?php const DB_HOST = "127.0.0.1";
+              const DB_USER = "my_app";
+              const DB_PASS = "secret";
+              const DB_DBNAME = "spil";
 
-            const ACCESS_TOKEN = "1111";
-            const PUSH_URL = "https://api.line.me/v2/bot/message/push";
-            const PROFILE_URL = "https://api.line.me/v2/profile";
-            const GROUP_URL = "https://api.line.me/v2/bot/group/";
-            const GROUP_ID = "2222";
-            const PUSH_KEY = "spil_push";
+              const ACCESS_TOKEN = "1111";
+              const PUSH_URL = "https://api.line.me/v2/bot/message/push";
+              const PROFILE_URL = "https://api.line.me/v2/profile";
+              const GROUP_URL = "https://api.line.me/v2/bot/group/";
+              const GROUP_ID = "2222";
+              const PUSH_KEY = "spil_push";
 
-            const ROOT_URL = "https://www.spildev.hetabun.com/"; ' > src/settings_param.php
-          - vendor/bin/phpunit
-        services:
-          - mysql
+              const ROOT_URL = "https://www.spildev.hetabun.com/"; ' > src/settings_param.php
+            - vendor/bin/phpunit
+          services:
+            - mysql
 
 definitions:
   services:

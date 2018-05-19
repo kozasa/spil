@@ -28,7 +28,7 @@ class LoginMapperTest extends Base\BaseTestCase
 
         // テストデータ作成
         $this->container['db']->query(
-            "INSERT INTO `admin_user`(`id`, `name`, `password`) VALUES (null,'田中太郎','password')"
+            "INSERT INTO `admin_user`(`id`, `name`, `password`) VALUES ('0','田中太郎','password')"
         );
 
         // メソッド実行

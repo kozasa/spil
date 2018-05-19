@@ -193,6 +193,7 @@ class LineBotMassageTest extends TestCase
         
         $info = array(
             1 => array(
+                'title' => 'バドミントン１面',
                 'month' => '10',
                 'day' => '20',
                 'week' => '水',
@@ -200,6 +201,7 @@ class LineBotMassageTest extends TestCase
                 'place' => 'あああああ'
             ),
             2 => array(
+                'title' => 'バドミントン３面',
                 'month' => '11',
                 'day' => '21',
                 'week' => '木',
@@ -207,6 +209,7 @@ class LineBotMassageTest extends TestCase
                 'place' => 'いいいいいい'
             ),
             3 => array(
+                'title' => 'バドミントン５面',
                 'month' => '12',
                 'day' => '22',
                 'week' => '金',
@@ -219,9 +222,9 @@ class LineBotMassageTest extends TestCase
             "text" => "本日はご参加ありがとうございました〜！！\n".
                         "\n".
                         "〜直近の活動日〜\n".
-                        $info[1]['month']."月".$info[1]['day']."日"."(".$info[1]['week'].")"." ".date('H:i' ,strtotime($info[1]['start_time']))."〜 ".$info[1]['place']."\n".
-                        $info[2]['month']."月".$info[2]['day']."日"."(".$info[2]['week'].")"." ".date('H:i' ,strtotime($info[2]['start_time']))."〜 ".$info[2]['place']."\n".
-                        $info[3]['month']."月".$info[3]['day']."日"."(".$info[3]['week'].")"." ".date('H:i' ,strtotime($info[3]['start_time']))."〜 ".$info[3]['place']."\n".
+                        $info[1]['month']."月".$info[1]['day']."日"."(".$info[1]['week'].")"." ".date('H:i' ,strtotime($info[1]['start_time']))."〜 ".$info[1]['place']." ".str_replace('バドミントン','',$info[1]['title'])."\n".
+                        $info[2]['month']."月".$info[2]['day']."日"."(".$info[2]['week'].")"." ".date('H:i' ,strtotime($info[2]['start_time']))."〜 ".$info[2]['place']." ".str_replace('バドミントン','',$info[2]['title'])."\n".
+                        $info[3]['month']."月".$info[3]['day']."日"."(".$info[3]['week'].")"." ".date('H:i' ,strtotime($info[3]['start_time']))."〜 ".$info[3]['place']." ".str_replace('バドミントン','',$info[3]['title'])."\n".
                         "https://spil.hetabun.com/latest/\n".
                         "\n".
                         "また空いてる日があったら参加してね！"

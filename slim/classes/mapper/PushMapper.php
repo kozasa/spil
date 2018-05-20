@@ -26,6 +26,19 @@ class PushMapper extends Mapper
             return false;
         }
 
+        // 開催1日前 かつ 1日前フラグの立っていないイベントを取得
+        $isEventInfo1 = $this->isBeforeDaysInfo(1);
+        if($isEventInfo1){
+            // 1日前の情報が取得できた場合、フラグを立てる
+            $this->setDaysFlag($isEventInfo1["event_id"],1);
+
+            // 1日前をセット
+            $isEventInfo1 = array_merge($isEventInfo1,array('day'=>1));
+
+            // 取得した情報を返す
+            return $isEventInfo1;
+        }
+
         // 開催7日前 かつ 7日前フラグの立っていないイベントを取得
         $isEventInfo7 = $this->isBeforeDaysInfo(7);
         if($isEventInfo7){
@@ -37,18 +50,6 @@ class PushMapper extends Mapper
 
             // 取得した情報を返す
             return $isEventInfo7;
-        }
-
-        $isEventInfo1 = $this->isBeforeDaysInfo(1);
-        if($isEventInfo1){
-            // 1日前の情報が取得できた場合、フラグを立てる
-            $this->setDaysFlag($isEventInfo1["event_id"],1);
-
-            // 1日前をセット
-            $isEventInfo1 = array_merge($isEventInfo1,array('day'=>1));
-
-            // 取得した情報を返す
-            return $isEventInfo1;
         }
 
         // どちらも該当しない場合

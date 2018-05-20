@@ -48,7 +48,7 @@ class PushMapperTest extends Base\BaseTestCase
             if($arg===7){
                 return array('event_id'=>'7');
             }else if($arg===1){
-                return array('event_id'=>'1');
+                return null;
             }
         }]); 
         $mock3 = test::double('\Classes\Mapper\PushMapper', ['setDaysFlag' => function($arg0,$arg1){

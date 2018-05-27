@@ -175,6 +175,292 @@ class AdminControllerTest extends Base\BaseTestCase
     /**
      * @group controller
      */
+    public function testeventEditListGet(){
+        // ログイン認証NG
+        $this->loginNG('GET','/admin/eventedit/');
+
+        /**
+         * ログイン認証OK
+         */
+        $mock1 = test::double('\Classes\Utility\Login', ['isCheckAfter' => function($arg){
+            if($arg === 'aaa'){
+                return true;
+            }else{
+                return false;
+            }
+        }]); 
+        
+        $mock2 = test::double('\Classes\Mapper\EventEditMapper', ['getEventList' => 
+            array( 
+                '2018年' => array(
+                    '8月' =>array(
+                        0 => array('event_id' => "b000004",
+                            'title' => "バドミントン１面",
+                            'place' => "富田地区会館",
+                            'date' => '25',
+                            'week' => '水',
+                            'start_time' => '13:00',
+                            'end_time' => '18:00',
+                        ),
+                        1 => array(
+                            'event_id' => "b000005",
+                            'title' => "バドミントン１面",
+                            'place' => "富田地区会館",
+                            'date' => '25',
+                            'week' => '水',
+                            'start_time' => '13:00',
+                            'end_time' => '18:00',
+                        ),
+                    ),
+                    '9月' =>array(
+                        0 => array('event_id' => "b000006",
+                            'title' => "バドミントン１面",
+                            'place' => "富田地区会館",
+                            'date' => '25',
+                            'week' => '水',
+                            'start_time' => '13:00',
+                            'end_time' => '18:00',
+                        ),
+                    ),
+                ),
+                '2019年' => array(
+                    '11月' => array(
+                        0 => array('event_id' => "b000007",
+                                'title' => "バドミントン１面",
+                                'place' => "富田地区会館",
+                                'date' => '25',
+                                'week' => '水',
+                                'start_time' => '13:00',
+                                'end_time' => '18:00',
+                        ),
+                    ),
+                ),
+            ),
+        ]);
+
+        $response = $this->runApp('GET', '/admin/eventedit/');
+        
+        // ページが正常動作の場合は200となる
+        $this->assertEquals(200, $response->getStatusCode());
+        // タイトル確認
+        $this->assertContains('イベント情報編集', (string)$response->getBody());
+        // 出力確認
+        $this->assertContains('2018年', (string)$response->getBody());
+        $this->assertContains('2019年', (string)$response->getBody());
+        $this->assertContains('８月', (string)$response->getBody());
+        $this->assertContains('９月', (string)$response->getBody());
+        $this->assertContains('１１月', (string)$response->getBody());
+        $this->assertContains('b000004', (string)$response->getBody());
+        $this->assertContains('b000005', (string)$response->getBody());
+        $this->assertContains('b000006', (string)$response->getBody());
+        $this->assertContains('b000007', (string)$response->getBody());
+    }
+
+    /**
+     * @group controller
+     */
+    public function testeventEditGet(){
+        // ログイン認証NG
+        $this->loginNG('GET','/admin/eventedit/update/b00004');
+
+        /**
+         * ログイン認証OK
+         */
+        $mock1 = test::double('\Classes\Utility\Login', ['isCheckAfter' => function($arg){
+            if($arg === 'aaa'){
+                return true;
+            }else{
+                return false;
+            }
+        }]); 
+
+        $event_id = 'b000004';
+        $mock1 = test::double('\Classes\Mapper\EventEditMapper', ['getEventFromId' => function($arg){
+            if($arg === 'b000004'){
+                return array(
+                    'event_id' => 'b000004',
+                    'title' => "バドミントン１面",
+                    'place' => "富田地区会館",
+                    'date' => '2018-06-18',
+                    'week' => '水',
+                    'fee' => '500',
+                    'start_time' => '13:00',
+                    'end_time' => '18:00',
+                );
+            }else{
+                return false;
+            }
+        }]);
+
+        $response = $this->runApp('GET', '/admin/eventedit/update/b000004');
+        
+        // ページが正常動作の場合は200となる
+        $this->assertEquals(200, $response->getStatusCode());
+        // タイトル確認
+        $this->assertContains('イベント情報編集', (string)$response->getBody());
+        // 出力確認
+        $this->assertContains('2018-06-18', (string)$response->getBody());
+    }
+
+    /**
+     * @group controller
+     */
+    public function testeventEditPost(){
+        // ログイン認証NG
+        $this->loginNG('POST','/admin/eventedit/update/b000004',array());
+
+        /**
+         * ログイン認証OK
+         */
+        $mock1 = test::double('\Classes\Utility\Login', ['isCheckAfter' => function($arg){
+            if($arg === 'aaa'){
+                return true;
+            }else{
+                return false;
+            }
+        }]); 
+
+        $mock3 = test::double('\Classes\Mapper\EventEditMapper', ['updateEvent' => function($arg){
+            if($arg['event_id'] === 'b000004'){
+                return true;
+            }else{
+                return false;
+            }
+        }]);
+        
+        $mock4 = test::double('\Classes\Utility\LineBotMassage', ['push_event_edit_info' => function($arg0,$arg1){
+            if($arg0['event_id'] === 'b000004'){
+                return "message";
+            }else{
+                throw exception;
+            }
+        }]); 
+        $mock5 = test::double('\Classes\Utility\LineBotPush', ['push' => function($arg0){
+            if($arg0 === 'message'){
+                return true;
+            }else{
+                throw exception;
+            }
+        }]); 
+        
+        $post_data = array(
+            'title' => "バドミントン１面",
+            'place' => "富田地区会館",
+            'date' => '2018-06-18',
+            'week' => '水',
+            'fee' => '500',
+            'start_time' => '13:00',
+            'end_time' => '18:00',
+        );
+        $response = $this->runApp('POST', '/admin/eventedit/update/b000004',$post_data );
+        // リダイレクト
+        $this->assertEquals(302, $response->getStatusCode());
+        // リダイレクト先取得
+        $header = $response->getHeaders();
+        $this->assertContains('../', (string)$header['Location'][0]);
+
+        test::clean();
+        
+        /**
+         * DB挿入失敗
+         */
+        $mock1 = test::double('\Classes\Utility\Login', ['isCheckAfter' => function($arg){
+            if($arg === 'aaa'){
+                return true;
+            }else{
+                return false;
+            }
+        }]); 
+
+        $mock2 = test::double('\Classes\Mapper\EventEditMapper', ['updateEvent' => false]);
+        
+        $response = $this->runApp('POST', '/admin/eventedit/update/b000004',$post_data);
+        // ページが正常動作の場合は200となる
+        $this->assertEquals(200, $response->getStatusCode());
+        // タイトル確認
+        $this->assertContains('イベント情報編集', (string)$response->getBody());
+
+        test::clean();
+    }
+
+    /**
+     * @group controller
+     */
+    public function testeventDeleteGet(){
+        // ログイン認証NG
+        $this->loginNG('GET','/admin/eventedit/delete/b00004');
+
+        /**
+         * ログイン認証OK
+         */
+        $mock1 = test::double('\Classes\Utility\Login', ['isCheckAfter' => function($arg){
+            if($arg === 'aaa'){
+                return true;
+            }else{
+                return false;
+            }
+        }]); 
+
+        $mock2 = test::double('\Classes\Mapper\EventEditMapper', ['deleteEvent' => function($arg){
+            if($arg === 'b000004'){
+                return true;
+            }else{
+                throw exception;
+            }
+        }]); 
+        $mock3 = test::double('\Classes\Mapper\EventEditMapper', ['getEventFromId' => function($arg){
+            if($arg === 'b000004'){
+                return array(
+                    'event_id' => 'b000004',
+                    'title' => "バドミントン１面",
+                    'place' => "富田地区会館",
+                    'date' => '2018-06-18',
+                    'week' => '水',
+                    'fee' => '500',
+                    'start_time' => '13:00',
+                    'end_time' => '18:00',
+                );
+            }else{
+                throw exception;
+            }
+        }]); 
+
+        $response = $this->runApp('GET', '/admin/eventedit/delete/b000004');
+        // リダイレクトのため302となる
+        $this->assertEquals(302, $response->getStatusCode());
+        // リダイレクト先取得
+        $header = $response->getHeaders();
+        $this->assertContains('../', (string)$header['Location'][0]);
+
+        test::clean();
+        
+        /**
+         * DB挿入失敗
+         */
+        $mock1 = test::double('\Classes\Utility\Login', ['isCheckAfter' => function($arg){
+            if($arg === 'aaa'){
+                return true;
+            }else{
+                return false;
+            }
+        }]); 
+
+        $mock2 = test::double('\Classes\Mapper\EventEditMapper', ['deleteEvent' => false]);
+        
+        $response = $this->runApp('GET', '/admin/eventedit/delete/b000004');
+        // リダイレクトのため302となる
+        $this->assertEquals(302, $response->getStatusCode());
+        // リダイレクト先取得
+        $header = $response->getHeaders();
+        $this->assertContains('../', (string)$header['Location'][0]);
+
+        test::clean();
+
+    }
+
+    /**
+     * @group controller
+     */
     public function testnewPostGet(){
         // ログイン認証NG
         $this->loginNG('GET','/admin/newpost/');

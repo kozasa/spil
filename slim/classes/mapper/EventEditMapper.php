@@ -33,7 +33,7 @@ class EventEditMapper extends Mapper
             $month = date('n月' ,strtotime($row['event_date']));
             $weekday = date('w',strtotime($row['event_date']));
             
-            #年がリスト存在しなければリスト作成、月のリストを初期化
+            #年がリストに存在しなければリスト作成、月のリストを初期化
             if(!array_key_exists($year, $year_list)){
                 array_merge($year_list,array($year => array()));
                 $month_list = array();
@@ -110,9 +110,10 @@ class EventEditMapper extends Mapper
         $query->bindParam(':start_time', $info['start_time'], \PDO::PARAM_STR);
         $query->bindParam(':end_time', $info['end_time'], \PDO::PARAM_STR);
         $query->bindParam(':fee', $info['fee'], \PDO::PARAM_INT);
+        
         $query->execute();
 
-        return $info['event_id'];
+        return true;
     }
 
 
@@ -126,7 +127,7 @@ class EventEditMapper extends Mapper
         $query->bindParam(':event_id', $event_id, \PDO::PARAM_STR);
         $query->execute();
 
-        return $event_id;
+        return true;
     }
 
     /**

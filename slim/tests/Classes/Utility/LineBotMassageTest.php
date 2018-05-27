@@ -172,6 +172,56 @@ class LineBotMassageTest extends TestCase
     /**
      * @group utility
      */
+    public function testpush_event_edit_info(){
+        
+        $info = array(
+            'event_date' => date('h-i-s'),
+            'start_time' => '11:11',
+            'end_time' => '22:22',
+            'place' => '場所場所場所',
+
+        );
+        $massage = array(
+            "type" => "template",
+            "altText" => "イベントが変更されました！\n 開催日時："
+                .$info["event_date"].$info["start_time"]."~".$info["end_time"]."\n場所：".$info["place"],
+            "template" => array(
+                "type" => "buttons",
+                "thumbnailImageUrl" => ROOT_URL."img/calender_takujou.png",
+                "imageAspectRatio" => "rectangle",
+                "imageSize" => "cover",
+                "imageBackgroundColor" => "#e0c0a0",
+                "title" => "イベントが変更されました！",
+                "text" => "開催日：".$info["event_date"]."\n".
+                    "開催時間：".$info["start_time"]."~".$info["end_time"].
+                    "\n場所：".$info["place"],
+                "defaultAction" => array(
+                    "type" => "uri",
+                    "label" => "View detail",
+                    "uri" => ROOT_URL."latest/",
+                    "area" => array(  
+                        "x" => 0,
+                        "y" => 0,
+                        "width" => 20,
+                        "height" => 100
+                    )
+                ),
+                "actions" => array(
+                    array(
+                        "type" => "uri",
+                        "label" => "直近イベント情報を確認",
+                        "uri" => ROOT_URL."latest/"
+                    )
+                )
+            ) 
+        );
+        $this->assertEquals($massage,Utility\LineBotMassage::push_event_edit_info($info,$info));
+    }
+
+
+    /**
+     * @group utility
+     */
     public function testpush_new_info(){
         
         $info = array('name' => '名前');

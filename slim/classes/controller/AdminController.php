@@ -194,7 +194,7 @@ class AdminController extends Controller
 
         // ログイン認証
         if(!Utility\Login::isCheckAfter($_SESSION['user'])){
-            return $response->withStatus(302)->withHeader('Location', '../../admin/');
+            return $response->withStatus(302)->withHeader('Location', '../../../admin/');
         }
 
         // event id 取得
@@ -204,11 +204,11 @@ class AdminController extends Controller
         $mapper = new Mapper\EventEditMapper($this->container->db);
         $event = $mapper->getEventFromId($event_id);
         
-        // 管理者ログイン画面表示
+        // 管理者イベント編集画面表示
         return $this->container->renderer->render(
             $response,
             'admin_event_edit.phtml', 
-            array('event' => $event)
+            array('event' => $event, 'error_msg' => '')
         );
     }
 
@@ -224,7 +224,7 @@ class AdminController extends Controller
 
         // ログイン認証
         if(!Utility\Login::isCheckAfter($_SESSION['user'])){
-            return $response->withStatus(302)->withHeader('Location', '../../admin/');
+            return $response->withStatus(302)->withHeader('Location', '../../../admin/');
         }
 
         // event id 取得
@@ -233,15 +233,14 @@ class AdminController extends Controller
         // POSTデータ取得
         $post_data = $request->getParsedBody();
         $post_data['event_id'] = $event_id;
-        // DB更新
+        
+        //DB更新
         $mapper = new Mapper\EventEditMapper($this->container->db);
-        $event_id = $mapper->updateEvent($post_data);
+        $is_success = $mapper->updateEvent($post_data);
 
-        if($event_id){
+        if($is_success){
             // 成功した場合、チャットに投稿
-            $message = Utility\LineBotMassage::push_event_info($post_data,$event_id);
-            $message['altText'] = str_replace('追加', '変更', $message['altText']);
-            $message['template']['title'] = 'イベントが変更されました。';
+            $message = Utility\LineBotMassage::push_event_edit_info($post_data,$event_id);
             Utility\LineBotPush::push($message);
 
             // メニュー画面へリダイレクト
@@ -252,7 +251,7 @@ class AdminController extends Controller
             return $this->container->renderer->render(
                 $response,
                 'admin_event_edit.phtml', 
-                array('error_msg' => "投稿処理に失敗しました。入力内容を確認してください。")
+                array('event' => $post_data, 'error_msg' => "投稿処理に失敗しました。入力内容を確認してください。")
             );
         }
         
@@ -271,32 +270,30 @@ class AdminController extends Controller
 
         // ログイン認証
         if(!Utility\Login::isCheckAfter($_SESSION['user'])){
-            return $response->withStatus(302)->withHeader('Location', '../../admin/');
+            return $response->withStatus(302)->withHeader('Location', '../../../admin/');
         }
 
         // event id 取得
         $event_id = $request->getAttribute('event_id');
 
-        // DB更新
+        //削除前のイベント情報を取得
         $mapper = new Mapper\EventEditMapper($this->container->db);
-        $event_id = $mapper->deleteEvent($event_id);
+        $before_event = $mapper->getEventFromId($event_id);
 
-        if($event_id){
+        // イベント削除
+        $mapper = new Mapper\EventEditMapper($this->container->db);
+        $is_success = $mapper->deleteEvent($event_id);
+
+        if($is_success){
             // 成功した場合、チャットに投稿
-            $message = Utility\LineBotMassage::push_event_info($post_data,$event_id);
-            $message['altText'] = str_replace('追加', '削除', $message['altText']);
-            $message['template']['title'] = 'イベントが削除されました。';
-            Utility\LineBotPush::push($message);
+            //$message = Utility\LineBotMassage::push_event_delete_info($post_data,$event_id);
+            //Utility\LineBotPush::push($message);
             // イベントリスト画面へリダイレクト
             return $response->withStatus(302)->withHeader('Location', '../');
         }else{
 
-            // 失敗した場合、エラー表示
-            return $this->container->renderer->render(
-                $response,
-                'admin_event_edit.phtml', 
-                array('error_msg' => "投稿処理に失敗しました。入力内容を確認してください。")
-            );
+            // 失敗した場合
+            return $response->withStatus(302)->withHeader('Location', '../');
         }
         
     }

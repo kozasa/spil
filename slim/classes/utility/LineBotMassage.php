@@ -42,13 +42,13 @@ class LineBotMassage
                         "type" => "postback",
                         "label" => "参加！",
                         "data" => "action=join&event_id=".$info["event_id"]."&key=spil_push",
-                        "displayText" => "参加！"
+                        "displayText" => $info["event_date"] ."参加！"
                     ),
                     array(
                         "type" => "postback",
                         "label" => "参加取り消し",
                         "data" => "action=exit&event_id=".$info["event_id"]."&key=spil_push",
-                        "displayText" => "参加取り消し"
+                        "displayText" => $info["event_date"] ."参加取り消し"
                     ),
                 )
             )        

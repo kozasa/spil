@@ -1,9 +1,9 @@
 <?php
-namespace Classes\Mapper;
+namespace Classes\Mapper\event;
 
 use Classes\Utility;
 
-class EventMapper extends Mapper
+class _EventMapper extends Mapper
 {
     private $week = [
         '日', //0

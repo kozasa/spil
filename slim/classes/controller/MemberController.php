@@ -2,7 +2,7 @@
 namespace Classes\Controller;
 
 use Classes\Utility;
-use Classes\Mapper;
+use Classes\Model;
 
 /**
  * メンバー用ページ
@@ -23,8 +23,8 @@ class MemberController extends Controller
         $id = $request->getAttribute('id');
 
         // DB取得
-        $mapper = new Mapper\EventMapper($this->container->db);
-        $event_info = $mapper->getEventInfo($id);
+        $model = new Model\MemberModel($this->container->db);
+        $event_info = $model->getEventInfo($id);
         
         if($event_info){
             // イベントが存在する場合はイベントページを表示
@@ -44,8 +44,8 @@ class MemberController extends Controller
     public function latest($request, $response, $args) {
         
         // DB取得
-        $mapper = new Mapper\LatestMapper($this->container->db);
-        $latest_info = $mapper->getLatestInfo();
+        $model = new Model\MemberModel($this->container->db);
+        $latest_info = $model->getLatestInfo();
 
         // 直近イベント情報ページ表示
         return $this->container->renderer->render(

@@ -2,7 +2,7 @@
 
 namespace Classes\Utility;
 
-use Classes\Mapper;
+use Classes\Model;
 
 class Login
 {
@@ -33,16 +33,16 @@ class Login
         }
 
         // ユーザを検索してパスワードを取得
-        $mapper = new Mapper\LoginMapper($db);
-        $user_info = $mapper->getUserInfo($user);
+        $model = new Model\LoginModel($db);
+        $passwordCipher = $model->getPassword($user);
 
-        if(!$user_info){
+        if(!$passwordCipher){
             $error_msg = "IDを確認してください";
             return false;
         }
 
         // パスワード一致判定
-        if (password_verify($password, $user_info['password'])) {
+        if (password_verify($password, $passwordCipher)) {
             // 判定OK
             session_regenerate_id(true);
         }else{

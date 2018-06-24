@@ -2,7 +2,7 @@
 namespace Classes\Controller;
 
 use Classes\Utility;
-use Classes\Mapper;
+use Classes\Model;
 
 /**
  * 管理者用ページ
@@ -132,8 +132,8 @@ class AdminController extends Controller
         $post_data = $request->getParsedBody();
 
         // DB挿入
-        $mapper = new Mapper\EventPostMapper($this->container->db);
-        $event_id = $mapper->insertEventPost($post_data);
+        $model = new Model\AdminModel($this->container->db);
+        $event_id = $model->eventPostPost($post_data);
 
         if($event_id){
             // 成功した場合、チャットに投稿
@@ -170,8 +170,8 @@ class AdminController extends Controller
         }
 
         // DB取得
-        $mapper = new Mapper\EventEditMapper($this->container->db);
-        $year_list = $mapper->getEventList();
+        $model = new Model\AdminModel($this->container->db);
+        $year_list = $model->eventEditListGet();
 
         // 管理者イベント一覧画面表示
         return $this->container->renderer->render(

@@ -28,8 +28,8 @@
         <div class="highlight-clean" style="background-color:#00829b;">
             <div class="container">
                 <div class="intro" style="color:white">
-                    <p class="text-left" style="margin:10px;color:white;"><?= htmlspecialchars($year) ?></p>
-                    <h2 class="text-left" style="margin-bottom:0px;"><?= htmlspecialchars(mb_convert_kana($month,"N")) ?></h2>
+                    <p class="text-left" style="margin:10px;color:white;"><?= htmlspecialchars($info['year']) ?></p>
+                    <h2 class="text-left" style="margin-bottom:0px;"><?= htmlspecialchars(mb_convert_kana($info['month'],"N")) ?></h2>
                 </div>
             </div>
         </div>
@@ -41,21 +41,21 @@
                 <div class="col-12 col-sm-6 col-md-4 col-lg-3 user-item">
                     <div class="d-flex user-container" >
                         <div style="width:78px; margin-left:10px;margin-right:10px;">
-                            <h3 class="text-center" style="margin-top:10px;"><?= htmlspecialchars($event['date']) ?></h3>
-                            <h5 class="text-center">（<?= htmlspecialchars($event['week']) ?>）</h5>
+                            <h3 class="text-center" style="margin-top:10px;"><?= htmlspecialchars($info['day']) ?></h3>
+                            <h5 class="text-center">（<?= htmlspecialchars($info['week']) ?>）</h5>
                         </div>
                         <p class="user-name" style = "width:100%">
-                            <?= htmlspecialchars($event['title']) ?>
-                            <span><?= htmlspecialchars($event['start_time']) ?> - <?= htmlspecialchars($event['end_time']) ?></span>
+                            <?= htmlspecialchars($info['title']) ?>
+                            <span><?= htmlspecialchars($info['start_time']) ?> - <?= htmlspecialchars($info['end_time']) ?></span>
                             
-                            <span><?= htmlspecialchars($event['place']); ?></span>
+                            <span><?= htmlspecialchars($info['place']); ?></span>
                             <span style = "float:left; width:100%;">
-                                <a href="./update/<?= htmlspecialchars($event['event_id']) ?>">
+                                <a href="./update/<?= htmlspecialchars($info['event_id']) ?>">
                                 <span style="float:left; width:45%; text-align:center; padding: 2px; margin-right: 5px; margin-bottom: 5px; border: 0px solid #999999; border-radius: 6px; background-color: #00829b;">
                                     <font style = "color:white;"> edit </font>
                                 </span>
                                 </a>
-                                <!-- <a href="./delete/<?= htmlspecialchars($event['event_id']) ?>"> -->
+                                <!-- <a href="./delete/<?= htmlspecialchars($info['event_id']) ?>"> -->
                                 <span style="float:left; width:45%; text-align:center; padding: 2px; margin-bottom: 5px; border: 0px solid #999999; border-radius: 6px; background-color: #999999;">
                                     <font style = "color:white;"> delete </font>
                                 </span>
@@ -75,6 +75,7 @@
         $count++; 
         endforeach; 
     ?> 
+    </div>
     <div class="form-group"><a href="../menu/" style="margin-left:10px;font-size:20px;color:white;">Back</a></div>
     </div>
         <script src="/admin/js/jquery.min.js"></script>

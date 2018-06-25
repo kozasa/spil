@@ -1,6 +1,7 @@
 <?php
 namespace Classes\Model;
 
+use Classes\Utility;
 use Classes\Mapper\Event;
 use Classes\Mapper\EventParticipants;
 
@@ -11,7 +12,7 @@ class MemberModel extends Model
      *
      * @return array
      */
-    public function getEventInfo(string $id){
+    public function event(string $id){
         
         $result = array();
 
@@ -23,7 +24,7 @@ class MemberModel extends Model
         }
         
         // イベントIDからイベント情報を取得
-        $eventInfo = $eventMapper->getEventIdInfo($id);
+        $eventInfo = $eventMapper->selectFromEventId($id);
 
         // イベント情報を格納
         $result = array(
@@ -38,20 +39,35 @@ class MemberModel extends Model
         // イベントIDからイベント参加者一覧情報を取得
         $eventParticipantsMapper = new EventParticipants\EventParticipantsMapper($this->db);
         // 参加者情報取得
-        $joinMember = $eventParticipantsMapper->getEventIdAndJoin($id,1);
+        $joinMember = $eventParticipantsMapper->selectFromEventIdAndJoinFlag($id,1);
         $joinMemberResult = array();
         foreach ($joinMember as $row) {
-            $data = array(
-                'new_flag' => $row->getNewFlag(),
-                'display_name' => $row->getDisplayName(),
-                'picture_url' => $row->getPictureUrl(),
-            );
+
+            if(!$row->getNewFlag()){
+                // 既存メンバー
+                $data = array(
+                    'new_flag' => $row->getNewFlag(),
+                    'display_name' => $row->getDisplayName(),
+                    'picture_url' => $row->getPictureUrl(),
+                );
+
+            }else{
+                // 新規メンバー
+                $data = array(
+                    'new_flag' => $row->getNewFlag(),
+                    'display_name' => $row->getNewName(),
+                    'gender' => Utility\NewRegisterEnum::getGender((int)$row->getNewGender()),
+                    'age' => Utility\NewRegisterEnum::getAge((int)$row->getNewAge()),
+                    'picture_url' => Utility\NewRegisterEnum::getImage((int)$row->getNewGender()),
+                );
+
+            }
             array_push($joinMemberResult,$data);
         }
         $result['join_member'] = $joinMemberResult;
 
         // 非参加者情報取得
-        $noneJoinMember = $eventParticipantsMapper->getEventIdAndJoin($id,0);
+        $noneJoinMember = $eventParticipantsMapper->selectFromEventIdAndJoinFlag($id,0);
         $noneJoinMemberResult = array();
         foreach ($noneJoinMember as $row) {
             $data = array(
@@ -71,11 +87,11 @@ class MemberModel extends Model
      *
      * @return array
      */
-    public function getLatestInfo(){
+    public function latest(){
 
         // 直近のイベント情報を取得
         $eventMapper = new event\EventMapper($this->db);
-        $eventInfo = $eventMapper->getLatestInfo();
+        $eventInfo = $eventMapper->selectLatest();
 
         $result = array();
         foreach ($eventInfo as $row) {

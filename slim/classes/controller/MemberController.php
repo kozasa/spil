@@ -24,7 +24,7 @@ class MemberController extends Controller
 
         // DB取得
         $model = new Model\MemberModel($this->container->db);
-        $event_info = $model->getEventInfo($id);
+        $event_info = $model->event($id);
         
         if($event_info){
             // イベントが存在する場合はイベントページを表示
@@ -45,7 +45,7 @@ class MemberController extends Controller
         
         // DB取得
         $model = new Model\MemberModel($this->container->db);
-        $latest_info = $model->getLatestInfo();
+        $latest_info = $model->latest();
 
         // 直近イベント情報ページ表示
         return $this->container->renderer->render(

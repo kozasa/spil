@@ -21,7 +21,7 @@ class HomeController extends Controller
         
         // DB取得
         $model = new Model\HomeModel($this->container->db);
-        $latest_info = $model->getLatestInfo();
+        $latest_info = $model->home();
 
         // Render index view
         return $this->container->renderer->render(

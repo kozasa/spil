@@ -12,10 +12,10 @@ class HomeModel extends Model
      *
      * @return array
      */
-    public function getLatestInfo(){
+    public function home(){
         
         $mapper = new event\EventMapper($this->db);
-        $latest_info = $mapper->getLatestInfo();
+        $latest_info = $mapper->selectLatest();
 
         // 直近３日程を取り出す
         $latest_3day = array_slice($latest_info,0,3);

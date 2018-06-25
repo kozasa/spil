@@ -14,7 +14,7 @@ class LoginModel extends Model
     public function getPassword(string $name){
         
         $mapper = new AdminUser\AdminUserMapper($this->db);
-        $adminUser = $mapper->select($name);
+        $adminUser = $mapper->selectFromName($name);
 
         // 取得できなかった場合はfalseを返す
         if(!$adminUser){

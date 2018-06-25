@@ -48,6 +48,10 @@ class EventData
         return $this->place;
     }
 
+    public function getEventDate(){
+        return $this->event_date;
+    }
+
     public function getEventYear(){
         return date('Y' ,strtotime($this->event_date));
     }

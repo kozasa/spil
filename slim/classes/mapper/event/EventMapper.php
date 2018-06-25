@@ -9,7 +9,7 @@ class EventMapper extends \Classes\Mapper\Mapper
      *
      * @return array
      */
-    public function getLatestInfo(){
+    public function selectLatest(){
         $sql = 'SELECT * FROM `event` WHERE event_date >= CURRENT_DATE() order by event_date';
         $query = $this->db->prepare($sql);
         $query->execute();
@@ -32,7 +32,7 @@ class EventMapper extends \Classes\Mapper\Mapper
      *
      * @return 
      */
-    public function getEventIdInfo(string $event_id){
+    public function selectFromEventId(string $event_id){
         $sql = 'SELECT * FROM `event` WHERE event_id = :event_id';
         $query = $this->db->prepare($sql);
         $query->bindParam(':event_id', $event_id, \PDO::PARAM_STR);
@@ -61,17 +61,112 @@ class EventMapper extends \Classes\Mapper\Mapper
     }
 
     /**
+     * 当日イベント確認
+     *
+     * @return boolean
+     */
+    public function isEventToday(){
+        $sql = 'SELECT id FROM `event` WHERE event_date = CURRENT_DATE()';
+        $query = $this->db->prepare($sql);
+        $query->execute();
+
+        //取得件数が０件の場合、falseを返す
+        if($query->rowCount()==0){
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * 開催●日前 かつ フラグの立っていないイベントを取得
+     * @args integer $day
+     */
+    public function isBeforeDaysInfo($day){
+
+        $sql="";
+        if($day===7){
+            $sql = 'SELECT * FROM `event` WHERE `before_seven_days` = false 
+            AND `event_date`  < DATE_ADD( now(), interval :day DAY ) 
+            ORDER BY id;';
+        }elseif($day===1){
+            $sql = 'SELECT * FROM `event` WHERE `before_one_day` = false 
+            AND `event_date`  < DATE_ADD( now(), interval :day DAY ) 
+            ORDER BY id;';
+        }elseif($day===0){
+            // 0の場合は直近のイベント情報を返す
+            $sql = 'SELECT * FROM `event` WHERE  `event_date` > DATE_ADD( now(), interval :day DAY ) ORDER BY id;';
+        }
+        
+        $query = $this->db->prepare($sql);
+        $query->bindParam(':day', $day, \PDO::PARAM_STR);
+        $query->execute();
+
+        //取得件数が０件の場合、falseを返す
+        if($query->rowCount()==0){
+            return false;
+        }
+
+        // 取得したデータをデータクラスに格納する
+        $result = new EventData($query -> fetch());
+        return $result;
+    }
+
+    /**
      * 一番最新の情報取得
      *
      * @return EventData
      */
-    public function selectLatest(){
+    public function selectLatestPiece(){
         $sql = 'SELECT * FROM event WHERE event_id = (select max(event_id) from event )';
         $query = $this->db->prepare($sql);
         $query->execute();
 
         $result = new EventData($query -> fetch());
         return $result;
+    }
+
+    /**
+     * 更新
+     *
+     * @param array $info
+     * @return void
+     */
+    public function update(array $info){
+
+        $sql = 'UPDATE event SET title=:title, place=:place, event_date=:event_date, start_time=:start_time, end_time=:end_time, fee=:fee WHERE event_id =:event_id';
+
+        $query = $this->db->prepare($sql);
+        $query->bindParam(':event_id', $info['event_id'], \PDO::PARAM_STR);
+        $query->bindParam(':title', $info['title'], \PDO::PARAM_STR);
+        $query->bindParam(':place', $info['place'], \PDO::PARAM_STR);
+        $query->bindParam(':event_date', $info['event_date'], \PDO::PARAM_STR);
+        $query->bindParam(':start_time', $info['start_time'], \PDO::PARAM_STR);
+        $query->bindParam(':end_time', $info['end_time'], \PDO::PARAM_STR);
+        $query->bindParam(':fee', $info['fee'], \PDO::PARAM_INT);
+        $query->execute();
+
+        return $info['event_id'];
+    }
+
+    /**
+     * 開催日フラグの更新
+     *
+     * @param string $eventId
+     * @param integer $day
+     * @return void
+     */
+    public function updateFlag(string $eventId,int $day){
+
+        $sql="";
+        if($day===7){
+            $sql = 'UPDATE `event` SET `before_seven_days` = true WHERE event_id = :event_id';
+        }elseif($day===1){
+            $sql = 'UPDATE `event` SET `before_one_day` = true WHERE event_id = :event_id';
+        }
+        $query = $this->db->prepare($sql);
+        $query->bindParam(':event_id', $eventId, \PDO::PARAM_STR);
+        $query->execute();
+
     }
 
     /**
@@ -95,7 +190,7 @@ class EventMapper extends \Classes\Mapper\Mapper
         $query->bindParam(':fee', $info['fee'], \PDO::PARAM_INT);
         $query->execute();
 
-        return true;
+        return $info['event_id'];
 
     }
 }

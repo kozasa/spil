@@ -4,7 +4,7 @@ namespace Classes\Mapper\AdminUser;
 class AdminUserMapper extends \Classes\Mapper\Mapper
 {
     
-    public function select(string $name){
+    public function selectFromName(string $name){
 
         $sql = 'SELECT * FROM admin_user WHERE name = :name';
         $query = $this->db->prepare($sql);

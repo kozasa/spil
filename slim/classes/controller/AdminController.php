@@ -171,13 +171,13 @@ class AdminController extends Controller
 
         // DB取得
         $model = new Model\AdminModel($this->container->db);
-        $year_list = $model->eventEditListGet();
+        $latest_info = $model->eventEditListGet();
 
         // 管理者イベント一覧画面表示
         return $this->container->renderer->render(
             $response,
             'admin_event_list.phtml', 
-            array('year_list' => $year_list)
+            array('latest_info' => $latest_info)
         );
         
     }
@@ -200,9 +200,9 @@ class AdminController extends Controller
         // event id 取得
         $event_id = $request->getAttribute('event_id');
 
-        // DB挿入
-        $mapper = new Mapper\EventEditMapper($this->container->db);
-        $event = $mapper->getEventFromId($event_id);
+        // DB取得
+        $model = new Model\AdminModel($this->container->db);
+        $event = $model->eventEditGet($event_id);
         
         // 管理者ログイン画面表示
         return $this->container->renderer->render(
@@ -233,9 +233,10 @@ class AdminController extends Controller
         // POSTデータ取得
         $post_data = $request->getParsedBody();
         $post_data['event_id'] = $event_id;
+
         // DB更新
-        $mapper = new Mapper\EventEditMapper($this->container->db);
-        $event_id = $mapper->updateEvent($post_data);
+        $model = new Model\AdminModel($this->container->db);
+        $event_id = $model->eventEditPost($post_data);
 
         if($event_id){
             // 成功した場合、チャットに投稿
@@ -316,9 +317,9 @@ class AdminController extends Controller
             return $response->withStatus(302)->withHeader('Location', '../../admin/');
         }
 
-        // 直近イベント情報取得
-        $mapper = new Mapper\LatestMapper($this->container->db);
-        $latest_info = $mapper->getLatestInfo();
+        // DB取得
+        $model = new Model\AdminModel($this->container->db);
+        $latest_info = $model->newPostGet();
 
         // 管理者ログイン画面表示
         return $this->container->renderer->render(
@@ -347,15 +348,11 @@ class AdminController extends Controller
         // POSTデータ取得
         $post_data = $request->getParsedBody();
 
-        // DB挿入
-        $mapper = new Mapper\NewPostMapper($this->container->db);
-        $result = $mapper->insertNewRegistant($post_data);
+        // DB挿入、直近イベント情報取得
+        $model = new Model\AdminModel($this->container->db);
+        $latest_info = $model->newPostPost($post_data);
 
-        // 直近イベント情報取得
-        $mapper_event = new Mapper\LatestMapper($this->container->db);
-        $latest_info = $mapper_event->getLatestInfo();
-
-        if($result){
+        if($latest_info){
             // 成功した場合、チャットに投稿
 
             // 日付の情報を取得
@@ -428,8 +425,8 @@ class AdminController extends Controller
 
         // 通知するイベント情報を取得
         // 当日にイベントが開催されている場合は情報を取得せず、通知処理は行わない
-        $mapper = new Mapper\PushMapper($this->container->db);
-        $push_info = $mapper->getPushInfo();
+        $model = new Model\AdminModel($this->container->db);
+        $push_info = $model->push();
 
         var_dump($push_info);
 
@@ -459,8 +456,8 @@ class AdminController extends Controller
         }
 
         // 通知するイベント情報(三日分)を取得
-        $mapper = new Mapper\LatestMapper($this->container->db);
-        $push_info = $mapper->getLatestInfo();
+        $model = new Model\AdminModel($this->container->db);
+        $push_info = $model->latestpush();
 
         var_dump($push_info);
 

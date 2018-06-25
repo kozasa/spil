@@ -45,4 +45,16 @@ class EventParticipantsData
     public function getPictureUrl(){
         return $this->picture_url;
     }
+
+    public function getNewName(){
+        return $this->new_name;
+    }
+
+    public function getNewGender(){
+        return $this->new_gender;
+    }
+
+    public function getNewAge(){
+        return $this->new_age;
+    }
 }

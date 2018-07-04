@@ -98,8 +98,8 @@ class PushMapper extends Mapper
 
     private function isBeforeDaysWeekInfo(int $weekNum){
         $sql = 'SELECT * FROM `event` WHERE 
-                `event_date` > now() AND
-                `event_date` < DATE_ADD( now(), interval 10 DAY ) AND
+                `event_date` > DATE_ADD( now(), interval 1 DAY ) AND
+                `event_date` < DATE_ADD( now(), interval 7 DAY ) AND
                 DAYOFWEEK(event_date)-1 = :weekNum 
                 ORDER BY event_date;';
         $query = $this->db->prepare($sql);

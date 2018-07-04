@@ -88,7 +88,7 @@ class EventPostMapperTest extends Base\BaseTestCase
         // テストデータ挿入
         $this->container['db']->query(
             "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`, `created_at`, `updated_at`) 
-            VALUES (99999,'','','',CURRENT_DATE(),'11:11:11','22:22:22',100,0,0,CURRENT_DATE(),CURRENT_DATE())"
+            VALUES (999999,'','','',CURRENT_DATE(),'11:11:11','22:22:22',100,0,0,CURRENT_DATE(),CURRENT_DATE())"
         );
 
         // メソッド実行
@@ -98,7 +98,7 @@ class EventPostMapperTest extends Base\BaseTestCase
         $method->setAccessible(true);                   // privateメソッドを実行できるようにする
         $res = $method->invoke($object);
 
-        $this->assertEquals($res,99999);
+        $this->assertEquals($res,999999);
     }
 
     /**

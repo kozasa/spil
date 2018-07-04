@@ -86,7 +86,7 @@ class PushMapper extends Mapper
         $weekInt = array_search($weekKanji, $this->week);
 
         // 直近のイベント情報を取得
-        $isEventInfo0 = $this->isBeforeDaysWeekInfo();
+        $isEventInfo0 = $this->isBeforeDaysWeekInfo($weekInt);
 
         if($isEventInfo0){
             // 情報が取得できた場合、取得した情報を返す

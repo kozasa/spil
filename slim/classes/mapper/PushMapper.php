@@ -76,6 +76,58 @@ class PushMapper extends Mapper
     }
 
     /**
+     * プッシュする情報を再取得（曜日指定）
+     *
+     * @return array
+     */
+    public function getRePushWeekInfo(string $weekKanji){
+
+        // 漢字を数値変換
+        $weekInt = array_search($weekKanji, $this->week);
+
+        // 直近のイベント情報を取得
+        $isEventInfo0 = $this->isBeforeDaysWeekInfo();
+
+        if($isEventInfo0){
+            // 情報が取得できた場合、取得した情報を返す
+            return $isEventInfo0;
+        }
+        
+        return false;
+    }
+
+    private function isBeforeDaysWeekInfo(int $weekNum){
+        $sql = 'SELECT * FROM `event` WHERE 
+                `event_date` > now() AND
+                `event_date` < DATE_ADD( now(), interval 10 DAY ) AND
+                DAYOFWEEK(event_date)-1 = :weekNum 
+                ORDER BY event_date;';
+        $query = $this->db->prepare($sql);
+        $query->bindParam(':weekNum', $weekNum, \PDO::PARAM_INT);
+        $query->execute();
+
+        //取得件数が０件の場合、falseを返す
+        if($query->rowCount()==0){
+            return false;
+        }
+
+        $array = array();
+        if($row = $query->fetch()){
+            $weekday = date('w',strtotime($row['event_date']));
+            $array = array(
+                'event_id' => $row['event_id'],
+                'title' => $row['title'],
+                'place' => $row['place'],
+                'event_date' => date('m/d',strtotime($row['event_date'])) ."(".$this->week[$weekday].")",
+                'start_time' => date('H:i',strtotime($row['start_time'])),
+                'end_time' => date('H:i',strtotime($row['end_time'])),
+                'fee' => $row['fee'],
+            );
+        }
+        return $array;
+    }
+
+    /**
      * 開催●日前 かつ フラグの立っていないイベントを取得
      * @args integer $day
      */
@@ -92,7 +144,7 @@ class PushMapper extends Mapper
             ORDER BY id;';
         }elseif($day===0){
             // 0の場合は直近のイベント情報を返す
-            $sql = 'SELECT * FROM `event` WHERE  `event_date` > DATE_ADD( now(), interval :day DAY ) ORDER BY id;';
+            $sql = 'SELECT * FROM `event` WHERE  `event_date` > DATE_ADD( now(), interval :day DAY ) ORDER BY event_date;';
         }
         
         $query = $this->db->prepare($sql);

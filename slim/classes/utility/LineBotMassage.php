@@ -178,4 +178,32 @@ class LineBotMassage
                         "また空いてる日があったら参加してね！"
         );
     }
+
+    /**
+     * AUTHテストメッセージ
+     *
+     * @return void
+     */
+    public static function pushTestAuth(){
+        return array(
+            "type" => "template",
+            "altText" => "AUTHテスト",
+            "template" => array(
+                "type" => "confirm",
+                "text" => "Are you sure?",
+                "actions" => array(
+                    array(
+                      "type" => "uri",
+                      "label" => "ログイン",
+                      "uri" => "http://www.geocities.jp/tkozasa0119/redirect.html"
+                    ),
+                    array(
+                      "type" => "message",
+                      "label" => "No",
+                      "text" => "no"
+                    )
+                )
+            )        
+        );
+    }
 }

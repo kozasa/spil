@@ -40,7 +40,11 @@ class HomeController extends Controller
     * @param [type] $args
     * @return void
     */
-   public function auth($request, $response, $args){
+    public function auth($request, $response, $args){
+
+        //$massage = Utility\LineBotMassage::pushTestAuth();
+        //$result = Utility\LineBotPush::push($massage);
+
 
         $session_factory = new \Aura\Session\SessionFactory;
         $session = $session_factory->newInstance($_COOKIE);

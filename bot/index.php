@@ -139,8 +139,19 @@ class MyBot{
         $raw = file_get_contents('php://input');
         $receive = json_decode($raw, true);
 
+        // HTTPレスポンスコードを取得
+        $httpCode = http_response_code();
+
         // ログ出力
-        $log_text = date('Y/m/d H:i:s') . ":" . $receive['events'][0]["source"]["groupId"].":".$receive['events'][0]['type']."\n";
+        $log_text = "[".date('Y/m/d H:i:s') . "]" . 
+            $receive['events'][0]["source"]["groupId"].":".
+            $receive['events'][0]["source"]["userId"].":".
+            $receive['events'][0]['type'].":".
+            $receive['events'][0]["message"]["text"].":".
+            $receive['events'][0]['postback']['displayName'].":".
+            $receive['events'][0]['postback']['statusMessage'].":".
+            $httpCode."\n";
+
         error_log(print_r($log_text, TRUE), 3, 'yamato_dbg_log.txt');
 
         // メッセージ確認

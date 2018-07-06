@@ -67,3 +67,7 @@ $app->get('/push/{key}', Controller\AdminController::class. ':push');
 
 // 直近イベント開催通知機能
 $app->get('/latestpush/{key}', Controller\AdminController::class. ':latestpush');
+
+// AUTHテスト用
+$app->get('/auth/', Controller\HomeController::class. ':auth');
+$app->get('/auth_callback/', Controller\HomeController::class. ':auth_callback');

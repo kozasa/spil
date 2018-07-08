@@ -91,6 +91,9 @@ class MemberController extends Controller
             $_SESSION['page'] = $page;
             $_SESSION['arg1'] = $request->getAttribute('arg1');   // 参加不参加
             $_SESSION['arg2'] = $request->getAttribute('arg2');  // イベントID
+            
+        }else{
+            return;
         }
 
         // CSRF対策

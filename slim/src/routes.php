@@ -17,10 +17,15 @@ $app->get('/', Controller\HomeController::class. ':home');
  */
 
 // イベント情報画面
-$app->get('/event/{id}', Controller\MemberController::class. ':event');
+$app->get('/event/{id}[/{action}]', Controller\MemberController::class. ':event');
 
 // 直近イベント日程画面
 $app->get('/latest/', Controller\MemberController::class. ':latest');
+
+// ラインログイン
+$app->get('/auth/{page}[/{arg1}[/{arg2}]]', Controller\MemberController::class. ':auth');
+
+$app->get('/auth_callback/', Controller\MemberController::class. ':authCallback');
 
 /**
  * ADMIN PAGE

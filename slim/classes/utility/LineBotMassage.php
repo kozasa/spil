@@ -39,17 +39,15 @@ class LineBotMassage
                 ),
                 "actions" => array(
                     array(
-                        "type" => "postback",
+                        "type" => "uri",
                         "label" => "参加！",
-                        "data" => "action=join&event_id=".$info["event_id"]."&key=spil_push",
-                        "displayText" => "参加！"
+                        "uri" => ROOT_URL."auth/event/join/".$info["event_id"]
                     ),
                     array(
-                        "type" => "postback",
-                        "label" => "参加取り消し",
-                        "data" => "action=exit&event_id=".$info["event_id"]."&key=spil_push",
-                        "displayText" => "参加取り消し"
-                    ),
+                        "type" => "uri",
+                        "label" => "不参加",
+                        "uri" => ROOT_URL."auth/event/exit/".$info["event_id"]
+                    )
                 )
             )        
         );
@@ -176,6 +174,34 @@ class LineBotMassage
                         "https://spil.hetabun.com/latest/\n".
                         "\n".
                         "また空いてる日があったら参加してね！"
+        );
+    }
+
+    /**
+     * AUTHテストメッセージ
+     *
+     * @return void
+     */
+    public static function pushTestAuth(){
+        return array(
+            "type" => "template",
+            "altText" => "AUTHテスト",
+            "template" => array(
+                "type" => "confirm",
+                "text" => "Are you sure?",
+                "actions" => array(
+                    array(
+                      "type" => "uri",
+                      "label" => "ログイン",
+                      "uri" => "http://www.geocities.jp/tkozasa0119/redirect.html"
+                    ),
+                    array(
+                      "type" => "message",
+                      "label" => "No",
+                      "text" => "no"
+                    )
+                )
+            )        
         );
     }
 }

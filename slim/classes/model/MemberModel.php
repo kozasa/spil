@@ -4,6 +4,7 @@ namespace Classes\Model;
 use Classes\Utility;
 use Classes\Mapper\Event;
 use Classes\Mapper\EventParticipants;
+use Classes\Mapper\UserMst;
 
 class MemberModel extends Model
 {
@@ -111,6 +112,60 @@ class MemberModel extends Model
 
         return $result;
 
+    }
+
+    /**
+     * LINEコールバック：ユーザマスタ更新
+     *
+     * @return array
+     */
+    public function authCallbackUserMst(array $info){
+
+        // ユーザ情報が登録されているか確認
+        $mapper = new UserMst\UserMstMapper($this->db);
+        $userIsExist = $mapper->selectExist($info['userId']);
+
+        if(!$userIsExist){
+            // 登録されていない場合、insert処理
+            $mapper->insert($info);
+
+        }else{
+            // 登録されている場合、更新確認
+            $userInfoSame = $mapper->selectUpdateConfirm($info);
+
+            if(!$userInfoSame){
+                // ユーザ情報がDBと相違の場合、update処理
+                $mapper->update($info);
+            }
+
+        }
+
+    }
+
+    public function authCallbackEventAction(array $data,string $userId){
+
+        // 参加、不参加
+        $joinFlg = false;
+        if($data['action']=="join"){
+            $joinFlg = true;
+        }
+
+        // 配列に格納
+        $data['join_flag'] = $joinFlg;
+        $data['member_id'] = $userId;
+
+        // イベント情報テーブルに登録されているか確認
+        $mapper = new EventParticipants\EventParticipantsMapper($this->db);
+        $isExist = $mapper->selectExistFromUseridAndEventid($data['member_id'],$data["eventId"]);
+        
+        if($isExist){
+            // 登録されている場合、UPDATE処理
+            $mapper->update($data);
+
+        }else{
+            // 登録されていない場合、INSERT処理
+            $mapper->insert($data);
+        }
     }
     
 }

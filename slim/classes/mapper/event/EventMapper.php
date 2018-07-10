@@ -126,6 +126,34 @@ class EventMapper extends \Classes\Mapper\Mapper
     }
 
     /**
+     * 曜日から直近の一件取得
+     *
+     * @param integer $weekNum
+     * @return boolean
+     */
+    public function selectFromWeek(int $weekNum){
+
+        $sql = 'SELECT * FROM `event` WHERE 
+                `event_date` > DATE_ADD( now(), interval 1 DAY ) AND
+                `event_date` < DATE_ADD( now(), interval 7 DAY ) AND
+                DAYOFWEEK(event_date)-1 = :weekNum 
+                ORDER BY event_date;';
+        $query = $this->db->prepare($sql);
+        $query->bindParam(':weekNum', $weekNum, \PDO::PARAM_INT);
+        $query->execute();
+
+        //取得件数が０件の場合、falseを返す
+        if($query->rowCount()==0){
+            return false;
+        }
+
+        // 取得したデータをデータクラスに格納する
+        $result = new EventData($query -> fetch());
+        return $result;
+
+    }
+
+    /**
      * 更新
      *
      * @param array $info

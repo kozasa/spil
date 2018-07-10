@@ -2,6 +2,8 @@
 
 namespace Classes\Utility;
 
+use Classes\Model;
+
 class LineBotRecieve
 {
 
@@ -16,13 +18,8 @@ class LineBotRecieve
         if(strpos($massage_text,'曜日再通知')!== false){
             // ●曜日再通知が含まれている場合
 
-            // 曜日の切り出し
-            $num = mb_strpos($massage_text,'曜日再通知');
-            $weekStr = mb_substr($massage_text,$num-1,1);
-
-            // 直近のイベント情報を取得
-            $mapper = new \Classes\Mapper\PushMapper($db);
-            $push_info = $mapper->getRePushWeekInfo($weekStr);
+            $model = new Model\LineBotRecieveModel($db);
+            $push_info = $model->WeekRePush($massage_text);
 
             if($push_info){
                 // 7日前イベント情報メッセージ取得
@@ -36,6 +33,9 @@ class LineBotRecieve
             // 再通知が含まれている場合
 
             // 直近のイベント情報を取得
+            $model = new Model\LineBotRecieveModel($db);
+            $push_info = $model->RePush();
+
             $mapper = new \Classes\Mapper\PushMapper($db);
             $push_info = $mapper->getRePushInfo();
 

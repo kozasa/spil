@@ -22,9 +22,12 @@ $app->get('/event/{id}[/{action}]', Controller\MemberController::class. ':event'
 // 直近イベント日程画面
 $app->get('/latest/', Controller\MemberController::class. ':latest');
 
-// ラインログイン
+// LINEログイン
+// {page}:ページ名称
+// {arg1}{arg2}:引数
 $app->get('/auth/{page}[/{arg1}[/{arg2}]]', Controller\MemberController::class. ':auth');
 
+// LINEログインコールバック
 $app->get('/auth_callback/', Controller\MemberController::class. ':authCallback');
 
 /**

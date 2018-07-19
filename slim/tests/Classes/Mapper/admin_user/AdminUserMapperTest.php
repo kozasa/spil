@@ -6,12 +6,17 @@ use Classes\Mapper\AdminUser;
 use AspectMock\Test as test;
 use Tests\Classes as Base;
 
-class EventMapperTest extends Base\BaseTestCase
+class AdminUserMapperTest extends Base\BaseTestCase
 {
     protected function setUp()
     {
         parent::setUp();
         $this->container['db']->beginTransaction();
+
+        // 元のデータを全て削除
+        $this->container['db']->query(
+            "DELETE FROM `admin_user`"
+        );
     }
     protected function tearDown()
     {

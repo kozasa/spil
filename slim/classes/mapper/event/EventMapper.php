@@ -87,14 +87,14 @@ class EventMapper extends \Classes\Mapper\Mapper
         if($day===7){
             $sql = 'SELECT * FROM `event` WHERE `before_seven_days` = false 
             AND `event_date`  < DATE_ADD( now(), interval :day DAY ) 
-            ORDER BY id;';
+            ORDER BY `event_date`;';
         }elseif($day===1){
             $sql = 'SELECT * FROM `event` WHERE `before_one_day` = false 
             AND `event_date`  < DATE_ADD( now(), interval :day DAY ) 
-            ORDER BY id;';
+            ORDER BY `event_date`;';
         }elseif($day===0){
             // 0の場合は直近のイベント情報を返す
-            $sql = 'SELECT * FROM `event` WHERE  `event_date` > DATE_ADD( now(), interval :day DAY ) ORDER BY id;';
+            $sql = 'SELECT * FROM `event` WHERE  `event_date` > DATE_ADD( now(), interval :day DAY ) ORDER BY `event_date`;';
         }
         
         $query = $this->db->prepare($sql);

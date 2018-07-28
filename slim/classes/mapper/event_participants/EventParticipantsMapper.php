@@ -86,7 +86,8 @@ class EventParticipantsMapper extends \Classes\Mapper\Mapper
      */
     public function insertNewUser(array $info){
         
-        $sql = 'INSERT INTO event_participants (event_id,member_id,join_flag,new_flag,new_name,new_gender,new_age,created_at,updated_at) VALUES (:event_id," ",1,1,:new_name,:new_gender,:new_age,NOW(),NOW())';
+        $sql = 'INSERT INTO event_participants (event_id,member_id,join_flag,new_flag,new_name,new_gender,new_age,created_at,updated_at) 
+        VALUES (:event_id," ",1,1,:new_name,:new_gender,:new_age,NOW(),NOW())';
 
         $query = $this->db->prepare($sql);
         $query->bindParam(':event_id', $info['event_id'], \PDO::PARAM_STR);

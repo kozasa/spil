@@ -19,14 +19,14 @@ class EventParticipantsData
     private $picture_url;
 
     public function __construct($data){
-        $this->id = $data['id'];
+        $this->id = (int)$data['id'];
         $this->event_id = $data['event_id'];
         $this->member_id = $data['member_id'];
-        $this->join_flag = $data['join_flag'];
-        $this->new_flag = $data['new_flag'];
+        $this->join_flag = (int)$data['join_flag'];
+        $this->new_flag = (int)$data['new_flag'];
         $this->new_name = $data['new_name'];
-        $this->new_gender = $data['new_gender'];
-        $this->new_age = $data['new_age'];
+        $this->new_gender = (int)$data['new_gender'];
+        $this->new_age = (int)$data['new_age'];
         $this->created_at = $data['created_at'];
         $this->updated_at = $data['updated_at'];
 

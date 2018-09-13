@@ -22,8 +22,8 @@ class LineBotRecieveTest extends TestCase
          */
         $massage_text = "あああ火曜日再通知ああああ";
 
-        $mock1 = test::double('\Classes\Mapper\PushMapper', ['getRePushWeekInfo' => function($arg){
-            if($arg === '火'){
+        $mock1 = test::double('\Classes\Model\LineBotRecieveModel', ['WeekRePush' => function($arg){
+            if($arg === 'あああ火曜日再通知ああああ'){
                 return "push_massage";
             }else{
                 throw e;
@@ -53,7 +53,7 @@ class LineBotRecieveTest extends TestCase
          */
         $massage_text = "あああ再通知ああああ";
 
-        $mock1 = test::double('\Classes\Mapper\PushMapper', ['getRePushInfo' => 'push_massage']);
+        $mock1 = test::double('\Classes\Model\LineBotRecieveModel', ['RePush' => 'push_massage']);
         $mock2 = test::double('\Classes\Utility\LineBotMassage', ['push_join_message_seven' => function($arg){
             if($arg === 'push_massage'){
                 return "massage";
@@ -77,7 +77,7 @@ class LineBotRecieveTest extends TestCase
          * スピルくん再通知が含まれていない場合
          */
 
-        $mock1 = test::double('\Classes\Mapper\PushMapper', ['getRePushInfo' => function($arg){
+        $mock1 = test::double('\Classes\Model\LineBotRecieveModel', ['WeekRePush' => function($arg){
             throw e;
         }]);
 

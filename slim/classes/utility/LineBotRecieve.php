@@ -36,9 +36,6 @@ class LineBotRecieve
             $model = new Model\LineBotRecieveModel($db);
             $push_info = $model->RePush();
 
-            $mapper = new \Classes\Mapper\PushMapper($db);
-            $push_info = $mapper->getRePushInfo();
-
             // 7日前イベント情報メッセージ取得
             $message = \Classes\Utility\LineBotMassage::push_join_message_seven($push_info);
 

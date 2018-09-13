@@ -34,11 +34,12 @@ class MemberController extends Controller
         // DB取得
         $model = new Model\MemberModel($this->container->db);
         $event_info = $model->event($id);
-
-        // アクションを配列に追記
-        $event_info = array_merge($event_info , array('actionMassage'=>$actionMassage));
         
         if($event_info){
+            
+            // アクションを配列に追記
+            $event_info = array_merge($event_info , array('actionMassage'=>$actionMassage));
+
             // イベントが存在する場合はイベントページを表示
             return $this->container->renderer->render($response, 'event.phtml', $event_info);
         }

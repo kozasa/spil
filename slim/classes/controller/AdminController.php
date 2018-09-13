@@ -208,7 +208,10 @@ class AdminController extends Controller
         return $this->container->renderer->render(
             $response,
             'admin_event_edit.phtml', 
-            array('event' => $event)
+            array(
+                'event' => $event,
+                'error_msg' => null,
+            )
         );
     }
 
@@ -253,7 +256,16 @@ class AdminController extends Controller
             return $this->container->renderer->render(
                 $response,
                 'admin_event_edit.phtml', 
-                array('error_msg' => "投稿処理に失敗しました。入力内容を確認してください。")
+                array(
+                    'error_msg' => "投稿処理に失敗しました。入力内容を確認してください。",
+                    'event' => array(
+                        'title' => null,
+                        'place' => null,
+                        'date' => null,
+                        'start_time' => null,
+                        'end_time' => null,
+                    ),
+                )
             );
         }
         
@@ -279,8 +291,12 @@ class AdminController extends Controller
         $event_id = $request->getAttribute('event_id');
 
         // DB更新
-        $mapper = new Mapper\EventEditMapper($this->container->db);
-        $event_id = $mapper->deleteEvent($event_id);
+        $model = new Model\AdminModel($this->container->db);
+        $event_id = $model->eventDeleteGet($event_id);
+        
+        // DB更新
+        //$mapper = new Mapper\EventEditMapper($this->container->db);
+        //$event_id = $mapper->deleteEvent($event_id);
 
         if($event_id){
             // 成功した場合、チャットに投稿

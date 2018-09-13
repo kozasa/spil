@@ -150,6 +150,11 @@ class AdminModel extends Model
         $participantsMapper = new EventParticipants\EventParticipantsMapper($this->db);
         $result = $participantsMapper->insert($postData);
 
+        // DB挿入で失敗した場合
+        if(!$result){
+            return false;
+        }
+        
         // 直近イベント情報取得
         $eventMapper = new event\EventMapper($this->db);
         $eventInfo = $eventMapper->selectLatest();
@@ -162,11 +167,6 @@ class AdminModel extends Model
                 'event_date' => $row->getEventDate(),
             );
             array_push($result,$data);
-        }
-
-        // DB挿入で失敗した場合
-        if(!$result){
-            return false;
         }
 
         return $result;

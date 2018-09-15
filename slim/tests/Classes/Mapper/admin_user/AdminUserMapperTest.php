@@ -32,8 +32,8 @@ class AdminUserMapperTest extends Base\BaseTestCase
     public function testselectFromName(){
         // テストデータ投稿
         $this->container['db']->query(
-            "INSERT INTO `admin_user`( `name`, `password`) 
-            VALUES ('テスト太郎selectFromName','1122334455')"
+            "INSERT INTO `admin_user`( `id`,`name`, `password`) 
+            VALUES (null,'テスト太郎selectFromName','1122334455')"
         );
         $stmt = $this->container['db']->query("SELECT * FROM `admin_user` WHERE name = 'テスト太郎selectFromName'");
         $select = $stmt->fetch();

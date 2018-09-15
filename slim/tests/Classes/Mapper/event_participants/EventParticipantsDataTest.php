@@ -21,14 +21,14 @@ class EventParticipantsDataTest extends Base\BaseTestCase
 
     // データ作成
     private $data = array(
-        'id' => 'idxxx',
+        'id' => 111,
         'event_id' => 'event_idxxx',
         'member_id' => 'member_idxxx',
-        'join_flag' => 'join_flagxxx',
-        'new_flag' => 'new_flagxxx',
+        'join_flag' => 1,
+        'new_flag' => 0,
         'new_name' => 'new_namexxx',
-        'new_gender' => 'new_genderxxx',
-        'new_age' => 'new_agexxx',
+        'new_gender' => 3,
+        'new_age' => 4,
         'created_at' => 'created_atxxx',
         'updated_at' => 'updated_atxxx',
         'display_name' => 'display_namexxx',

@@ -271,53 +271,6 @@ class AdminController extends Controller
         
     }
 
-
-    /**
-     * 管理者画面 イベント削除 get
-     *
-     * @param Request $request
-     * @param Response $response
-     * @param array $args
-     * @return 
-     */
-    public function eventDeleteGet($request, $response, $args) {
-
-        // ログイン認証
-        if(!Utility\Login::isCheckAfter($_SESSION['user'])){
-            return $response->withStatus(302)->withHeader('Location', '../../admin/');
-        }
-
-        // event id 取得
-        $event_id = $request->getAttribute('event_id');
-
-        // DB更新
-        $model = new Model\AdminModel($this->container->db);
-        $event_id = $model->eventDeleteGet($event_id);
-        
-        // DB更新
-        //$mapper = new Mapper\EventEditMapper($this->container->db);
-        //$event_id = $mapper->deleteEvent($event_id);
-
-        if($event_id){
-            // 成功した場合、チャットに投稿
-            $message = Utility\LineBotMassage::push_event_info($post_data,$event_id);
-            $message['altText'] = str_replace('追加', '削除', $message['altText']);
-            $message['template']['title'] = 'イベントが削除されました。';
-            Utility\LineBotPush::push($message);
-            // イベントリスト画面へリダイレクト
-            return $response->withStatus(302)->withHeader('Location', '../');
-        }else{
-
-            // 失敗した場合、エラー表示
-            return $this->container->renderer->render(
-                $response,
-                'admin_event_edit.phtml', 
-                array('error_msg' => "投稿処理に失敗しました。入力内容を確認してください。")
-            );
-        }
-        
-    }
-
     /**
      * 管理者画面 新規者登録 get
      *

@@ -1,7 +1,7 @@
 <?php
-namespace Classes\Mapper;
+namespace Classes\Model;
 
-abstract class Mapper {
+abstract class Model {
     protected $db;
     public function __construct($db) {
       $this->db = $db;

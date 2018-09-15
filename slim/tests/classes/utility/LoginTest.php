@@ -39,7 +39,13 @@ class LoginTest extends TestCase
          * ユーザ検索後取得できない場合
          */
         // mock作成　nullが返るように設定
-        $mock = test::double('\Classes\Mapper\LoginMapper', ['getUserInfo' => []]);
+        $mock = test::double('\Classes\Model\LoginModel', ['getPassword' => function($arg){
+            if($arg === 'user01'){
+                return null;
+            }else{
+                throw e;
+            }
+        }]);
 
         $user = "user01";
         $password = "1111";
@@ -55,9 +61,15 @@ class LoginTest extends TestCase
         // mock作成　パスワードが返るように設定
         $password_hash = password_hash( "test", PASSWORD_DEFAULT);
         $password = "test";
-        $mock = test::double('\Classes\Mapper\LoginMapper', 
-            ['getUserInfo' => array('password' => $password_hash)]
-        );
+
+        $mock = test::double('\Classes\Model\LoginModel', ['getPassword' => function($arg){
+            if($arg === 'user01'){
+                return password_hash( "test", PASSWORD_DEFAULT);
+            }else{
+                throw e;
+            }
+        }]);
+    
         $func = test::func('Classes\Utility', 'session_regenerate_id', true);
         
         $result = Utility\Login::isCheck(null,$user,$password,$error_msg);
@@ -72,9 +84,13 @@ class LoginTest extends TestCase
          */
         $non_password_hash = "ng";
         $password = "test";
-        $mock = test::double('\Classes\Mapper\LoginMapper', 
-            ['getUserInfo' => array('password' => $non_password_hash)]
-        );
+        $mock = test::double('\Classes\Model\LoginModel', ['getPassword' => function($arg){
+            if($arg === 'user01'){
+                return "ng";
+            }else{
+                throw e;
+            }
+        }]);
         $func = test::func('Classes\Utility', 'session_regenerate_id', true);
 
         $result = Utility\Login::isCheck(null,$user,$password,$error_msg);

@@ -76,7 +76,7 @@ class AdminControllerTest extends Base\BaseTestCase
                 return false;
             }
         }]); 
-        $response = $this->runApp('GET', '/admin/menu/',array('user'=>'aaa'));
+        $response = $this->runApp('GET', '/admin/menu/');
         // ページが正常動作の場合は200となる
         $this->assertEquals(200, $response->getStatusCode());
         // タイトル確認
@@ -131,7 +131,7 @@ class AdminControllerTest extends Base\BaseTestCase
                 return false;
             }
         }]); 
-        $mock2 = test::double('\Classes\Mapper\EventPostMapper', ['insertEventPost' => function($arg){
+        $mock2 = test::double('\Classes\Model\AdminModel', ['eventPostPost' => function($arg){
             if($arg['post'] === 'post'){
                 return true;
             }else{
@@ -160,12 +160,205 @@ class AdminControllerTest extends Base\BaseTestCase
          * ログイン認証OK 
          * DB挿入NG
          */
-        $mock1 = test::double('\Classes\Mapper\EventPostMapper', ['insertEventPost' => false]);
-        $response = $this->runApp('POST', '/admin/eventpost/');
+        $mock1 = test::double('\Classes\Utility\Login', ['isCheckAfter' => function($arg){
+            if($arg === 'aaa'){
+                return true;
+            }else{
+                return false;
+            }
+        }]); 
+
+        $mock2 = test::double('\Classes\Model\AdminModel', ['eventPostPost' => function($arg){
+            if($arg['post'] === 'post'){
+                return false;
+            }else{
+                throw e;
+            }
+        }]); 
+        $response = $this->runApp('POST', '/admin/eventpost/',array('post'=>'post'));
         // ページが正常動作の場合は200となる
         $this->assertEquals(200, $response->getStatusCode());
         // タイトル確認
         $this->assertContains('イベント情報投稿', (string)$response->getBody());
+        // 出力内容確認
+        $this->assertContains('投稿処理に失敗しました。入力内容を確認してください。', (string)$response->getBody());
+
+        test::clean();
+    }
+
+    /**
+     * @group controller
+     */
+    public function testeventEditListGet(){
+
+        // ログイン認証NG
+        $this->loginNG('GET','/admin/eventedit/');
+
+        /**
+         * ログイン認証OK 
+         */
+        $mock1 = test::double('\Classes\Utility\Login', ['isCheckAfter' => function($arg){
+            if($arg === 'aaa'){
+                return true;
+            }else{
+                return false;
+            }
+        }]); 
+        $mock2 = test::double('\Classes\Model\AdminModel', ['eventEditListGet' => 
+        array(0=>array(
+            'id' => 1,
+            'event_id' => 'event_id1',
+            'title' => 'バドミントン１面',
+            'place' => 'なんとか公園',
+            'event_date' => '2018-01-03',
+            'start_time' => '11:11:11',
+            'end_time' => '22:22:22',
+            'fee' => '501',
+            'before_seven_days' => '0',
+            'before_one_day' => '0',
+            'created_at' => '',
+            'updated_at' => '',
+            'year' => '2018',
+            'month' => '03',
+            'day' => '11',
+            'week' => '日'
+            )
+        )
+        ]); 
+
+        $response = $this->runApp('GET', '/admin/eventedit/');
+
+        // ページが正常動作の場合は200となる
+        $this->assertEquals(200, $response->getStatusCode());
+        // タイトル確認
+        $this->assertContains('イベント情報編集', (string)$response->getBody());
+
+        test::clean();
+    }
+
+    /**
+     * @group controller
+     */
+    public function testeventEditGet(){
+
+        // ログイン認証NG
+        $this->loginNG('GET','/admin/eventedit/update/111');
+
+        /**
+         * ログイン認証OK 
+         */
+        $mock1 = test::double('\Classes\Utility\Login', ['isCheckAfter' => function($arg){
+            if($arg === 'aaa'){
+                return true;
+            }else{
+                return false;
+            }
+        }]); 
+        $mock2 = test::double('\Classes\Model\AdminModel', ['eventEditGet' => function($arg){
+            if($arg === '111'){
+                return array(
+                    'event_id' => 'event_id1',
+                    'title' => 'バドミントン1面',
+                    'place' => '中村生涯学習センター',
+                    'date' => '2018-01-03',
+                    'week' => '水',
+                    'fee' => '501',
+                    'start_time' => '11:11',
+                    'end_time' => '22:22',
+                );
+            }else{
+                throw e;
+            }
+        }]); 
+
+        $response = $this->runApp('GET', '/admin/eventedit/update/111');
+
+        // ページが正常動作の場合は200となる
+        $this->assertEquals(200, $response->getStatusCode());
+        // タイトル確認
+        $this->assertContains('イベント情報編集', (string)$response->getBody());
+
+        test::clean();
+    }
+
+    /**
+     * @group controller
+     */
+    public function testeventEditPost(){
+
+        // ログイン認証NG
+        $this->loginNG('POST','/admin/eventedit/update/111');
+
+        /**
+         * ログイン認証OK 
+         * DB更新成功
+         */
+        $mock1 = test::double('\Classes\Utility\Login', ['isCheckAfter' => function($arg){
+            if($arg === 'aaa'){
+                return true;
+            }else{
+                return false;
+            }
+        }]); 
+        $mock2 = test::double('\Classes\Model\AdminModel', ['eventEditPost' => function($arg){
+            if($arg['post_data'] === 'post_data' && $arg['event_id'] === '111'){
+                return 'event_id111222333';
+            }else{
+                throw e;
+            }
+        }]); 
+        $mock3 = test::double('\Classes\Utility\LineBotMassage', ['push_event_info' => function($arg,$arg2){
+            if($arg['post_data'] === 'post_data' && $arg['event_id'] === '111' && $arg2 === 'event_id111222333'){
+                return array(
+                    'altText' => 'あああ追加あああああ' 
+                );
+            }else{
+                throw e;
+            }
+        }]);
+        $mock4 = test::double('\Classes\Utility\LineBotPush', ['push' => function($arg){
+            if($arg['altText'] == 'あああ変更あああああ' && $arg['template']['title'] == "イベントが変更されました。"){
+                return 'message';
+            }else{
+                throw e;
+            }
+        }]);
+
+        $response = $this->runApp('POST', '/admin/eventedit/update/111',array('post_data' => 'post_data'));
+
+        // リダイレクト
+        $this->assertEquals(302, $response->getStatusCode());
+        // リダイレクト先取得
+        $header = $response->getHeaders();
+        $this->assertContains('../', (string)$header['Location'][0]);
+
+        test::clean();
+
+        /**
+         * ログイン認証OK 
+         * DB更新失敗
+         */
+        $mock1 = test::double('\Classes\Utility\Login', ['isCheckAfter' => function($arg){
+            if($arg === 'aaa'){
+                return true;
+            }else{
+                return false;
+            }
+        }]); 
+        $mock2 = test::double('\Classes\Model\AdminModel', ['eventEditPost' => function($arg){
+            if($arg['post_data'] === 'post_data' && $arg['event_id'] === '111'){
+                return false;
+            }else{
+                throw e;
+            }
+        }]); 
+
+        $response = $this->runApp('POST', '/admin/eventedit/update/111',array('post_data' => 'post_data'));
+
+        // ページが正常動作の場合は200となる
+        $this->assertEquals(200, $response->getStatusCode());
+        // タイトル確認
+        $this->assertContains('イベント情報編集', (string)$response->getBody());
         // 出力内容確認
         $this->assertContains('投稿処理に失敗しました。入力内容を確認してください。', (string)$response->getBody());
 
@@ -182,7 +375,7 @@ class AdminControllerTest extends Base\BaseTestCase
         /**
          * ログイン認証OK 
          */
-        $mock1 = test::double('\Classes\Mapper\LatestMapper', ['getLatestInfo' => array(
+        $mock1 = test::double('\Classes\Model\AdminModel', ['newPostGet' => array(
             array(
                 'event_id'=>"b000004",
                 'title'=>"バドミントン１面",
@@ -219,30 +412,29 @@ class AdminControllerTest extends Base\BaseTestCase
             if($arg === 'aaa'){
                 return true;
             }else{
-                return false;
+                throw e;
             }
         }]); 
-        $mock2 = test::double('\Classes\Mapper\NewPostMapper', ['insertNewRegistant' => function($arg){
+        $mock2 = test::double('\Classes\Model\AdminModel', ['newPostPost' => function($arg){
             if($arg['post'] === 'post'){
-                return true;
+                return array(
+                        array(
+                        'event_id'=>"b000004",
+                        'title'=>"バドミントン１面",
+                        'place'=>"富田地区会館",
+                        'event_date'=>"2018-04-25",
+                        'start_time'=>"18:30:00",
+                        'end_time'=>"21:00:00",
+                        'year'=>"2018",
+                        'month'=>"4",
+                        'day'=>"25",
+                        'week'=>"水",
+                        )
+                );
             }else{
-                return false;
+                throw e;
             }
         }]); 
-        $mock3 = test::double('\Classes\Mapper\LatestMapper', ['getLatestInfo' => array(0 =>
-            array(
-                'event_id'=>"b000004",
-                'title'=>"バドミントン１面",
-                'place'=>"富田地区会館",
-                'event_date'=>"2018-04-25",
-                'start_time'=>"18:30:00",
-                'end_time'=>"21:00:00",
-                'year'=>"2018",
-                'month'=>"4",
-                'day'=>"25",
-                'week'=>"水",
-            ),
-        )]); 
         $mock4 = test::double('\Classes\Utility\LineBotMassage', ['push_new_info' => function($arg0,$arg1){
             if($arg1 === '2018-04-25'){
                 return "message";
@@ -277,21 +469,7 @@ class AdminControllerTest extends Base\BaseTestCase
                 return false;
             }
         }]); 
-        $mock2 = test::double('\Classes\Mapper\NewPostMapper', ['insertNewRegistant' => false]); 
-        $mock3 = test::double('\Classes\Mapper\LatestMapper', ['getLatestInfo' => array(0 =>
-            array(
-                'event_id'=>"b000004",
-                'title'=>"バドミントン１面",
-                'place'=>"富田地区会館",
-                'event_date'=>"2018-04-25",
-                'start_time'=>"18:30:00",
-                'end_time'=>"21:00:00",
-                'year'=>"2018",
-                'month'=>"4",
-                'day'=>"25",
-                'week'=>"水",
-            ),
-        )]); 
+        $mock3 = test::double('\Classes\Model\AdminModel', ['newPostPost' => false]); 
 
         $response = $this->runApp('POST', '/admin/newpost/',array('post'=>'post','user'=>'aaa','join_day'=>'b000004'));
 
@@ -342,7 +520,7 @@ class AdminControllerTest extends Base\BaseTestCase
         /**
          * key ok イベント情報false
          */
-        $mock1 = test::double('\Classes\Mapper\PushMapper', ['getPushInfo' => false]);
+        $mock1 = test::double('\Classes\Model\AdminModel', ['push' => false]);
         ob_start();
         $response = $this->runApp('GET', '/push/'.PUSH_KEY);
         ob_get_clean();
@@ -354,7 +532,7 @@ class AdminControllerTest extends Base\BaseTestCase
         /**
          * key ok イベント情報true
          */
-        $mock1 = test::double('\Classes\Mapper\PushMapper', ['getPushInfo' => true]);
+        $mock1 = test::double('\Classes\Model\AdminModel', ['push' => true]);
         $mock2 = test::double('\Classes\Utility\LineBotPush', ['pushCron' => function($arg){
             if($arg===true){
                 return true;
@@ -387,7 +565,7 @@ class AdminControllerTest extends Base\BaseTestCase
         /**
          * key ok イベント情報 日付違い
          */
-        $mock1 = test::double('\Classes\Mapper\LatestMapper', ['getLatestInfo' => array(0 => array('event_date' => '1111-11-11'))]);
+        $mock1 = test::double('\Classes\Model\AdminModel', ['latestpush' => array(0 => array('event_date' => '1111-11-11'))]);
         ob_start();
         $response = $this->runApp('GET', '/latestpush/'.PUSH_KEY);
         ob_get_clean();
@@ -399,7 +577,7 @@ class AdminControllerTest extends Base\BaseTestCase
         /**
          * key ok イベント情報true
          */
-        $mock1 = test::double('\Classes\Mapper\LatestMapper', ['getLatestInfo' => array(0 => array('event_date' => date("Y-m-d")))]);
+        $mock1 = test::double('\Classes\Model\AdminModel', ['latestpush' => array(0 => array('event_date' => date("Y-m-d")))]);
         $mock2 = test::double('\Classes\Utility\LineBotMassage', ['push_latest_message' => function($arg){
             if($arg[0]['event_date']===date("Y-m-d")){
                 return true;

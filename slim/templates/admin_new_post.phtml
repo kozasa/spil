@@ -20,9 +20,11 @@
             <div class="form-group">
                 <select class="form-control form-control-lg" name="join_day">
                     <optgroup label="参加日">
-                        <?php foreach ($latest_info as $info): ?>
-                        <option value="<?= htmlspecialchars($info['event_id']); ?>"><?= htmlspecialchars($info['event_date'].' ('.$info['week'].')'); ?></option>
-                        <?php endforeach; ?>
+                        <?php if($latest_info): ?>
+                            <?php foreach ($latest_info as $info): ?>
+                            <option value="<?= htmlspecialchars($info['event_id']); ?>"><?= htmlspecialchars($info['event_date'].' ('.$info['week'].')'); ?></option>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </select>
                 </div>
             <h4>名前</h4>

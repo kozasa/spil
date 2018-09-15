@@ -2,7 +2,7 @@
 namespace Classes\Controller;
 
 use Classes\Utility;
-use Classes\Mapper;
+use Classes\Model;
 
 /**
  * ホームページ
@@ -20,8 +20,8 @@ class HomeController extends Controller
     public function home($request, $response, $args) {
         
         // DB取得
-        $mapper = new Mapper\IndexMapper($this->container->db);
-        $latest_info = $mapper->getLatestInfo();
+        $model = new Model\HomeModel($this->container->db);
+        $latest_info = $model->home();
 
         // Render index view
         return $this->container->renderer->render(

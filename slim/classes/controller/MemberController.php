@@ -2,7 +2,7 @@
 namespace Classes\Controller;
 
 use Classes\Utility;
-use Classes\Mapper;
+use Classes\Model;
 
 /**
  * メンバー用ページ
@@ -32,13 +32,14 @@ class MemberController extends Controller
         }
 
         // DB取得
-        $mapper = new Mapper\EventMapper($this->container->db);
-        $event_info = $mapper->getEventInfo($id);
-
-        // アクションを配列に追記
-        $event_info = array_merge($event_info , array('actionMassage'=>$actionMassage));
+        $model = new Model\MemberModel($this->container->db);
+        $event_info = $model->event($id);
         
         if($event_info){
+            
+            // アクションを配列に追記
+            $event_info = array_merge($event_info , array('actionMassage'=>$actionMassage));
+
             // イベントが存在する場合はイベントページを表示
             return $this->container->renderer->render($response, 'event.phtml', $event_info);
         }
@@ -56,8 +57,8 @@ class MemberController extends Controller
     public function latest($request, $response, $args) {
         
         // DB取得
-        $mapper = new Mapper\LatestMapper($this->container->db);
-        $latest_info = $mapper->getLatestInfo();
+        $model = new Model\MemberModel($this->container->db);
+        $latest_info = $model->latest();
 
         // 直近イベント情報ページ表示
         return $this->container->renderer->render(
@@ -69,7 +70,7 @@ class MemberController extends Controller
     }
 
     /**
-    * ラインログイン
+    * LINEログイン
     *
     * @param [type] $request
     * @param [type] $response
@@ -118,7 +119,7 @@ class MemberController extends Controller
    }
 
     /**
-    * AUTHコールバックテスト用
+    * LINEコールバック
     *
     * @param [type] $request
     * @param [type] $response
@@ -142,11 +143,11 @@ class MemberController extends Controller
 
             // アクセストークン取得
             $json = "";
-            $callback = ROOT_URL  . 'auth_callback/';
+            $callbackUrl = ROOT_URL  . 'auth_callback/';
             $postData = array(
                 'grant_type'    => 'authorization_code',
                 'code'          => $_GET['code'],
-                'redirect_uri'  => $callback,
+                'redirect_uri'  => $callbackUrl,
                 'client_id'     => LOGIN_CHANNEL_ID,
                 'client_secret' => LOGIN_CHANNEL_SECRET
             );
@@ -167,8 +168,12 @@ class MemberController extends Controller
 
             // アクセストークンが取得できたかチェック
             if(!isset($accessToken)){
-                echo "再度ログインしなおしてください";
-                return;
+                // 取得できない場合はエラー表示
+                return $this->container->renderer->render(
+                    $response, 
+                    'error.phtml',
+                    array()
+                );
             }
 
             // ユーザ情報取得
@@ -191,27 +196,36 @@ class MemberController extends Controller
             );
 
             // ユーザマスタ更新
-            $mapper = new Mapper\AuthCallbackMapper($this->container->db);
-            $mapper->insertUserMst($insertInfo);
+            $model = new Model\MemberModel($this->container->db);
+            $latest_info = $model->authCallbackUserMst($insertInfo);
 
             $_SESSION['user'] = $json->{'userId'};
 
         }
 
         // セッション情報から処理
-        $page = $_SESSION['page'];
-
-        if($page == "event"){
+        $sessionPage = $_SESSION['page'];
+        if($sessionPage == "event"){
             // イベント情報ページ
+
+            // 引数チェック
+            if(!isset($_SESSION['arg1']) || !isset($_SESSION['arg2'])){
+                // 引数が一部でも設定されていない場合、エラーページへ遷移
+                return $this->container->renderer->render(
+                    $response, 
+                    'error.phtml',
+                    array()
+                );
+            }
 
             $data = array(
                 'action' => $_SESSION['arg1'],
                 'eventId' => $_SESSION['arg2'],
             );
             // 参加不参加の登録処理
-            $mapper->insertEventAction($data,$_SESSION['user']);
+            $model->authCallbackEventAction($data,$_SESSION['user']);
 
-            // リダイレクト
+            // イベント詳細画面へリダイレクト
             return $response->withStatus(302)->withHeader('Location', '../event/'.$data['eventId'].'/'.$data['action']);
         }
 

@@ -33,7 +33,12 @@
             "Classes\\": "classes/",
             "Classes\\Utility\\": "classes/utility/",
             "Classes\\Mapper\\": "classes/mapper/",
-            "Classes\\Controller\\": "classes/controller/"
+            "Classes\\Mapper\\UserMst\\": "classes/mapper/user_mst/",
+            "Classes\\Mapper\\AdminUser\\": "classes/mapper/admin_user/",
+            "Classes\\Mapper\\Event\\": "classes/mapper/event/",
+            "Classes\\Mapper\\EventParticipants\\": "classes/mapper/event_participants/",
+            "Classes\\Controller\\": "classes/controller/",
+            "Classes\\Model\\": "classes/model/"
         }
     },
     "config": {

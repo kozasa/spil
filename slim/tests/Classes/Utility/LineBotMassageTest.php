@@ -53,16 +53,14 @@ class LineBotMassageTest extends TestCase
                 ),
                 "actions" => array(
                     array(
-                        "type" => "postback",
+                        "type" => "uri",
                         "label" => "参加！",
-                        "data" => "action=join&event_id=".$info["event_id"]."&key=spil_push",
-                        "displayText" => $info["event_date"] ."参加！"
+                        "uri" => ROOT_URL."auth/event/join/".$info["event_id"]
                     ),
                     array(
-                        "type" => "postback",
-                        "label" => "参加取り消し",
-                        "data" => "action=exit&event_id=".$info["event_id"]."&key=spil_push",
-                        "displayText" => $info["event_date"] ."参加取り消し"
+                        "type" => "uri",
+                        "label" => "不参加",
+                        "uri" => ROOT_URL."auth/event/exit/".$info["event_id"]
                     ),
                 )
             )

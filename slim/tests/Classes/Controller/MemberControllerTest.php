@@ -22,7 +22,7 @@ class MemberControllerTest extends Base\BaseTestCase
          * パラメータのイベントIDがDBに登録されている
          */
         $event_id = 'b000004';
-        $mock1 = test::double('\Classes\Mapper\EventMapper', ['getEventInfo' => function($arg){
+        $mock1 = test::double('\Classes\Model\MemberModel', ['event' => function($arg){
             if($arg === 'b000004'){
                 return array(
                     'title'=>"バドミントン１面",
@@ -59,6 +59,35 @@ class MemberControllerTest extends Base\BaseTestCase
         $this->assertNotContains('イベント情報 - スピル', (string)$response->getBody());
         $this->assertNotContains('バドミントン１面', (string)$response->getBody());
 
+        /**
+         * 参加にしました　確認
+         */
+        $event_id = 'b000004';
+        $response = $this->runApp('GET', '/event/'.$event_id.'/join');
+
+        // ページが正常動作の場合は200となる
+        $this->assertEquals(200, $response->getStatusCode());
+        // タイトル確認
+        $this->assertContains('イベント情報 - スピル', (string)$response->getBody());
+        // 出力確認
+        $this->assertContains('バドミントン１面', (string)$response->getBody());
+        // 文言確認
+        $this->assertContains('参加にしました', (string)$response->getBody());
+
+        /**
+         * 不参加にしました　確認
+         */
+        $event_id = 'b000004';
+        $response = $this->runApp('GET', '/event/'.$event_id.'/exit');
+
+        // ページが正常動作の場合は200となる
+        $this->assertEquals(200, $response->getStatusCode());
+        // タイトル確認
+        $this->assertContains('イベント情報 - スピル', (string)$response->getBody());
+        // 出力確認
+        $this->assertContains('バドミントン１面', (string)$response->getBody());
+        // 文言確認
+        $this->assertContains('不参加にしました', (string)$response->getBody());
     }
 
     /**
@@ -66,7 +95,7 @@ class MemberControllerTest extends Base\BaseTestCase
      */
     public function testlatest(){
 
-        $mock1 = test::double('\Classes\Mapper\LatestMapper', ['getLatestInfo' => array( 0 => 
+        $mock1 = test::double('\Classes\Model\MemberModel', ['latest' => array( 0 => 
             array(
                 'event_id'=>"b000004",
                 'title'=>"バドミントン１面",
@@ -90,4 +119,9 @@ class MemberControllerTest extends Base\BaseTestCase
         $this->assertContains('b000004', (string)$response->getBody());
 
     }
+
+    /**
+     * auth,authCallbackはLINEAPI利用のため
+     * 手動テストとする
+     */
 }

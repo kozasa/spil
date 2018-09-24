@@ -490,11 +490,11 @@ class MemberModelTest extends Base\BaseTestCase
         // 引数作成
         $data1 = array(
             'action' => "join",
-            'eventId' => 'eventId',
+            'event_id' => 'eventId',
         );
         $data2 = array(
             'action' => "exit",
-            'eventId' => 'eventId'
+            'event_id' => 'eventId'
         );
         $userId = 'userId';
 
@@ -511,7 +511,7 @@ class MemberModelTest extends Base\BaseTestCase
         $mock2 = test::double('\Classes\Mapper\EventParticipants\EventParticipantsMapper', ['update' => function($arg){
             if($arg===array(
                 'action' => "join",
-                'eventId' => "eventId",
+                'event_id' => "eventId",
                 'join_flag'=>true,
                 'member_id' => "userId"
             )){
@@ -544,7 +544,7 @@ class MemberModelTest extends Base\BaseTestCase
         $mock2 = test::double('\Classes\Mapper\EventParticipants\EventParticipantsMapper', ['insert' => function($arg){
             if($arg===array(
                 'action' => "exit",
-                'eventId' => "eventId",
+                'event_id' => "eventId",
                 'join_flag'=>false,
                 'member_id' => "userId"
             )){

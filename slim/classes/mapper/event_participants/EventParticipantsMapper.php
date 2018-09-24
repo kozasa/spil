@@ -115,7 +115,7 @@ class EventParticipantsMapper extends \Classes\Mapper\Mapper
 
         $stmt->bindValue(':join_flag', $info["join_flag"], \PDO::PARAM_INT);
         $stmt->bindValue(':member_id', $info["member_id"], \PDO::PARAM_STR);
-        $stmt->bindValue(':event_id',  $info["eventId"], \PDO::PARAM_STR);
+        $stmt->bindValue(':event_id',  $info["event_id"], \PDO::PARAM_STR);
         $stmt->bindValue(':updated_at', date("Y/m/d H:i:s"), \PDO::PARAM_STR);
         
         $stmt->execute();

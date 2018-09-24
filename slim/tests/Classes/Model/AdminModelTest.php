@@ -59,6 +59,7 @@ class AdminModelTest extends Base\BaseTestCase
             'fee' => '501',
             'before_seven_days' => '0',
             'before_one_day' => '0',
+            'comment' => 'test',
             'created_at' => '',
             'updated_at' => '',
         );
@@ -301,6 +302,7 @@ class AdminModelTest extends Base\BaseTestCase
             'fee' => '501',
             'before_seven_days' => '0',
             'before_one_day' => '0',
+            'comment' => 'test',
             'created_at' => '',
             'updated_at' => '',
         );
@@ -318,6 +320,7 @@ class AdminModelTest extends Base\BaseTestCase
             'fee' => '601',
             'before_seven_days' => '1',
             'before_one_day' => '1',
+            'comment' => 'test',
             'created_at' => '',
             'updated_at' => '',
         );
@@ -335,6 +338,7 @@ class AdminModelTest extends Base\BaseTestCase
             'fee' => '801',
             'before_seven_days' => '0',
             'before_one_day' => '0',
+            'comment' => 'test',
             'created_at' => '',
             'updated_at' => '',
         );

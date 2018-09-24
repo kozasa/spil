@@ -14,6 +14,7 @@ class EventData
     private $fee;
     private $before_seven_days;
     private $before_one_day;
+    private $comment;
     private $created_at;
     private $updated_at;
 
@@ -28,6 +29,7 @@ class EventData
         $this->fee = $data['fee'];
         $this->before_seven_days = $data['before_seven_days'];
         $this->before_one_day = $data['before_one_day'];
+        $this->comment = isset($data['comment']) ? $data['comment']: "";
         $this->created_at = $data['created_at'];
         $this->updated_at = $data['updated_at'];
     }
@@ -102,6 +104,10 @@ class EventData
 
     public function getBeforeOneDay(){
         return $this->before_one_day;
+    }
+
+    public function getComment(){
+        return $this->comment;
     }
 
 }

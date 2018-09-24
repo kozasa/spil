@@ -31,6 +31,7 @@ CREATE TABLE `event` (
   `fee` int(11) NOT NULL,
   `before_seven_days` tinyint(1) NOT NULL,
   `before_one_day` tinyint(1) NOT NULL,
+  `comment` text,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

@@ -33,6 +33,7 @@ class MemberControllerTest extends Base\BaseTestCase
                     'fee'=>"500",
                     'join_member'=> [] ,
                     'none_join_member'=> [] ,
+                    'comment' => "テスト",
                 );
             }else{
                 return false;

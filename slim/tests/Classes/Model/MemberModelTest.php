@@ -240,6 +240,7 @@ class MemberModelTest extends Base\BaseTestCase
                     'picture_url' => 'htttp://11112.jp/',
                 ),
             ),
+            'comment'=>'',
         );
 
         $this->assertEquals($arrayTest, $result);

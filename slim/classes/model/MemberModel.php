@@ -35,6 +35,7 @@ class MemberModel extends Model
             'event_date' => $eventInfo->getEventDateDisplay(),
             'start_time' => $eventInfo->getStartTime(),
             'end_time' => $eventInfo->getEndTime(),
+            'comment' => $eventInfo->getComment(),
         );
 
         // イベントIDからイベント参加者一覧情報を取得

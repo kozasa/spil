@@ -151,7 +151,7 @@ class LineBotMassage
 
         return array(
             "type" => "text",
-            "text" => $date."に新しく".$info['name']."さんが参加するよ！"
+            "text" => $date."に新しく".$info['new_name']."さんが参加するよ！"
         );
     }
 

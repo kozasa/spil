@@ -403,21 +403,22 @@ class AdminModelTest extends Base\BaseTestCase
          */
 
         $arrayNewMember = array(
-            'name' => '田中太郎',
-            'gender' => 1,
-            'age' => 3,
+            'new_name' => '田中太郎',
+            'new_gender' => 1,
+            'new_age' => 3,
             'event_id' => '2018-01-03',
         );
     
         // DB挿入mock作成
         $mock1 = test::double('\Classes\Mapper\EventParticipants\EventParticipantsMapper', ['insert' => function($arg){
             if($arg === array(
-                'name' => '田中太郎',
-                'gender' => 1,
-                'age' => 3,
+                'new_name' => '田中太郎',
+                'new_gender' => 1,
+                'new_age' => 3,
                 'event_id' => '2018-01-03',
                 'member_id' => '',
-                'join_flag' => true
+                'join_flag' => true,
+                'new_flag' => true,
             )){
                 return false;
             }else{
@@ -436,21 +437,22 @@ class AdminModelTest extends Base\BaseTestCase
          * 通常処理
          */
         $arrayNewMember = array(
-            'name' => '田中太郎',
-            'gender' => 1,
-            'age' => 3,
+            'new_name' => '田中太郎',
+            'new_gender' => 1,
+            'new_age' => 3,
             'event_id' => '2018-01-03',
         );
     
         // DB挿入mock作成
         $mock1 = test::double('\Classes\Mapper\EventParticipants\EventParticipantsMapper', ['insert' => function($arg){
             if($arg === array(
-                'name' => '田中太郎',
-                'gender' => 1,
-                'age' => 3,
+                'new_name' => '田中太郎',
+                'new_gender' => 1,
+                'new_age' => 3,
                 'event_id' => '2018-01-03',
                 'member_id' => '',
-                'join_flag' => true
+                'join_flag' => true,
+                'new_flag' => true,
             )){
                 return true;
             }else{
@@ -976,9 +978,9 @@ class AdminModelTest extends Base\BaseTestCase
          */
 
         $info = array(
-            'name' => 'name',
-            'gender' => 2,
-            'age' => 4,
+            'new_name' => 'name',
+            'new_gender' => 2,
+            'new_age' => 4,
             'event_id' => 't11111'
         );
 

@@ -174,11 +174,11 @@ class LineBotMassageTest extends TestCase
      */
     public function testpush_new_info(){
         
-        $info = array('name' => '名前');
+        $info = array('new_name' => '名前');
         $date = date('h-i-s');
         $massage = array(
             "type" => "text",
-            "text" => $date."に新しく".$info['name']."さんが参加するよ！"
+            "text" => $date."に新しく".$info['new_name']."さんが参加するよ！"
         );
 
         $this->assertEquals($massage,Utility\LineBotMassage::push_new_info($info,$date));

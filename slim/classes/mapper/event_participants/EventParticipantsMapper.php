@@ -65,14 +65,17 @@ class EventParticipantsMapper extends \Classes\Mapper\Mapper
     public function insert(array $info){
 
         $sql = 'INSERT INTO event_participants (id,event_id,member_id,join_flag,new_flag,new_name,new_gender,new_age,created_at,updated_at) 
-                    VALUES (:id, :event_id,:member_id,:join_flag,:new_flag,"",0,0,:created_at,:updated_at)';
+                    VALUES (:id, :event_id,:member_id,:join_flag,:new_flag,:new_name,:new_gender,:new_age,:created_at,:updated_at)';
             $stmt = $this->db->prepare($sql);
             
             $stmt->bindValue(':id', null, \PDO::PARAM_INT);
             $stmt->bindValue(':event_id', $info["event_id"], \PDO::PARAM_STR);
             $stmt->bindValue(':member_id', $info["member_id"], \PDO::PARAM_STR);
             $stmt->bindValue(':join_flag', $info["join_flag"], \PDO::PARAM_INT);
-            $stmt->bindValue(':new_flag', false, \PDO::PARAM_INT);
+            $stmt->bindValue(':new_flag', $info["new_flag"], \PDO::PARAM_INT);
+            $stmt->bindValue(':new_name', $info["new_name"], \PDO::PARAM_STR);
+            $stmt->bindValue(':new_gender', $info["new_gender"], \PDO::PARAM_INT);
+            $stmt->bindValue(':new_age', $info["new_age"], \PDO::PARAM_INT);
             $stmt->bindValue(':created_at', date("Y/m/d H:i:s"), \PDO::PARAM_STR);
             $stmt->bindValue(':updated_at', date("Y/m/d H:i:s"), \PDO::PARAM_STR);
             $stmt->execute();

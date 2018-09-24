@@ -198,6 +198,10 @@ class EventParticipantsMapperTest extends Base\BaseTestCase
             'event_id' => 'b000005',
             'member_id' => '333333333333333333333333333333333',
             'join_flag' => 0,
+            'new_flag' => true,
+            'new_name' => "aaabbbccc",
+            'new_gender' => 2,
+            'new_age' => 3,
         );
 
         // メソッド実行
@@ -211,6 +215,11 @@ class EventParticipantsMapperTest extends Base\BaseTestCase
         $this->assertEquals($select['event_id'], $array['event_id']);
         $this->assertEquals($select['member_id'], $array['member_id']);
         $this->assertEquals($select['join_flag'], $array['join_flag']);
+        $this->assertEquals($select['new_flag'], $array['new_flag']);
+        $this->assertEquals($select['new_name'], $array['new_name']);
+        $this->assertEquals($select['new_gender'], $array['new_gender']);
+        $this->assertEquals($select['new_age'], $array['new_age']);
+
     }
 
     /**

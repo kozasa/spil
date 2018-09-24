@@ -38,20 +38,20 @@ class EventMapperTest extends Base\BaseTestCase
     public function testselectLatest(){
         // テストデータ投稿
         $this->container['db']->query(
-            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`, `created_at`, `updated_at`) 
-            VALUES (null,'event_id1','バドミントン１面','なんとか公園',CURRENT_DATE(),'11:11:11','22:22:22',501,0,0,CURRENT_DATE(),CURRENT_DATE())"
+            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`, `comment`,`created_at`, `updated_at`) 
+            VALUES (null,'event_id1','バドミントン１面','なんとか公園',CURRENT_DATE(),'11:11:11','22:22:22',501,0,0,'test',CURRENT_DATE(),CURRENT_DATE())"
         );
         $this->container['db']->query(
-            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`, `created_at`, `updated_at`) 
-            VALUES (null,'event_id2','バドミントン２面','なんとか公園あ',CURRENT_DATE()+1,'11:11:22','33:22:22',601,1,1,CURRENT_DATE(),CURRENT_DATE())"
+            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`, `comment`,`created_at`, `updated_at`) 
+            VALUES (null,'event_id2','バドミントン２面','なんとか公園あ',CURRENT_DATE()+1,'11:11:22','33:22:22',601,1,1,'test',CURRENT_DATE(),CURRENT_DATE())"
         );
         $this->container['db']->query(
-            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`, `created_at`, `updated_at`) 
-            VALUES (null,'event_id3','バドミントン３面','なんとか公園ああ',CURRENT_DATE()-1,'11:11:33','22:22:33',701,0,0,CURRENT_DATE(),CURRENT_DATE())"
+            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`, `comment`,`created_at`, `updated_at`) 
+            VALUES (null,'event_id3','バドミントン３面','なんとか公園ああ',CURRENT_DATE()-1,'11:11:33','22:22:33',701,0,0,'test',CURRENT_DATE(),CURRENT_DATE())"
         );
         $this->container['db']->query(
-            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`, `created_at`, `updated_at`) 
-            VALUES (null,'event_id4','バドミントン４面','なんとか公園あああ',CURRENT_DATE()+100,'11:11:44','22:22:44',801,0,0,CURRENT_DATE(),CURRENT_DATE())"
+            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`, `comment`,`created_at`, `updated_at`) 
+            VALUES (null,'event_id4','バドミントン４面','なんとか公園あああ',CURRENT_DATE()+100,'11:11:44','22:22:44',801,0,0,'test',CURRENT_DATE(),CURRENT_DATE())"
         );
 
         // メソッド実行
@@ -74,6 +74,7 @@ class EventMapperTest extends Base\BaseTestCase
             'fee' => '501',
             'before_seven_days' => '0',
             'before_one_day' => '0',
+            'comment' => 'test',
             'created_at' => $select['created_at'],
             'updated_at' => $select['updated_at'],
         );
@@ -92,6 +93,7 @@ class EventMapperTest extends Base\BaseTestCase
             'fee' => '601',
             'before_seven_days' => '1',
             'before_one_day' => '1',
+            'comment' => 'test',
             'created_at' => $select['created_at'],
             'updated_at' => $select['updated_at'],
         );
@@ -110,6 +112,7 @@ class EventMapperTest extends Base\BaseTestCase
             'fee' => '801',
             'before_seven_days' => '0',
             'before_one_day' => '0',
+            'comment' => 'test',
             'created_at' => $select['created_at'],
             'updated_at' => $select['updated_at'],
         );
@@ -127,8 +130,8 @@ class EventMapperTest extends Base\BaseTestCase
 
         // テストデータ投稿
         $this->container['db']->query(
-            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`, `created_at`, `updated_at`) 
-            VALUES (null,'event_id5','バドミントン１面','なんとか公園',CURRENT_DATE(),'11:11:11','22:22:22',501,0,0,CURRENT_DATE(),CURRENT_DATE())"
+            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`, `comment`,`created_at`, `updated_at`) 
+            VALUES (null,'event_id5','バドミントン１面','なんとか公園',CURRENT_DATE(),'11:11:11','22:22:22',501,0,0,'test',CURRENT_DATE(),CURRENT_DATE())"
         );
 
         // メソッド実行
@@ -149,6 +152,7 @@ class EventMapperTest extends Base\BaseTestCase
             'fee' => '501',
             'before_seven_days' => '0',
             'before_one_day' => '0',
+            'comment' => 'test',
             'created_at' => $select['created_at'],
             'updated_at' => $select['updated_at'],
         );
@@ -164,8 +168,8 @@ class EventMapperTest extends Base\BaseTestCase
 
         // テストデータ投稿
         $this->container['db']->query(
-            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`, `created_at`, `updated_at`) 
-            VALUES (100,'event_id7','バドミントン１面','なんとか公園',CURRENT_DATE(),'11:11:11','22:22:22',501,0,0,CURRENT_DATE(),CURRENT_DATE())"
+            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`,`comment`, `created_at`, `updated_at`) 
+            VALUES (100,'event_id7','バドミントン１面','なんとか公園',CURRENT_DATE(),'11:11:11','22:22:22',501,0,0,'test',CURRENT_DATE(),CURRENT_DATE())"
         );
 
         // メソッド実行
@@ -189,16 +193,16 @@ class EventMapperTest extends Base\BaseTestCase
 
         // テストデータ投稿
         $this->container['db']->query(
-            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`, `created_at`, `updated_at`) 
-            VALUES (null,'event_id2','バドミントン２面','なんとか公園あ',CURRENT_DATE()+1,'11:11:22','33:22:22',601,1,1,CURRENT_DATE(),CURRENT_DATE())"
+            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`,`comment`, `created_at`, `updated_at`) 
+            VALUES (null,'event_id2','バドミントン２面','なんとか公園あ',CURRENT_DATE()+1,'11:11:22','33:22:22',601,1,1,'test',CURRENT_DATE(),CURRENT_DATE())"
         );
         $this->container['db']->query(
-            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`, `created_at`, `updated_at`) 
-            VALUES (null,'event_id3','バドミントン３面','なんとか公園ああ',CURRENT_DATE()-1,'11:11:33','22:22:33',701,0,0,CURRENT_DATE(),CURRENT_DATE())"
+            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`,`comment`, `created_at`, `updated_at`) 
+            VALUES (null,'event_id3','バドミントン３面','なんとか公園ああ',CURRENT_DATE()-1,'11:11:33','22:22:33',701,0,0,'test',CURRENT_DATE(),CURRENT_DATE())"
         );
         $this->container['db']->query(
-            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`, `created_at`, `updated_at`) 
-            VALUES (null,'event_id4','バドミントン４面','なんとか公園あああ',CURRENT_DATE()+100,'11:11:44','22:22:44',801,0,0,CURRENT_DATE(),CURRENT_DATE())"
+            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`,`comment`, `created_at`, `updated_at`) 
+            VALUES (null,'event_id4','バドミントン４面','なんとか公園あああ',CURRENT_DATE()+100,'11:11:44','22:22:44',801,0,0,'test',CURRENT_DATE(),CURRENT_DATE())"
         );
 
         // メソッド実行
@@ -209,8 +213,8 @@ class EventMapperTest extends Base\BaseTestCase
 
         // テストデータ投稿
         $this->container['db']->query(
-            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`, `created_at`, `updated_at`) 
-            VALUES (null,'event_id1','バドミントン１面','なんとか公園',CURRENT_DATE(),'11:11:11','22:22:22',501,0,0,CURRENT_DATE(),CURRENT_DATE())"
+            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`,`comment`, `created_at`, `updated_at`) 
+            VALUES (null,'event_id1','バドミントン１面','なんとか公園',CURRENT_DATE(),'11:11:11','22:22:22',501,0,0,'test',CURRENT_DATE(),CURRENT_DATE())"
         );
 
         // メソッド実行
@@ -231,12 +235,12 @@ class EventMapperTest extends Base\BaseTestCase
          */
         // テストデータ投稿
         $this->container['db']->query(
-            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`, `created_at`, `updated_at`) 
-            VALUES (null,'event_id2','バドミントン２面','なんとか公園あ',DATE_ADD(CURRENT_DATE(),INTERVAL 7 DAY),'11:11:22','33:22:22',601,1,0,CURRENT_DATE(),CURRENT_DATE())"
+            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`,`comment`, `created_at`, `updated_at`) 
+            VALUES (null,'event_id2','バドミントン２面','なんとか公園あ',DATE_ADD(CURRENT_DATE(),INTERVAL 7 DAY),'11:11:22','33:22:22',601,1,0,'test',CURRENT_DATE(),CURRENT_DATE())"
         );
         $this->container['db']->query(
-            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`, `created_at`, `updated_at`) 
-            VALUES (null,'event_id2','バドミントン２面','なんとか公園あ',DATE_ADD(CURRENT_DATE(),INTERVAL 8 DAY),'11:11:22','33:22:22',601,0,0,CURRENT_DATE(),CURRENT_DATE())"
+            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`,`comment`, `created_at`, `updated_at`) 
+            VALUES (null,'event_id2','バドミントン２面','なんとか公園あ',DATE_ADD(CURRENT_DATE(),INTERVAL 8 DAY),'11:11:22','33:22:22',601,0,0,'test',CURRENT_DATE(),CURRENT_DATE())"
         );
 
         // メソッド実行
@@ -250,12 +254,12 @@ class EventMapperTest extends Base\BaseTestCase
          */
         // テストデータ投稿
         $this->container['db']->query(
-            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`, `created_at`, `updated_at`) 
-            VALUES (null,'event_id3','バドミントン３面','なんとか公園ああ',DATE_ADD(CURRENT_DATE(),INTERVAL 7 DAY),'11:11:33','22:22:33',701,0,0,CURRENT_DATE(),CURRENT_DATE())"
+            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`,`comment`, `created_at`, `updated_at`) 
+            VALUES (null,'event_id3','バドミントン３面','なんとか公園ああ',DATE_ADD(CURRENT_DATE(),INTERVAL 7 DAY),'11:11:33','22:22:33',701,0,0,'test',CURRENT_DATE(),CURRENT_DATE())"
         );
         $this->container['db']->query(
-            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`, `created_at`, `updated_at`) 
-            VALUES (null,'event_id4','バドミントン４面','なんとか公園あああ',DATE_ADD(CURRENT_DATE(),INTERVAL 6 DAY),'11:11:44','22:22:44',801,0,0,CURRENT_DATE(),CURRENT_DATE())"
+            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`,`comment`, `created_at`, `updated_at`) 
+            VALUES (null,'event_id4','バドミントン４面','なんとか公園あああ',DATE_ADD(CURRENT_DATE(),INTERVAL 6 DAY),'11:11:44','22:22:44',801,0,0,'test',CURRENT_DATE(),CURRENT_DATE())"
         );
 
         // メソッド実行
@@ -276,6 +280,7 @@ class EventMapperTest extends Base\BaseTestCase
             'fee' => '801',
             'before_seven_days' => '0',
             'before_one_day' => '0',
+            'comment' => 'test',
             'created_at' => $select['created_at'],
             'updated_at' => $select['updated_at'],
         );
@@ -288,12 +293,12 @@ class EventMapperTest extends Base\BaseTestCase
          */
         // テストデータ投稿
         $this->container['db']->query(
-            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`, `created_at`, `updated_at`) 
-            VALUES (null,'event_id2','バドミントン２面','なんとか公園あ',DATE_ADD(CURRENT_DATE(),INTERVAL 2 DAY),'11:11:22','33:22:22',601,0,0,CURRENT_DATE(),CURRENT_DATE())"
+            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`,`comment`, `created_at`, `updated_at`) 
+            VALUES (null,'event_id2','バドミントン２面','なんとか公園あ',DATE_ADD(CURRENT_DATE(),INTERVAL 2 DAY),'11:11:22','33:22:22',601,0,0,'test',CURRENT_DATE(),CURRENT_DATE())"
         );
         $this->container['db']->query(
-            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`, `created_at`, `updated_at`) 
-            VALUES (null,'event_id9','バドミントン２面','なんとか公園あ',DATE_ADD(CURRENT_DATE(),INTERVAL 1 DAY),'11:11:22','33:22:22',601,0,1,CURRENT_DATE(),CURRENT_DATE())"
+            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`,`comment`, `created_at`, `updated_at`) 
+            VALUES (null,'event_id9','バドミントン２面','なんとか公園あ',DATE_ADD(CURRENT_DATE(),INTERVAL 1 DAY),'11:11:22','33:22:22',601,0,1,'test',CURRENT_DATE(),CURRENT_DATE())"
         );
 
         // メソッド実行
@@ -307,12 +312,12 @@ class EventMapperTest extends Base\BaseTestCase
          */
         // テストデータ投稿
         $this->container['db']->query(
-            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`, `created_at`, `updated_at`) 
-            VALUES (null,'event_id3','バドミントン３面','なんとか公園ああ',DATE_ADD(CURRENT_DATE(),INTERVAL 1 DAY),'11:11:33','22:22:33',701,0,0,CURRENT_DATE(),CURRENT_DATE())"
+            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`,`comment`, `created_at`, `updated_at`) 
+            VALUES (null,'event_id3','バドミントン３面','なんとか公園ああ',DATE_ADD(CURRENT_DATE(),INTERVAL 1 DAY),'11:11:33','22:22:33',701,0,0,'test',CURRENT_DATE(),CURRENT_DATE())"
         );
         $this->container['db']->query(
-            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`, `created_at`, `updated_at`) 
-            VALUES (null,'event_id8','バドミントン４面','なんとか公園あああ',CURRENT_DATE(),'11:11:44','22:22:44',801,0,0,CURRENT_DATE(),CURRENT_DATE())"
+            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`,`comment`, `created_at`, `updated_at`) 
+            VALUES (null,'event_id8','バドミントン４面','なんとか公園あああ',CURRENT_DATE(),'11:11:44','22:22:44',801,0,0,'test',CURRENT_DATE(),CURRENT_DATE())"
         );
 
         // メソッド実行
@@ -333,6 +338,7 @@ class EventMapperTest extends Base\BaseTestCase
             'fee' => '801',
             'before_seven_days' => '0',
             'before_one_day' => '0',
+            'comment' => 'test',
             'created_at' => $select['created_at'],
             'updated_at' => $select['updated_at'],
         );
@@ -345,8 +351,8 @@ class EventMapperTest extends Base\BaseTestCase
          */
         // テストデータ投稿
         $this->container['db']->query(
-            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`, `created_at`, `updated_at`) 
-            VALUES (null,'event_id6','バドミントン３面','なんとか公園ああ',DATE_SUB(CURRENT_DATE(),INTERVAL 1 DAY),'11:11:33','22:22:33',701,0,0,CURRENT_DATE(),CURRENT_DATE())"
+            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`,`comment`, `created_at`, `updated_at`) 
+            VALUES (null,'event_id6','バドミントン３面','なんとか公園ああ',DATE_SUB(CURRENT_DATE(),INTERVAL 1 DAY),'11:11:33','22:22:33',701,0,0,'test',CURRENT_DATE(),CURRENT_DATE())"
         );
 
         // メソッド実行
@@ -367,6 +373,7 @@ class EventMapperTest extends Base\BaseTestCase
             'fee' => '601',
             'before_seven_days' => '0',
             'before_one_day' => '1',
+            'comment' => 'test',
             'created_at' => $select['created_at'],
             'updated_at' => $select['updated_at'],
         );
@@ -382,16 +389,16 @@ class EventMapperTest extends Base\BaseTestCase
 
         // テストデータ投稿
         $this->container['db']->query(
-            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`, `created_at`, `updated_at`) 
-            VALUES (null,'event_id2','バドミントン２面','なんとか公園あ',DATE_ADD(CURRENT_DATE(),INTERVAL 1 DAY),'11:11:22','33:22:22',601,1,1,CURRENT_DATE(),CURRENT_DATE())"
+            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`,`comment`, `created_at`, `updated_at`) 
+            VALUES (null,'event_id2','バドミントン２面','なんとか公園あ',DATE_ADD(CURRENT_DATE(),INTERVAL 1 DAY),'11:11:22','33:22:22',601,1,1,'test',CURRENT_DATE(),CURRENT_DATE())"
         );
         $this->container['db']->query(
-            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`, `created_at`, `updated_at`) 
-            VALUES (null,'event_id3','バドミントン３面','なんとか公園ああ',DATE_SUB(CURRENT_DATE(),INTERVAL 1 DAY),'11:11:33','22:22:33',701,0,0,CURRENT_DATE(),CURRENT_DATE())"
+            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`,`comment`, `created_at`, `updated_at`) 
+            VALUES (null,'event_id3','バドミントン３面','なんとか公園ああ',DATE_SUB(CURRENT_DATE(),INTERVAL 1 DAY),'11:11:33','22:22:33',701,0,0,'test',CURRENT_DATE(),CURRENT_DATE())"
         );
         $this->container['db']->query(
-            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`, `created_at`, `updated_at`) 
-            VALUES (null,'event_id4','バドミントン４面','なんとか公園あああ',DATE_ADD(CURRENT_DATE(),INTERVAL 100 DAY),'11:11:44','22:22:44',801,0,0,CURRENT_DATE(),CURRENT_DATE())"
+            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`,`comment`, `created_at`, `updated_at`) 
+            VALUES (null,'event_id4','バドミントン４面','なんとか公園あああ',DATE_ADD(CURRENT_DATE(),INTERVAL 100 DAY),'11:11:44','22:22:44',801,0,0,'test',CURRENT_DATE(),CURRENT_DATE())"
         );
 
         // メソッド実行
@@ -412,6 +419,7 @@ class EventMapperTest extends Base\BaseTestCase
             'fee' => '801',
             'before_seven_days' => '0',
             'before_one_day' => '0',
+            'comment' => 'test',
             'created_at' => $select['created_at'],
             'updated_at' => $select['updated_at'],
         );
@@ -428,16 +436,16 @@ class EventMapperTest extends Base\BaseTestCase
 
         // テストデータ投稿
         $this->container['db']->query(
-            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`, `created_at`, `updated_at`) 
-            VALUES (null,'event_id2','バドミントン２面','なんとか公園あ',cast('2018-07-21' as date),'11:11:22','33:22:22',601,1,1,CURRENT_DATE(),CURRENT_DATE())"
+            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`,`comment`, `created_at`, `updated_at`) 
+            VALUES (null,'event_id2','バドミントン２面','なんとか公園あ',cast('2018-07-21' as date),'11:11:22','33:22:22',601,1,1,'test',CURRENT_DATE(),CURRENT_DATE())"
         );
         $this->container['db']->query(
-            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`, `created_at`, `updated_at`) 
-            VALUES (null,'event_id3','バドミントン３面','なんとか公園ああ',DATE_ADD(CURRENT_DATE(),INTERVAL 2 DAY),'11:11:33','22:22:33',701,0,0,CURRENT_DATE(),CURRENT_DATE())"
+            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`,`comment`, `created_at`, `updated_at`) 
+            VALUES (null,'event_id3','バドミントン３面','なんとか公園ああ',DATE_ADD(CURRENT_DATE(),INTERVAL 2 DAY),'11:11:33','22:22:33',701,0,0,'test',CURRENT_DATE(),CURRENT_DATE())"
         );
         $this->container['db']->query(
-            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`, `created_at`, `updated_at`) 
-            VALUES (null,'event_id4','バドミントン４面','なんとか公園あああ',cast('2018-07-22' as date),'11:11:44','22:22:44',801,0,0,CURRENT_DATE(),CURRENT_DATE())"
+            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`,`comment`, `created_at`, `updated_at`) 
+            VALUES (null,'event_id4','バドミントン４面','なんとか公園あああ',cast('2018-07-22' as date),'11:11:44','22:22:44',801,0,0,'test',CURRENT_DATE(),CURRENT_DATE())"
         );
 
         /**
@@ -473,6 +481,7 @@ class EventMapperTest extends Base\BaseTestCase
             'fee' => '701',
             'before_seven_days' => '0',
             'before_one_day' => '0',
+            'comment' => 'test',
             'created_at' => $select['created_at'],
             'updated_at' => $select['updated_at'],
         );
@@ -489,8 +498,8 @@ class EventMapperTest extends Base\BaseTestCase
 
         // テストデータ投稿
         $this->container['db']->query(
-            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`, `created_at`, `updated_at`) 
-            VALUES (null,'event_id2','バドミントン２面','なんとか公園あ',cast('2018-07-21' as date),'11:11:22','33:22:22',601,1,1,CURRENT_DATE(),CURRENT_DATE())"
+            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`,`comment`, `created_at`, `updated_at`) 
+            VALUES (null,'event_id2','バドミントン２面','なんとか公園あ',cast('2018-07-21' as date),'11:11:22','33:22:22',601,1,1,'test',CURRENT_DATE(),CURRENT_DATE())"
         );
 
         // テストデータ作成
@@ -531,16 +540,16 @@ class EventMapperTest extends Base\BaseTestCase
 
         // テストデータ投稿
         $this->container['db']->query(
-            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`, `created_at`, `updated_at`) 
-            VALUES (null,'event_id2','バドミントン２面','なんとか公園あ',cast('2018-07-21' as date),'11:11:22','33:22:22',601,0,0,CURRENT_DATE(),CURRENT_DATE())"
+            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`,`comment`, `created_at`, `updated_at`) 
+            VALUES (null,'event_id2','バドミントン２面','なんとか公園あ',cast('2018-07-21' as date),'11:11:22','33:22:22',601,0,0,'test',CURRENT_DATE(),CURRENT_DATE())"
         );
         $this->container['db']->query(
-            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`, `created_at`, `updated_at`) 
-            VALUES (null,'event_id3','バドミントン３面','なんとか公園ああ',DATE_ADD(CURRENT_DATE(),INTERVAL 2 DAY),'11:11:33','22:22:33',701,0,0,CURRENT_DATE(),CURRENT_DATE())"
+            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`,`comment`, `created_at`, `updated_at`) 
+            VALUES (null,'event_id3','バドミントン３面','なんとか公園ああ',DATE_ADD(CURRENT_DATE(),INTERVAL 2 DAY),'11:11:33','22:22:33',701,0,0,'test',CURRENT_DATE(),CURRENT_DATE())"
         );
         $this->container['db']->query(
-            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`, `created_at`, `updated_at`) 
-            VALUES (null,'event_id4','バドミントン４面','なんとか公園あああ',cast('2018-07-22' as date),'11:11:44','22:22:44',801,0,0,CURRENT_DATE(),CURRENT_DATE())"
+            "INSERT INTO `event`(`id`, `event_id`, `title`, `place`, `event_date`, `start_time`, `end_time`, `fee`, `before_seven_days`, `before_one_day`,`comment`, `created_at`, `updated_at`) 
+            VALUES (null,'event_id4','バドミントン４面','なんとか公園あああ',cast('2018-07-22' as date),'11:11:44','22:22:44',801,0,0,'test',CURRENT_DATE(),CURRENT_DATE())"
         );
 
         /**
@@ -585,6 +594,7 @@ class EventMapperTest extends Base\BaseTestCase
             'event_date' => '2018-11-22',
             'start_time' => '11:11:44',
             'end_time' => '22:22:44',
+            'comment' => 'test',
             'fee' => '801'
         );
 
@@ -605,5 +615,6 @@ class EventMapperTest extends Base\BaseTestCase
         $this->assertEquals($select['start_time'], $array['start_time']);
         $this->assertEquals($select['end_time'], $array['end_time']);
         $this->assertEquals($select['fee'], $array['fee']);
+        $this->assertEquals($select['comment'], $array['comment']);
     }
 }

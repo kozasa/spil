@@ -205,8 +205,8 @@ class EventMapper extends \Classes\Mapper\Mapper
      */
     public function insert(array $info){
 
-        $sql = 'INSERT INTO event (event_id,title,place,event_date,start_time,end_time,fee,before_seven_days,before_one_day,created_at,updated_at) 
-            VALUES (:event_id,:title,:place,:event_date,:start_time,:end_time,:fee,0,0,NOW(),NOW())';
+        $sql = 'INSERT INTO event (event_id,title,place,event_date,start_time,end_time,fee,before_seven_days,before_one_day,comment,created_at,updated_at) 
+            VALUES (:event_id,:title,:place,:event_date,:start_time,:end_time,:fee,0,0,:comment,NOW(),NOW())';
 
         $query = $this->db->prepare($sql);
         $query->bindParam(':event_id', $info['event_id'], \PDO::PARAM_STR);
@@ -216,6 +216,7 @@ class EventMapper extends \Classes\Mapper\Mapper
         $query->bindParam(':start_time', $info['start_time'], \PDO::PARAM_STR);
         $query->bindParam(':end_time', $info['end_time'], \PDO::PARAM_STR);
         $query->bindParam(':fee', $info['fee'], \PDO::PARAM_INT);
+        $query->bindParam(':comment', $info['comment'], \PDO::PARAM_STR);
         $query->execute();
 
         return $info['event_id'];

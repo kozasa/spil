@@ -18,19 +18,23 @@
             <h6 style="color:red"><?= $error_msg; ?></h3>
 
             <div class="form-group">
-                <select class="form-control form-control-lg" name="title"><optgroup label="タイトル">
-                <option value="バドミントン1面" <?php if($event['title'] == "バドミントン1面"):?> selected=""<?php endif; ?> >バドミントン1面</option>
-                <option value="バドミントン2面" <?php if($event['title'] == "バドミントン2面"):?> selected=""<?php endif; ?> >バドミントン2面</option>
-                <option value="バドミントン3面" <?php if($event['title'] == "バドミントン3面"):?> selected=""<?php endif; ?> >バドミントン3面</option>
-                </optgroup></select>
+                <input class="form-control form-control-lg" type="text" name="title" list="badminton" placeholder="テキスト入力もしくはダブルクリック" autocomplete="off" value="<?php echo $event['title'] ?>">
+                <datalist id="badminton">
+                    <option value="バドミントン1面">
+                    <option value="バドミントン2面">
+                    <option value="バドミントン3面">
+                </datalist>
             </div>
 
             <div class="form-group"><select class="form-control form-control-lg" name="place"><optgroup label="場所">
                 <option value="中村生涯学習センター" <?php if($event['place'] == "中村生涯学習センター"):?> selected=""<?php endif; ?>>中村生涯学習センター</option>
                 <option value="中川生涯学習センター" <?php if($event['place'] == "中川生涯学習センター"):?> selected=""<?php endif; ?>>中川生涯学習センター</option>
                 <option value="港生涯学習センター" <?php if($event['place'] == "港生涯学習センター"):?> selected=""<?php endif; ?>>港生涯学習センター</option>
+                <option value="西生涯学習センター" <?php if($event['place'] == "西生涯学習センター"):?> selected=""<?php endif; ?>>西生涯学習センター</option>
                 <option value="山田地区会館" <?php if($event['place'] == "山田地区会館"):?> selected=""<?php endif; ?>>山田地区会館</option>
                 <option value="富田地区会館" <?php if($event['place'] == "富田地区会館"):?> selected=""<?php endif; ?>>富田地区会館</option>
+                <option value="藤前会館" <?php if($event['place'] == "藤前会館"):?> selected=""<?php endif; ?>>藤前会館</option>
+                <option value="ウィングアリーナ刈谷" <?php if($event['place'] == "ウィングアリーナ刈谷"):?> selected=""<?php endif; ?>>ウィングアリーナ刈谷</option>
                 </optgroup></select>
             </div>
             

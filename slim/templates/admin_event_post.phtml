@@ -16,14 +16,34 @@
         <form method="post">
             <h2 class="text-center">イベント情報投稿</h2>
             <h6 style="color:red"><?= $error_msg; ?></h3>
-            <div class="form-group"><select class="form-control form-control-lg" name="title"><optgroup label="タイトル"><option value="バドミントン1面" selected="">バドミントン1面</option><option value="バドミントン2面">バドミントン2面</option><option value="バドミントン3面">バドミントン3面</option></optgroup></select></div>
-            <div
-                class="form-group"><select class="form-control form-control-lg" name="place"><optgroup label="場所"><option value="中村生涯学習センター" selected="">中村生涯学習センター</option><option value="中川生涯学習センター">中川生涯学習センター</option><option value="港生涯学習センター">港生涯学習センター</option><option value="山田地区会館">山田地区会館</option><option value="富田地区会館">富田地区会館</option></optgroup></select></div>
+            <div class="form-group">
+                <input class="form-control form-control-lg" type="text" name="title" list="badminton" placeholder="テキスト入力もしくはダブルクリック" autocomplete="off">
+                <datalist id="badminton">
+                    <option value="バドミントン1面">
+                    <option value="バドミントン2面">
+                    <option value="バドミントン3面">
+                </datalist>
+            </div>
+            <div class="form-group">
+                <select class="form-control form-control-lg" name="place">
+                    <optgroup label="場所">
+                        <option value="中村生涯学習センター" selected="">中村生涯学習センター</option>
+                        <option value="中川生涯学習センター">中川生涯学習センター</option>
+                        <option value="港生涯学習センター">港生涯学習センター</option>
+                        <option value="西生涯学習センター">西生涯学習センター</option>
+                        <option value="山田地区会館">山田地区会館</option>
+                        <option value="富田地区会館">富田地区会館</option>
+                        <option value="藤前会館">藤前会館</option>
+                        <option value="ウィングアリーナ刈谷">ウィングアリーナ刈谷</option>
+                    </optgroup>
+                </select>
+            </div>
     <div
         class="form-group"><input class="form-control form-control-lg" type="date" name="event_date"></div>
         <div class="form-group d-flex"><input class="form-control form-control-lg" type="time" name="start_time" style="width:150px;">
             <h2 style="margin-right:20px;margin-left:20px;margin-bottom:0px;">〜</h2><input class="form-control form-control-lg" type="time" name="end_time" style="width:150px;"></div>
         <div class="form-group"><select class="form-control form-control-lg" name="fee"><optgroup label="料金"><option value="500" selected="">500円</option></optgroup></select></div>
+        <div class="form-group"><input type="text" name="comment" placeholder="コメント（任意入力）" class="form-control" /></div>
         <br>
         <div class="form-group"><button class="btn btn-primary btn-block" type="submit">send</button></div>
         <div class="form-group"><a href="../menu/" style="font-size:20px;">Back</a></div>

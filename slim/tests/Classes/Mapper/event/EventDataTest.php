@@ -38,6 +38,7 @@ class EventDataTest extends Base\BaseTestCase
             'before_one_day' => 'before_one_dayxxx',
             'created_at' => 'created_atxxx',
             'updated_at' => 'updated_atxxx',
+            'comment' => 'comment_aaaa',
         );
         $object = new Event\EventData($data);
         
@@ -63,6 +64,8 @@ class EventDataTest extends Base\BaseTestCase
         $before_seven_days->setAccessible(true);
         $before_one_day = $reflectionClass->getProperty('before_one_day');
         $before_one_day->setAccessible(true);
+        $comment = $reflectionClass->getProperty('comment');
+        $comment->setAccessible(true);
         $created_at = $reflectionClass->getProperty('created_at');
         $created_at->setAccessible(true);
         $updated_at = $reflectionClass->getProperty('updated_at');
@@ -108,6 +111,10 @@ class EventDataTest extends Base\BaseTestCase
         $before_one_dayValue = $before_one_day->getValue($object);
         $this->assertEquals($before_one_dayValue,$data['before_one_day']);
 
+        // comment
+        $comment = $comment->getValue($object);
+        $this->assertEquals($comment,$data['comment']);
+
         // created_at
         $created_atValue = $created_at->getValue($object);
         $this->assertEquals($created_atValue,$data['created_at']);
@@ -135,6 +142,7 @@ class EventDataTest extends Base\BaseTestCase
             'fee' => 'feexxx',
             'before_seven_days' => 'before_seven_daysxxx',
             'before_one_day' => 'before_one_dayxxx',
+            'comment' => 'comment_aaaa',
             'created_at' => 'created_atxxx',
             'updated_at' => 'updated_atxxx',
         );
@@ -161,6 +169,7 @@ class EventDataTest extends Base\BaseTestCase
             'fee' => 'feexxx',
             'before_seven_days' => 'before_seven_daysxxx',
             'before_one_day' => 'before_one_dayxxx',
+            'comment' => 'comment_aaaa',
             'created_at' => 'created_atxxx',
             'updated_at' => 'updated_atxxx',
         );
@@ -187,6 +196,7 @@ class EventDataTest extends Base\BaseTestCase
             'fee' => 'feexxx',
             'before_seven_days' => 'before_seven_daysxxx',
             'before_one_day' => 'before_one_dayxxx',
+            'comment' => 'comment_aaaa',
             'created_at' => 'created_atxxx',
             'updated_at' => 'updated_atxxx',
         );
@@ -213,6 +223,7 @@ class EventDataTest extends Base\BaseTestCase
             'fee' => 'feexxx',
             'before_seven_days' => 'before_seven_daysxxx',
             'before_one_day' => 'before_one_dayxxx',
+            'comment' => 'comment_aaaa',
             'created_at' => 'created_atxxx',
             'updated_at' => 'updated_atxxx',
         );
@@ -239,6 +250,7 @@ class EventDataTest extends Base\BaseTestCase
             'fee' => 'feexxx',
             'before_seven_days' => 'before_seven_daysxxx',
             'before_one_day' => 'before_one_dayxxx',
+            'comment' => 'comment_aaaa',
             'created_at' => 'created_atxxx',
             'updated_at' => 'updated_atxxx',
         );
@@ -265,6 +277,7 @@ class EventDataTest extends Base\BaseTestCase
             'fee' => 'feexxx',
             'before_seven_days' => 'before_seven_daysxxx',
             'before_one_day' => 'before_one_dayxxx',
+            'comment' => 'comment_aaaa',
             'created_at' => 'created_atxxx',
             'updated_at' => 'updated_atxxx',
         );
@@ -291,6 +304,7 @@ class EventDataTest extends Base\BaseTestCase
             'fee' => 'feexxx',
             'before_seven_days' => 'before_seven_daysxxx',
             'before_one_day' => 'before_one_dayxxx',
+            'comment' => 'comment_aaaa',
             'created_at' => 'created_atxxx',
             'updated_at' => 'updated_atxxx',
         );
@@ -317,6 +331,7 @@ class EventDataTest extends Base\BaseTestCase
             'fee' => 'feexxx',
             'before_seven_days' => 'before_seven_daysxxx',
             'before_one_day' => 'before_one_dayxxx',
+            'comment' => 'comment_aaaa',
             'created_at' => 'created_atxxx',
             'updated_at' => 'updated_atxxx',
         );
@@ -343,6 +358,7 @@ class EventDataTest extends Base\BaseTestCase
             'fee' => 'feexxx',
             'before_seven_days' => 'before_seven_daysxxx',
             'before_one_day' => 'before_one_dayxxx',
+            'comment' => 'comment_aaaa',
             'created_at' => 'created_atxxx',
             'updated_at' => 'updated_atxxx',
         );
@@ -369,6 +385,7 @@ class EventDataTest extends Base\BaseTestCase
             'fee' => 'feexxx',
             'before_seven_days' => 'before_seven_daysxxx',
             'before_one_day' => 'before_one_dayxxx',
+            'comment' => 'comment_aaaa',
             'created_at' => 'created_atxxx',
             'updated_at' => 'updated_atxxx',
         );
@@ -396,6 +413,7 @@ class EventDataTest extends Base\BaseTestCase
             'fee' => 'feexxx',
             'before_seven_days' => 'before_seven_daysxxx',
             'before_one_day' => 'before_one_dayxxx',
+            'comment' => 'comment_aaaa',
             'created_at' => 'created_atxxx',
             'updated_at' => 'updated_atxxx',
         );
@@ -423,6 +441,7 @@ class EventDataTest extends Base\BaseTestCase
             'fee' => 'feexxx',
             'before_seven_days' => 'before_seven_daysxxx',
             'before_one_day' => 'before_one_dayxxx',
+            'comment' => 'comment_aaaa',
             'created_at' => 'created_atxxx',
             'updated_at' => 'updated_atxxx',
         );
@@ -450,6 +469,7 @@ class EventDataTest extends Base\BaseTestCase
             'fee' => 'feexxx',
             'before_seven_days' => 'before_seven_daysxxx',
             'before_one_day' => 'before_one_dayxxx',
+            'comment' => 'comment_aaaa',
             'created_at' => 'created_atxxx',
             'updated_at' => 'updated_atxxx',
         );
@@ -477,6 +497,7 @@ class EventDataTest extends Base\BaseTestCase
             'fee' => 'feexxx',
             'before_seven_days' => 'before_seven_daysxxx',
             'before_one_day' => 'before_one_dayxxx',
+            'comment' => 'comment_aaaa',
             'created_at' => 'created_atxxx',
             'updated_at' => 'updated_atxxx',
         );
@@ -504,6 +525,7 @@ class EventDataTest extends Base\BaseTestCase
             'fee' => 'feexxx',
             'before_seven_days' => 'before_seven_daysxxx',
             'before_one_day' => 'before_one_dayxxx',
+            'comment' => 'comment_aaaa',
             'created_at' => 'created_atxxx',
             'updated_at' => 'updated_atxxx',
         );

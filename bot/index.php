@@ -6,6 +6,9 @@ require('../slim/classes/utility/LineBotMassage.php');
 require('../slim/classes/utility/LineBotPush.php');
 require('../slim/classes/model/Model.php');
 require('../slim/classes/model/LineBotRecieveModel.php');
+require('../slim/classes/mapper/Mapper.php');
+require('../slim/classes/mapper/event/EventMapper.php');
+require('../slim/classes/mapper/event/EventData.php');
 
 $myclass = new MyBot;
 $myclass->main();

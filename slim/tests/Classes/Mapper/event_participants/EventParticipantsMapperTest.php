@@ -255,7 +255,7 @@ class EventParticipantsMapperTest extends Base\BaseTestCase
         $array = array(
             'join_flag' => 0,
             'member_id' => '222222222222222222222222222222222',
-            'eventId' => 'b000005',
+            'event_id' => 'b000005',
         );
 
         // メソッド実行

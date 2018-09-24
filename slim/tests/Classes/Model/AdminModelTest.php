@@ -402,7 +402,7 @@ class AdminModelTest extends Base\BaseTestCase
             'name' => '田中太郎',
             'gender' => 1,
             'age' => 3,
-            'join_day' => '2018-01-03',
+            'event_id' => '2018-01-03',
         );
     
         // DB挿入mock作成
@@ -411,7 +411,9 @@ class AdminModelTest extends Base\BaseTestCase
                 'name' => '田中太郎',
                 'gender' => 1,
                 'age' => 3,
-                'join_day' => '2018-01-03',
+                'event_id' => '2018-01-03',
+                'member_id' => '',
+                'join_flag' => true
             )){
                 return false;
             }else{
@@ -433,7 +435,7 @@ class AdminModelTest extends Base\BaseTestCase
             'name' => '田中太郎',
             'gender' => 1,
             'age' => 3,
-            'join_day' => '2018-01-03',
+            'event_id' => '2018-01-03',
         );
     
         // DB挿入mock作成
@@ -442,7 +444,9 @@ class AdminModelTest extends Base\BaseTestCase
                 'name' => '田中太郎',
                 'gender' => 1,
                 'age' => 3,
-                'join_day' => '2018-01-03',
+                'event_id' => '2018-01-03',
+                'member_id' => '',
+                'join_flag' => true
             )){
                 return true;
             }else{
@@ -971,7 +975,7 @@ class AdminModelTest extends Base\BaseTestCase
             'name' => 'name',
             'gender' => 2,
             'age' => 4,
-            'join_day' => '11-22-11'
+            'event_id' => 't11111'
         );
 
         // 実行

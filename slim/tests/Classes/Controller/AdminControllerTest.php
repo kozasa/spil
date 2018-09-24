@@ -450,7 +450,7 @@ class AdminControllerTest extends Base\BaseTestCase
             }
         }]); 
 
-        $response = $this->runApp('POST', '/admin/newpost/',array('post'=>'post','user'=>'aaa','join_day'=>'b000004'));
+        $response = $this->runApp('POST', '/admin/newpost/',array('post'=>'post','user'=>'aaa','event_id'=>'b000004'));
         // リダイレクト
         $this->assertEquals(302, $response->getStatusCode());
         // リダイレクト先取得

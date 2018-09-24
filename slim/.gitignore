@@ -3,3 +3,4 @@
 /logs/*
 !/logs/README.md
 /src/settings_param.php
+composer.lock

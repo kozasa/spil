@@ -327,7 +327,7 @@ class AdminController extends Controller
             // 日付の情報を取得
             $date = null;
             foreach($latest_info as $info){
-                if($info['event_id'] == $post_data['join_day']){
+                if($info['event_id'] == $post_data['event_id']){
                     $date = $info['event_date'];
                 }
             }

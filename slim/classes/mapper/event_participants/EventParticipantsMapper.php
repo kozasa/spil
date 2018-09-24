@@ -60,7 +60,7 @@ class EventParticipantsMapper extends \Classes\Mapper\Mapper
      * 挿入（既存メンバー）
      *
      * @param array $info
-     * @return void
+     * @return bool
      */
     public function insert(array $info){
 
@@ -69,13 +69,15 @@ class EventParticipantsMapper extends \Classes\Mapper\Mapper
             $stmt = $this->db->prepare($sql);
             
             $stmt->bindValue(':id', null, \PDO::PARAM_INT);
-            $stmt->bindValue(':event_id', $info["eventId"], \PDO::PARAM_STR);
+            $stmt->bindValue(':event_id', $info["event_id"], \PDO::PARAM_STR);
             $stmt->bindValue(':member_id', $info["member_id"], \PDO::PARAM_STR);
             $stmt->bindValue(':join_flag', $info["join_flag"], \PDO::PARAM_INT);
             $stmt->bindValue(':new_flag', false, \PDO::PARAM_INT);
             $stmt->bindValue(':created_at', date("Y/m/d H:i:s"), \PDO::PARAM_STR);
             $stmt->bindValue(':updated_at', date("Y/m/d H:i:s"), \PDO::PARAM_STR);
             $stmt->execute();
+
+        return true;
     }
 
     /**

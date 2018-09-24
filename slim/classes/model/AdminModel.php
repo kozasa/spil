@@ -146,6 +146,10 @@ class AdminModel extends Model
             return false;
         }
 
+        // 新規登録者のメンバーID、joinFlgを設定（空欄）
+        $postData['member_id'] = '';
+        $postData['join_flag'] = true;
+
         // DB挿入
         $participantsMapper = new EventParticipants\EventParticipantsMapper($this->db);
         $result = $participantsMapper->insert($postData);
@@ -302,7 +306,7 @@ class AdminModel extends Model
     private function checkRegistantPost($info){
 
         if(!empty($info['name']) && !empty($info['gender']) 
-        && !empty($info['age']) && !empty($info['join_day']))
+        && !empty($info['age']) && !empty($info['event_id']))
         {
             return true;
         }

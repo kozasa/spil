@@ -195,7 +195,7 @@ class EventParticipantsMapperTest extends Base\BaseTestCase
 
         // 挿入データ
         $array = array(
-            'eventId' => 'b000005',
+            'event_id' => 'b000005',
             'member_id' => '333333333333333333333333333333333',
             'join_flag' => 0,
         );
@@ -208,7 +208,7 @@ class EventParticipantsMapperTest extends Base\BaseTestCase
         $stmt = $this->container['db']->query("SELECT * FROM `event_participants` WHERE event_id = 'b000005'");
         $select = $stmt->fetch();
 
-        $this->assertEquals($select['event_id'], $array['eventId']);
+        $this->assertEquals($select['event_id'], $array['event_id']);
         $this->assertEquals($select['member_id'], $array['member_id']);
         $this->assertEquals($select['join_flag'], $array['join_flag']);
     }

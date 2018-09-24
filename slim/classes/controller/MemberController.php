@@ -220,13 +220,13 @@ class MemberController extends Controller
 
             $data = array(
                 'action' => $_SESSION['arg1'],
-                'eventId' => $_SESSION['arg2'],
+                'event_id' => $_SESSION['arg2'],
             );
             // 参加不参加の登録処理
             $model->authCallbackEventAction($data,$_SESSION['user']);
 
             // イベント詳細画面へリダイレクト
-            return $response->withStatus(302)->withHeader('Location', '../event/'.$data['eventId'].'/'.$data['action']);
+            return $response->withStatus(302)->withHeader('Location', '../event/'.$data['event_id'].'/'.$data['action']);
         }
 
         return $this->container->renderer->render(

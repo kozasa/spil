@@ -142,6 +142,13 @@ class MemberModel extends Model
 
     }
 
+    /**
+     * LINEコールバックイベント参加登録アクション
+     *
+     * @param array $data
+     * @param string $userId
+     * @return void
+     */
     public function authCallbackEventAction(array $data,string $userId){
 
         // 参加、不参加
@@ -156,7 +163,7 @@ class MemberModel extends Model
 
         // イベント情報テーブルに登録されているか確認
         $mapper = new EventParticipants\EventParticipantsMapper($this->db);
-        $isExist = $mapper->selectExistFromUseridAndEventid($data['member_id'],$data["eventId"]);
+        $isExist = $mapper->selectExistFromUseridAndEventid($data['member_id'],$data["event_id"]);
         
         if($isExist){
             // 登録されている場合、UPDATE処理

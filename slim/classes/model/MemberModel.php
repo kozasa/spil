@@ -172,6 +172,11 @@ class MemberModel extends Model
 
         }else{
             // 登録されていない場合、INSERT処理
+            $data['new_flag'] = false;
+            $data['new_name'] = "";
+            $data['new_gender'] = 0;
+            $data['new_age'] = 0;
+
             $mapper->insert($data);
         }
     }

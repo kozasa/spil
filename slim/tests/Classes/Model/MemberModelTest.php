@@ -547,7 +547,11 @@ class MemberModelTest extends Base\BaseTestCase
                 'action' => "exit",
                 'event_id' => "eventId",
                 'join_flag'=>false,
-                'member_id' => "userId"
+                'member_id' => "userId",
+                'new_flag' => false,
+                'new_name' => "",
+                'new_gender' => 0,
+                'new_age' => 0
             )){
                 return true;
             }else{

@@ -16,9 +16,12 @@ class HomeModel extends Model
         
         $mapper = new event\EventMapper($this->db);
         $latest_info = $mapper->selectLatest();
+        
+        // 2面のみ取得
+        $latest_2court = array_filter($latest_info, function($v){return $v->getTitle() == "バドミントン2面";});
 
         // 直近３日程を取り出す
-        $latest_3day = array_slice($latest_info,0,3);
+        $latest_3day = array_slice($latest_2court,0,3);
 
         $result = array();
         foreach ($latest_3day as $row) {

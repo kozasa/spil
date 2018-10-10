@@ -23,9 +23,9 @@ class HomeModelTest extends Base\BaseTestCase
         $array = array(
             'id' => 1,
             'event_id' => 'event_id1',
-            'title' => 'バドミントン１面',
+            'title' => 'バドミントン1面',
             'place' => 'なんとか公園',
-            'event_date' => '2018-01-03',
+            'event_date' => '2018-01-01',
             'start_time' => '11:11:11',
             'end_time' => '22:22:22',
             'fee' => '501',
@@ -40,9 +40,9 @@ class HomeModelTest extends Base\BaseTestCase
         $array = array(
             'id' => 2,
             'event_id' => 'event_id2',
-            'title' => 'バドミントン２面',
+            'title' => 'バドミントン2面',
             'place' => 'なんとか公園あ',
-            'event_date' => '2018-01-01',
+            'event_date' => '2018-01-02',
             'start_time' => '11:11:22',
             'end_time' => '11:22:22',
             'fee' => '601',
@@ -56,10 +56,10 @@ class HomeModelTest extends Base\BaseTestCase
 
         $array = array(
             'id' => 3,
-            'event_id' => 'event_id4',
-            'title' => 'バドミントン４面',
+            'event_id' => 'event_id3',
+            'title' => 'バドミントン2面',
             'place' => 'なんとか公園あああ',
-            'event_date' => '2018-01-02',
+            'event_date' => '2018-01-03',
             'start_time' => '11:11:44',
             'end_time' => '22:22:44',
             'fee' => '801',
@@ -73,10 +73,10 @@ class HomeModelTest extends Base\BaseTestCase
 
         $array = array(
             'id' => 4,
-            'event_id' => 'event_id5',
-            'title' => 'バドミントン6面',
+            'event_id' => 'event_id4',
+            'title' => 'バドミントン4面',
             'place' => 'なんとか公園あああaaaaaaaaaa',
-            'event_date' => '2018-01-02',
+            'event_date' => '2018-01-04',
             'start_time' => '11:11:44',
             'end_time' => '22:22:44',
             'fee' => '801',
@@ -90,10 +90,28 @@ class HomeModelTest extends Base\BaseTestCase
 
         $array = array(
             'id' => 5,
-            'event_id' => 'event_id6',
-            'title' => 'バドミントン7面',
+            'event_id' => 'event_id5',
+            'title' => 'バドミントン2面',
             'place' => 'なんとか公園あああbbbbbbbbb',
-            'event_date' => '2018-01-02',
+            'event_date' => '2018-01-05',
+            'start_time' => '11:11:44',
+            'end_time' => '22:22:44',
+            'fee' => '801',
+            'before_seven_days' => '0',
+            'before_one_day' => '0',
+            'created_at' => '',
+            'updated_at' => '',
+        );
+        $data = new Event\EventData($array);
+        array_push($testResult,$data);
+
+
+        $array = array(
+            'id' => 6,
+            'event_id' => 'event_id6',
+            'title' => 'バドミントン2面',
+            'place' => 'なんとか公園あああbbbbbbbbb',
+            'event_date' => '2018-01-06',
             'start_time' => '11:11:44',
             'end_time' => '22:22:44',
             'fee' => '801',
@@ -114,9 +132,19 @@ class HomeModelTest extends Base\BaseTestCase
         //検証用データ
         $testResult2 = array();
         $array = array(
-            'event_id' => 'event_id1',
-            'title' => 'バドミントン１面',
-            'place' => 'なんとか公園',
+            'event_id' => 'event_id2',
+            'title' => 'バドミントン2面',
+            'place' => 'なんとか公園あ',
+            'event_date' => '01月02日 (火)',
+            'start_time' => '11:11',
+            'end_time' => '11:22',
+        );
+        array_push($testResult2,$array);
+
+        $array = array(
+            'event_id' => 'event_id3',
+            'title' => 'バドミントン2面',
+            'place' => 'なんとか公園あああ',
             'event_date' => '01月03日 (水)',
             'start_time' => '11:11',
             'end_time' => '22:22',
@@ -124,20 +152,10 @@ class HomeModelTest extends Base\BaseTestCase
         array_push($testResult2,$array);
 
         $array = array(
-            'event_id' => 'event_id2',
-            'title' => 'バドミントン２面',
-            'place' => 'なんとか公園あ',
-            'event_date' => '01月01日 (月)',
-            'start_time' => '11:11',
-            'end_time' => '11:22',
-        );
-        array_push($testResult2,$array);
-
-        $array = array(
-            'event_id' => 'event_id4',
-            'title' => 'バドミントン４面',
-            'place' => 'なんとか公園あああ',
-            'event_date' => '01月02日 (火)',
+            'event_id' => 'event_id5',
+            'title' => 'バドミントン2面',
+            'place' => 'なんとか公園あああbbbbbbbbb',
+            'event_date' => '01月05日 (金)',
             'start_time' => '11:11',
             'end_time' => '22:22',
         );

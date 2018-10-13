@@ -29,7 +29,7 @@ class EventData
         $this->fee = $data['fee'];
         $this->before_seven_days = $data['before_seven_days'];
         $this->before_one_day = $data['before_one_day'];
-        $this->comment = isset($data['comment']) ? $data['comment']: "";
+        $this->comment = isset($data['comment']) ? $data['comment']: " ";
         $this->created_at = $data['created_at'];
         $this->updated_at = $data['updated_at'];
     }

@@ -201,6 +201,7 @@ class AdminModel extends Model
                 'start_time' => $isEventInfo1->getStartTime(),
                 'end_time' => $isEventInfo1->getEndTime(),
                 'fee' => $isEventInfo1->getFee(),
+                'comment' => $isEventInfo1->getComment(),
             );
 
             // 1日前をセット
@@ -234,6 +235,7 @@ class AdminModel extends Model
                 'start_time' => $isEventInfo7->getStartTime(),
                 'end_time' => $isEventInfo7->getEndTime(),
                 'fee' => $isEventInfo7->getFee(),
+                'comment' => $isEventInfo7->getComment(),
             );
 
             // 7日前をセット

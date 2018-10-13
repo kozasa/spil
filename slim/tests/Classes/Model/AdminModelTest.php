@@ -565,6 +565,7 @@ class AdminModelTest extends Base\BaseTestCase
             'before_one_day' => '0',
             'created_at' => '',
             'updated_at' => '',
+            'comment' => 'aabbbcc',
         );
         $data = new Event\EventData($array);
         $mock1 = test::double('\Classes\Mapper\Event\EventMapper', ['isBeforeDaysInfo' => $data]); 
@@ -585,6 +586,7 @@ class AdminModelTest extends Base\BaseTestCase
                     'before_one_day' => '0',
                     'created_at' => '',
                     'updated_at' => '',
+                    'comment' => 'aabbbcc',
                 );
                 $data = new Event\EventData($array);
                 return $data;
@@ -606,6 +608,7 @@ class AdminModelTest extends Base\BaseTestCase
             'end_time' => '22:22',
             'fee' => '501',
             'day' => 1,
+            'comment' => 'aabbbcc',
         );
 
         $this->assertEquals($result, $testResult);
@@ -641,6 +644,7 @@ class AdminModelTest extends Base\BaseTestCase
             'before_one_day' => '0',
             'created_at' => '',
             'updated_at' => '',
+            'comment' => 'aabbbcc',
         );
         $data = new Event\EventData($array);
 
@@ -659,6 +663,7 @@ class AdminModelTest extends Base\BaseTestCase
                     'before_one_day' => '0',
                     'created_at' => '',
                     'updated_at' => '',
+                    'comment' => 'aabbbcc',
                 );
                 $data = new Event\EventData($array);
                 return $data;
@@ -685,6 +690,7 @@ class AdminModelTest extends Base\BaseTestCase
                     'before_one_day' => '0',
                     'created_at' => '',
                     'updated_at' => '',
+                    'comment' => 'aabbbcc',
                 );
                 $data = new Event\EventData($array);
                 return $data;
@@ -706,6 +712,7 @@ class AdminModelTest extends Base\BaseTestCase
             'end_time' => '22:22',
             'fee' => '501',
             'day' => 7,
+            'comment' => 'aabbbcc',
         );
 
         $this->assertEquals($result, $testResult);

@@ -12,168 +12,46 @@ class LineBotMassage
      */
     public static function push_join_message_seven($info){
 
-        /*
-"header" =>  array(
-                "type" =>  "box",
-                "layout" =>  "horizontal",
-                "contents" =>  array(
-                    array(
-                    "type" =>  "text",
-                    "text" =>  "イベント参加者募集！",
-                    "weight" =>  "bold",
-                    "color" =>  "#2f4f4f",
-                    "size" =>  "sm",
-                    "margin" =>  "none"
-                    )
-                )
-                ),
-                "hero" =>  array(
-                "type" =>  "image",
-                "url" =>  "https://gs-files.japaneast.cloudapp.azure.com/wp-content/uploads/SP-1612-179.jpg",
-                "size" =>  "full",
-                "aspectRatio" =>  "3:1",
-                "aspectMode" =>  "cover",
-                "action" =>  array(
-                    "type" =>  "uri",
-                    "uri" =>  "https://linecorp.com"
-                )
-                ),
-         */
-
-         /*
-         {
-  "type": "bubble",
-  "body": {
-    "type": "box",
-    "layout": "vertical",
-    "spacing": "sm",
-    "action": {
-      "type": "uri",
-      "uri": "https://linecorp.com"
-    },
-    "contents": [
-      {
-        "type": "text",
-        "text": "イベント参加者募集！",
-        "size": "sm",
-        "weight": "bold"
-      },
-      {
-        "type": "image",
-        "url": "https://gs-files.japaneast.cloudapp.azure.com/wp-content/uploads/SP-1612-179.jpg",
-        "size": "full",
-        "aspectRatio": "3:1",
-        "aspectMode": "cover",
-        
-        "action": {
-          "type": "uri",
-          "uri": "https://linecorp.com"
-        }
-      },
-      {
-        "type": "text",
-        "text": "バドミントン２面",
-        "size": "lg",
-        "weight": "bold"
-      },
-      {
-        "type": "box",
-        "layout": "baseline",
-        "spacing": "sm",
-        "contents": [
-          {
-            "type": "text",
-            "text": "開催日時",
-            "color": "#aaaaaa",
-            "size": "md",
-            "flex": 2
-          },
-          {
-            "type": "text",
-            "text": "09月30日(日) 18:30~21:00",
-            "wrap": true,
-            "size": "sm",
-            "color": "#666666",
-            "flex": 5
-          }
-        ]
-      },
-      {
-        "type": "box",
-        "layout": "baseline",
-        "spacing": "sm",
-        "contents": [
-          {
-            "type": "text",
-            "text": "場所",
-            "color": "#aaaaaa",
-            "size": "md",
-            "flex": 2
-          },
-          {
-            "type": "text",
-            "text": "山田地区会館",
-            "wrap": true,
-            "size": "md",
-            "color": "#666666",
-            "flex": 5
-          }
-        ]
-      },
-      {
-        "type": "text",
-        "text": "JR安城駅から安城市民体育館までの送迎を希望される方は 16時45分 JR安城駅北口ロータリー前に集合でお願いします。",
-        "wrap": true,
-        "color": "#666666",
-        "size": "xs"
-      }
-    ]
-  },
-  "footer": {
-    "type": "box",
-    "layout": "vertical",
-    "contents": [
-      {
-        "type": "button",
-        "style": "primary",
-        "color": "#9acd32",
-        "action": {
-          "type": "uri",
-          "label": "参加する",
-          "uri": "https://linecorp.com"
-        }
-      },
-      {
-        "type": "button",
-        "action": {
-          "type": "uri",
-          "label": "不参加",
-          "uri": "https://linecorp.com"
-        }
-      }
-    ]
-  }
-}
-*/
         return array(
             "type" => "flex",
             "altText" => "イベント参加者募集！",
             "contents" => array(
                 "type" =>  "bubble",
                 
+                "header" =>  array(
+                    "type" =>  "box",
+                    "layout" =>  "horizontal",
+                    "contents" =>  array(
+                        array(
+                        "type" =>  "text",
+                        "text" =>  "イベント参加者募集！",
+                        "weight" =>  "bold",
+                        "color" =>  "#2f4f4f",
+                        "size" =>  "sm",
+                        "margin" =>  "none"
+                        )
+                    )
+                    ),
+                    "hero" =>  array(
+                    "type" =>  "image",
+                    "url" =>  "https://gs-files.japaneast.cloudapp.azure.com/wp-content/uploads/SP-1612-179.jpg",
+                    "size" =>  "full",
+                    "aspectRatio" =>  "3:1",
+                    "aspectMode" =>  "cover",
+                    "action" =>  array(
+                        "type" =>  "uri",
+                        "uri" =>  ROOT_URL.'event/'.$info["event_id"]
+                    )
+                ),
                 
                 "body" =>  array(
                 "type" =>  "box",
                 "layout" =>  "vertical",
                 "spacing" =>  "sm",
-                "action" =>  array(
-                    "type" =>  "uri",
-                    "uri" =>  "https://linecorp.com"
-                ),
                 "contents" =>  array(
                     array(
                     "type" =>  "text",
-                    "text" =>  "バドミントン２面",
+                    "text" =>  $info["title"],
                     "size" =>  "lg",
                     "weight" =>  "bold"
                     ),
@@ -191,7 +69,7 @@ class LineBotMassage
                         ),
                         array(
                         "type" =>  "text",
-                        "text" =>  "09月30日(日) 18:30~21:00",
+                        "text" =>  $info["event_date"].$info["start_time"]."~".$info["end_time"],
                         "wrap" =>  true,
                         "size" =>  "sm",
                         "color" =>  "#666666",
@@ -213,7 +91,7 @@ class LineBotMassage
                         ),
                         array(
                         "type" =>  "text",
-                        "text" =>  "山田地区会館",
+                        "text" =>  $info["place"],
                         "wrap" =>  true,
                         "size" =>  "md",
                         "color" =>  "#666666",
@@ -223,7 +101,7 @@ class LineBotMassage
                     ),
                     array(
                     "type" =>  "text",
-                    "text" =>  "JR安城駅から安城市民体育館までの送迎を希望される方は 16時45分 JR安城駅北口ロータリー前に集合でお願いします。",
+                    "text" =>  $info['comment'],
                     "wrap" =>  true,
                     "color" =>  "#666666",
                     "size" =>  "xs"
@@ -241,7 +119,7 @@ class LineBotMassage
                     "action" =>  array(
                         "type" =>  "uri",
                         "label" =>  "参加する",
-                        "uri" =>  "https://linecorp.com"
+                        "uri" =>  ROOT_URL."auth/event/join/".$info["event_id"]
                     )
                     ),
                     array(
@@ -249,55 +127,13 @@ class LineBotMassage
                     "action" =>  array(
                         "type" =>  "uri",
                         "label" =>  "不参加",
-                        "uri" =>  "https://linecorp.com"
+                        "uri" =>  ROOT_URL."auth/event/exit/".$info["event_id"]
                     )
                     )
                 )
                 )
             )
         );
-
-        /*
-        return array(
-            "type" => "template",
-            "altText" => "バドミントンの参加者募集！！\n 開催日時："
-                .$info["event_date"].$info["start_time"]."~".$info["end_time"]."\n場所：".$info["place"],
-            "template" => array(
-                "type" => "buttons",
-                "thumbnailImageUrl" => ROOT_URL."img/s_badminton.jpg",
-                "imageAspectRatio" => "rectangle",
-                "imageSize" => "cover",
-                "imageBackgroundColor" => "#e0c0a0",
-                "title" => "バドミントン参加者募集！",
-                "text" => "開催日時：".$info["event_date"].$info["start_time"]."~".$info["end_time"].
-                    "\n場所：".$info["place"].
-                    "\nタイトル：".$info["title"],
-                "defaultAction" => array(
-                    "type" => "uri",
-                    "label" => "View detail",
-                    "uri" => ROOT_URL.'event/'.$info["event_id"],
-                    "area" => array(  
-                        "x" => 0,
-                        "y" => 0,
-                        "width" => 20,
-                        "height" => 100
-                    )
-                ),
-                "actions" => array(
-                    array(
-                        "type" => "uri",
-                        "label" => "参加！",
-                        "uri" => ROOT_URL."auth/event/join/".$info["event_id"]
-                    ),
-                    array(
-                        "type" => "uri",
-                        "label" => "不参加",
-                        "uri" => ROOT_URL."auth/event/exit/".$info["event_id"]
-                    )
-                )
-            )        
-        );
-        */
     }
 
     /**

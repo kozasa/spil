@@ -29,7 +29,7 @@ class LineBotMassageTest extends TestCase
 
         $massage = array(
             "type" => "flex",
-            "altText" => "イベント参加者募集！",
+            "altText" => "イベント参加者募集！ ".$info["event_date"].$info["start_time"]."~".$info["end_time"],
             "contents" => array(
                 "type" =>  "bubble",
                 
@@ -49,7 +49,7 @@ class LineBotMassageTest extends TestCase
                     ),
                     "hero" =>  array(
                     "type" =>  "image",
-                    "url" =>  "https://gs-files.japaneast.cloudapp.azure.com/wp-content/uploads/SP-1612-179.jpg",
+                    "url" =>  ROOT_URL."img/pushseven.jpg",
                     "size" =>  "full",
                     "aspectRatio" =>  "3:1",
                     "aspectMode" =>  "cover",
@@ -163,40 +163,129 @@ class LineBotMassageTest extends TestCase
             'end_time' => '22:22',
             'place' => '場所場所場所',
             'event_id' => 'event_id',
-            'title' => 'たいとる'
+            'title' => 'たいとる',
+            'comment' => 'コメント',
         );
 
         $massage = array(
-            "type" => "template",
-            "altText" => "明日はバドミントン活動日！\n 開催日時："
-                .$info["event_date"].$info["start_time"]."~".$info["end_time"]."\n場所：".$info["place"],
-            "template" => array(
-                "type" => "buttons",
-                "thumbnailImageUrl" => ROOT_URL."img/illust_badminton.png",
-                "imageAspectRatio" => "rectangle",
-                "imageSize" => "cover",
-                "imageBackgroundColor" => "#e0c0a0",
-                "title" => "明日はバドミントン活動日！",
-                "text" => "開催日時：".$info["event_date"].$info["start_time"]."~".$info["end_time"].
-                    "\n場所：".$info["place"].
-                    "\nタイトル：".$info["title"],
-                "defaultAction" => array(
-                    "type" => "uri",
-                    "label" => "View detail",
-                    "uri" => ROOT_URL."event/".$info["event_id"],
-                    "area" => array(  
-                        "x" => 0,
-                        "y" => 0,
-                        "width" => 20,
-                        "height" => 100
+            "type" => "flex",
+            "altText" => "明日はイベント活動日！".$info["event_date"].$info["start_time"]."~".$info["end_time"],
+            "contents" => array(
+                "type" =>  "bubble",
+                
+                "header" =>  array(
+                    "type" =>  "box",
+                    "layout" =>  "horizontal",
+                    "contents" =>  array(
+                        array(
+                        "type" =>  "text",
+                        "text" =>  "明日はイベント活動日！",
+                        "weight" =>  "bold",
+                        "color" =>  "#2f4f4f",
+                        "size" =>  "sm",
+                        "margin" =>  "none"
+                        )
+                    )
+                    ),
+                    "hero" =>  array(
+                    "type" =>  "image",
+                    "url" =>  ROOT_URL."img/pushone.jpeg",
+                    "size" =>  "full",
+                    "aspectRatio" =>  "3:1",
+                    "aspectMode" =>  "cover",
+                    "action" =>  array(
+                        "type" =>  "uri",
+                        "uri" =>  ROOT_URL.'event/'.$info["event_id"]
                     )
                 ),
-                "actions" => array(
+                
+                "body" =>  array(
+                "type" =>  "box",
+                "layout" =>  "vertical",
+                "spacing" =>  "sm",
+                "contents" =>  array(
                     array(
-                        "type" => "uri",
-                        "label" => "詳細を確認する",
-                        "uri" => ROOT_URL."event/".$info["event_id"]
+                    "type" =>  "text",
+                    "text" =>  $info["title"],
+                    "size" =>  "lg",
+                    "weight" =>  "bold"
+                    ),
+                    array(
+                    "type" =>  "box",
+                    "layout" =>  "baseline",
+                    "spacing" =>  "sm",
+                    "contents" =>  array(
+                        array(
+                        "type" =>  "text",
+                        "text" =>  "開催日時",
+                        "color" =>  "#aaaaaa",
+                        "size" =>  "md",
+                        "flex" =>  2
+                        ),
+                        array(
+                        "type" =>  "text",
+                        "text" =>  $info["event_date"].$info["start_time"]."~".$info["end_time"],
+                        "wrap" =>  true,
+                        "size" =>  "sm",
+                        "color" =>  "#666666",
+                        "flex" =>  5
+                        )
                     )
+                    ),
+                    array(
+                    "type" =>  "box",
+                    "layout" =>  "baseline",
+                    "spacing" =>  "sm",
+                    "contents" =>  array(
+                        array(
+                        "type" =>  "text",
+                        "text" =>  "場所",
+                        "color" =>  "#aaaaaa",
+                        "size" =>  "md",
+                        "flex" =>  2
+                        ),
+                        array(
+                        "type" =>  "text",
+                        "text" =>  $info["place"],
+                        "wrap" =>  true,
+                        "size" =>  "md",
+                        "color" =>  "#666666",
+                        "flex" =>  5
+                        )
+                    )
+                    ),
+                    array(
+                    "type" =>  "text",
+                    "text" =>  $info['comment'],
+                    "wrap" =>  true,
+                    "color" =>  "#666666",
+                    "size" =>  "xs"
+                    )
+                )
+                ),
+                "footer" =>  array(
+                "type" =>  "box",
+                "layout" =>  "vertical",
+                "contents" =>  array(
+                    array(
+                    "type" =>  "button",
+                    "style" =>  "primary",
+                    "color" =>  "#9acd32",
+                    "action" =>  array(
+                        "type" =>  "uri",
+                        "label" =>  "参加する",
+                        "uri" =>  ROOT_URL."auth/event/join/".$info["event_id"]
+                    )
+                    ),
+                    array(
+                    "type" =>  "button",
+                    "action" =>  array(
+                        "type" =>  "uri",
+                        "label" =>  "不参加",
+                        "uri" =>  ROOT_URL."auth/event/exit/".$info["event_id"]
+                    )
+                    )
+                )
                 )
             )
         );

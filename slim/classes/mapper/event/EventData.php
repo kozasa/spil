@@ -32,6 +32,11 @@ class EventData
         $this->comment = isset($data['comment']) ? $data['comment']: " ";
         $this->created_at = $data['created_at'];
         $this->updated_at = $data['updated_at'];
+
+        // comment変数がemptyの場合は値を格納する
+        if(empty($this->comment)){
+            $this->comment = " ";
+        }
     }
 
     public function getId(){

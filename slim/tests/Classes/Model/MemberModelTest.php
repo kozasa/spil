@@ -202,6 +202,8 @@ class MemberModelTest extends Base\BaseTestCase
             'event_date'=>"01月03日 (水)",
             'start_time'=>"11:11",
             'end_time'=>"22:22",
+            'join_url' => ROOT_URL."auth/event/join/"."event_id1",
+            'exit_url' => ROOT_URL."auth/event/exit/"."event_id1",
             'join_member' => array(
                 array(
                     'new_flag' => 0,

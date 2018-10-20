@@ -34,6 +34,8 @@ class MemberControllerTest extends Base\BaseTestCase
                     'join_member'=> [] ,
                     'none_join_member'=> [] ,
                     'comment' => "テスト",
+                    'join_url' => "https://join_url.jp/",
+                    'exit_url' => "https://exit_url.jp/",
                 );
             }else{
                 return false;

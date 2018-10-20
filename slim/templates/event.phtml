@@ -24,6 +24,14 @@
                 <p class="text-left" style="color:black;">
                     <?= htmlspecialchars($comment); ?>
                 </p>
+                <div class="d-flex" style="padding-top: 10px;padding-bottom: 10px;">
+                    <div style="width: 50%;text-align: left;">
+                        <a class="btn btn-primary" role="button" href=<?= htmlspecialchars($join_url);?> style="width: 70%;background-color: rgb(142,200,27);border-color: rgb(255,255,255);">参加する</a>
+                    </div>
+                    <div style="width: 50%;text-align: left;">
+                        <a class="btn btn-primary" role="button" href=<?= htmlspecialchars($exit_url);?> style="width: 70%;background-color: rgb(115,120,125);border-color: rgb(255,255,255);">不参加</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -36,6 +36,8 @@ class MemberModel extends Model
             'start_time' => $eventInfo->getStartTime(),
             'end_time' => $eventInfo->getEndTime(),
             'comment' => $eventInfo->getComment(),
+            'join_url' => ROOT_URL."auth/event/join/".$eventInfo->getEventId(),
+            'exit_url' => ROOT_URL."auth/event/exit/".$eventInfo->getEventId(),
         );
 
         // イベントIDからイベント参加者一覧情報を取得

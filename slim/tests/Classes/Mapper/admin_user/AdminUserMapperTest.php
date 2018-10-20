@@ -32,7 +32,7 @@ class AdminUserMapperTest extends Base\BaseTestCase
     public function testselectFromName(){
         // テストデータ投稿
         $this->container['db']->query(
-            "INSERT INTO `admin_user`( `id`,`name`, `password`) 
+            "INSERT INTO `admin_user`( `id`,`name`, `user_id`) 
             VALUES (1,'テスト太郎selectFromName','1122334455')"
         );
         $stmt = $this->container['db']->query("SELECT * FROM `admin_user` WHERE name = 'テスト太郎selectFromName'");
@@ -49,7 +49,7 @@ class AdminUserMapperTest extends Base\BaseTestCase
         $array = array(
             'id' => $select['id'],
             'name' => 'テスト太郎selectFromName',
-            'password' => '1122334455',
+            'user_id' => '1122334455',
         );
         $testResult = new AdminUser\AdminUserData($array);
 

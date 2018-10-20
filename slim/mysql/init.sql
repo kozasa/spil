@@ -13,7 +13,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `admin_user` (
   `id` int(11) NOT NULL,
   `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `password` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
+  `user_id` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --

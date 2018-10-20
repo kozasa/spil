@@ -28,7 +28,7 @@ class AdminUserDataTest extends Base\BaseTestCase
         $data = array(
             'id' => 'idxxx',
             'name' => 'namexxx',
-            'password' => 'passwordxxx',
+            'user_id' => 'passwordxxx',
         );
         $object = new AdminUser\AdminUserData($data);
         
@@ -38,8 +38,8 @@ class AdminUserDataTest extends Base\BaseTestCase
         $id->setAccessible(true);
         $name = $reflectionClass->getProperty('name');
         $name->setAccessible(true);
-        $password = $reflectionClass->getProperty('password');
-        $password->setAccessible(true);
+        $userId = $reflectionClass->getProperty('userId');
+        $userId->setAccessible(true);
 
         // id
         $idValue = $id->getValue($object);
@@ -49,9 +49,9 @@ class AdminUserDataTest extends Base\BaseTestCase
         $nameValue = $name->getValue($object);
         $this->assertEquals($nameValue,$data['name']);
 
-        // password
-        $passwordValue = $password->getValue($object);
-        $this->assertEquals($passwordValue,$data['password']);
+        // user_id
+        $userIdValue = $userId->getValue($object);
+        $this->assertEquals($userIdValue,$data['user_id']);
 
     }
 
@@ -65,7 +65,7 @@ class AdminUserDataTest extends Base\BaseTestCase
         $data = array(
             'id' => 'idxxx',
             'name' => 'namexxx',
-            'password' => 'passwordxxx',
+            'user_id' => 'passwordxxx',
         );
         $object = new AdminUser\AdminUserData($data);
 
@@ -77,17 +77,17 @@ class AdminUserDataTest extends Base\BaseTestCase
      *
      * @group data
      */
-    public function testgetPassword(){
+    public function testgetUserId(){
 
         // データ作成
         $data = array(
             'id' => 'idxxx',
             'name' => 'namexxx',
-            'password' => 'passwordxxx',
+            'user_id' => 'passwordxxx',
         );
         $object = new AdminUser\AdminUserData($data);
 
-        $this->assertEquals($object->getPassword(),$data['password']);
+        $this->assertEquals($object->getUserId(),$data['user_id']);
 
     }
 }

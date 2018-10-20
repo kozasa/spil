@@ -23,4 +23,10 @@ class LoginModel extends Model
 
         return $adminUser->getPassword();
     }
+
+    public function loginConfirmation($userId){
+
+        $mapper = new AdminUser\AdminUserMapper($this->db);
+        return $mapper->isUserId($userId);
+    }
 }

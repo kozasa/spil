@@ -18,11 +18,12 @@ class LoginModelTest extends Base\BaseTestCase
     /**
      * @group model
      */
-    public function testWeekRePush(){
+    /*
+    public function testgetPassword(){
 
-        /**
-         * 情報が取得できた場合
-         */
+//
+//         * 情報が取得できた場合
+//         
 
 
         $mock1 = test::double('\Classes\Mapper\AdminUser\AdminUserMapper', ['selectFromName' => function($arg){
@@ -47,9 +48,9 @@ class LoginModelTest extends Base\BaseTestCase
         $this->assertEquals('password', $result);
 
         test::clean(); // 登録したテストダブルをすべて削除
-        /**
-         * 情報が取得できない場合
-         */
+//
+//         * 情報が取得できない場合
+//         
 
         $mock1 = test::double('\Classes\Mapper\AdminUser\AdminUserMapper', ['selectFromName' => function($arg){
             if($arg==='name'){
@@ -66,6 +67,31 @@ class LoginModelTest extends Base\BaseTestCase
         $this->assertEquals(false, $result);
 
         test::clean(); // 登録したテストダブルをすべて削除
+    }
+    */
+
+    /**
+     * @group model
+     */
+    
+    public function testLoginConfirmation(){
+
+        $mock1 = test::double('\Classes\Mapper\AdminUser\AdminUserMapper', ['isUserId' => function($arg){
+            if($arg==='name'){
+            
+                return true;
+            }else{
+                throw exception;
+            }
+        }]);
+
+        // 実行
+        $object1 = new Model\LoginModel($this->container['db']);
+        $result = $object1->loginConfirmation('name');
+
+        // 検証
+        $this->assertEquals(true, $result);
+
     }
 
 }

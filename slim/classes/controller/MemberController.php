@@ -92,7 +92,11 @@ class MemberController extends Controller
             $_SESSION['page'] = $page;
             $_SESSION['arg1'] = $request->getAttribute('arg1');   // 参加不参加
             $_SESSION['arg2'] = $request->getAttribute('arg2');  // イベントID
-            
+
+        }else if($page == "admin"){    
+            // 管理画面の場合
+            $_SESSION['page'] = $page;
+
         }else{
             return;
         }
@@ -227,6 +231,34 @@ class MemberController extends Controller
 
             // イベント詳細画面へリダイレクト
             return $response->withStatus(302)->withHeader('Location', '../event/'.$data['event_id'].'/'.$data['action']);
+        
+        }elseif($sessionPage == "admin"){
+            // 管理画面
+
+            // 管理画面ログイン確認
+            $model = new Model\LoginModel($this->container->db);
+            $result = $model->loginConfirmation($json->{'userId'});
+
+            if($result){
+
+                // セッションへ登録
+                $_SESSION['admin_user'] = $json->{'userId'};
+
+                // 管理者メニュー画面へリダイレクト
+                return $response->withStatus(302)->withHeader('Location', '../admin/menu/');
+
+            }else{
+
+                // ログインエラー画面へリダイレクト
+                return $this->container->renderer->render(
+                    $response, 
+                    'login_error.phtml', 
+                    array()
+                );
+
+            }
+            
+
         }
 
         return $this->container->renderer->render(

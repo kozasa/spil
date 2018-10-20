@@ -5,19 +5,19 @@ class AdminUserData
 {
     private $id;
     private $name;
-    private $password;
+    private $userId;
 
     public function __construct($data){
         $this->id = $data['id'];
         $this->name = $data['name'];
-        $this->password = $data['password'];
+        $this->userId = $data['user_id'];
     }
 
     public function getName(){
         return $this->name;
     }
 
-    public function getPassword(){
-        return $this->password;
+    public function getUserId(){
+        return $this->userId;
     }
 }

@@ -7,6 +7,9 @@ use Classes\Model;
 class Login
 {
     /**
+     * LINE AUTHにより、ログイン処理は不要になりました
+     */
+    /**
      * ログイン確認
      *
      * @param  $db

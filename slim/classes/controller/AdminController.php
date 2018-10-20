@@ -19,12 +19,9 @@ class AdminController extends Controller
      */
     public function topGet($request, $response, $args) {
         
-        // 管理者ログイン画面表示
-        return $this->container->renderer->render(
-            $response,
-            'admin_login.phtml', 
-            array('error_msg' => null)
-        );
+        //  LineAuthへリダイレクト
+        return $response->withStatus(302)->withHeader('Location', '../auth/admin');
+
     }
 
     /**
@@ -35,6 +32,7 @@ class AdminController extends Controller
      * @param array $args
      * @return 
      */
+    /*
     public function topPost($request, $response, $args) {
         
         // POSTデータ取得
@@ -66,6 +64,7 @@ class AdminController extends Controller
             );
         }
     }
+    */
 
     /**
      * 管理者画面 メニュー画面
@@ -78,7 +77,7 @@ class AdminController extends Controller
     public function menuGet($request, $response, $args) {
         
         // ログイン認証
-        if(!Utility\Login::isCheckAfter($_SESSION['user'])){
+        if(!Utility\Login::isCheckAfter($_SESSION['admin_user'])){
             return $response->withStatus(302)->withHeader('Location', '../../admin/');
         }
 
@@ -101,7 +100,7 @@ class AdminController extends Controller
     public function eventPostGet($request, $response, $args) {
         
         // ログイン認証
-        if(!Utility\Login::isCheckAfter($_SESSION['user'])){
+        if(!Utility\Login::isCheckAfter($_SESSION['admin_user'])){
             return $response->withStatus(302)->withHeader('Location', '../../admin/');
         }
 
@@ -124,7 +123,7 @@ class AdminController extends Controller
     public function eventPostPost($request, $response, $args) {
         
         // ログイン認証
-        if(!Utility\Login::isCheckAfter($_SESSION['user'])){
+        if(!Utility\Login::isCheckAfter($_SESSION['admin_user'])){
             return $response->withStatus(302)->withHeader('Location', '../../admin/');
         }
 
@@ -165,7 +164,7 @@ class AdminController extends Controller
     public function eventEditListGet($request, $response, $args) {
 
         // ログイン認証
-        if(!Utility\Login::isCheckAfter($_SESSION['user'])){
+        if(!Utility\Login::isCheckAfter($_SESSION['admin_user'])){
             return $response->withStatus(302)->withHeader('Location', '../../admin/');
         }
 
@@ -193,7 +192,7 @@ class AdminController extends Controller
     public function eventEditGet($request, $response, $args) {
 
         // ログイン認証
-        if(!Utility\Login::isCheckAfter($_SESSION['user'])){
+        if(!Utility\Login::isCheckAfter($_SESSION['admin_user'])){
             return $response->withStatus(302)->withHeader('Location', '../../admin/');
         }
 
@@ -226,7 +225,7 @@ class AdminController extends Controller
     public function eventEditPost($request, $response, $args) {
 
         // ログイン認証
-        if(!Utility\Login::isCheckAfter($_SESSION['user'])){
+        if(!Utility\Login::isCheckAfter($_SESSION['admin_user'])){
             return $response->withStatus(302)->withHeader('Location', '../../admin/');
         }
 
@@ -282,7 +281,7 @@ class AdminController extends Controller
     public function newPostGet($request, $response, $args) {
         
         // ログイン認証
-        if(!Utility\Login::isCheckAfter($_SESSION['user'])){
+        if(!Utility\Login::isCheckAfter($_SESSION['admin_user'])){
             return $response->withStatus(302)->withHeader('Location', '../../admin/');
         }
 
@@ -310,7 +309,7 @@ class AdminController extends Controller
     public function newPostPost($request, $response, $args) {
         
         // ログイン認証
-        if(!Utility\Login::isCheckAfter($_SESSION['user'])){
+        if(!Utility\Login::isCheckAfter($_SESSION['admin_user'])){
             return $response->withStatus(302)->withHeader('Location', '../../admin/');
         }
 
@@ -360,7 +359,7 @@ class AdminController extends Controller
     public function logout($request, $response, $args) {
         
         // ログイン認証
-        if(!Utility\Login::isCheckAfter($_SESSION['user'])){
+        if(!Utility\Login::isCheckAfter($_SESSION['admin_user'])){
             return $response->withStatus(302)->withHeader('Location', '../../admin/');
         }
 
@@ -370,8 +369,8 @@ class AdminController extends Controller
         // セッション破棄
         @session_destroy();
 
-        // ログイン画面へリダイレクト
-        return $response->withStatus(302)->withHeader('Location', '../../admin/');
+        // スピルTOPページへリダイレクト
+        return $response->withStatus(302)->withHeader('Location', '../../');
     }
 
     /**

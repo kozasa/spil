@@ -270,49 +270,124 @@ class LineBotMassage
     }
 
     /**
-     * イベント情報投稿メッセージ
+     * イベント追加投稿メッセージ
      *
      * @param array $info
      * @return array
      */
     public static function push_event_info($info,$event_id){
+        $header = array(
+            "type" => "box",
+            "layout" => "horizontal",
+            "contents" => array(
+                array(
+                    "type" => "text",
+                    "text" => "イベントが追加されました!",
+                    "weight" => "bold",
+                    "color" => "#ffffff",
+                    "size" => "md"
+                )
+            )
+        );
 
-        return array(
-            "type" => "template",
-            "altText" => "イベントが追加されました！\n 開催日時："
-                .$info["event_date"].$info["start_time"]."~".$info["end_time"]."\n場所：".$info["place"],
-            "template" => array(
-                "type" => "buttons",
-                "thumbnailImageUrl" => ROOT_URL."img/calender_takujou.png",
-                "imageAspectRatio" => "rectangle",
-                "imageSize" => "cover",
-                "imageBackgroundColor" => "#e0c0a0",
-                "title" => "イベントが追加されました！",
-                "text" => "開催日：".$info["event_date"]."\n".
-                    "開催時間：".$info["start_time"]."~".$info["end_time"].
-                    "\n場所：".$info["place"],
-                "defaultAction" => array(
-                    "type" => "uri",
-                    "label" => "View detail",
-                    "uri" => ROOT_URL."latest/",
-                    "area" => array(  
-                        "x" => 0,
-                        "y" => 0,
-                        "width" => 20,
-                        "height" => 100
-                    )
-                ),
-                "actions" => array(
+        $title_contents = array(
+            "type" => "box",
+            "layout" => "baseline",
+            "contents" => array(
+                array(
+                    "type" => "text",
+                    "text" => "バドミントン2面",
+                    "wrap" => true,
+                    "color" => "#666666",
+                    "size" => "md"
+                )
+            )
+        );
+
+        $place_contents = array(
+            "type" => "box",
+            "layout" => "baseline",
+            "spacing" => "sm",
+            "contents" => array(
+                array(
+                    "type" => "text",
+                    "text" => "場所 : ".$info["place"],
+                    "color" => "#666666",
+                    "size" => "sm",
+                    "flex" => 1
+                )
+            )
+        );
+
+        $date_contents = array(
+            "type" => "box",
+            "layout" => "baseline",
+            "spacing" => "sm",
+            "contents" => array(
                     array(
-                        "type" => "uri",
-                        "label" => "直近イベント情報を確認",
-                        "uri" => ROOT_URL."latest/"
+                    "type" => "text",
+                    "text" => "日程 : ".$info["event_date"]." ".$info["start_time"]."~".$info["end_time"],
+                    "color" => "#666666",
+                    "size" => "sm"
+                )
+            )
+        );
+
+        $body = array(
+            "type" => "box",
+            "layout" => "vertical",
+            "contents" => array(
+                array(
+                    "type" => "box",
+                    "layout" => "vertical",
+                    "margin" => "lg",
+                    "spacing" => "sm",
+                    "contents" => array(
+                        $title_contents,
+                        $place_contents,
+                        $date_contents
                     )
                 )
-            )        
+            )
         );
-    }
 
+        $footer = array(
+            "type" => "box",
+            "layout" => "vertical",
+            "spacing" => "sm",
+            "contents" => array(
+                array(
+                    "type" => "button",
+                    "style" => "link",
+                    "height" => "sm",
+                    "action" => array(
+                        "type" => "uri",
+                        "label" => "詳細",
+                        "uri" => ROOT_URL."event/".$event_id
+                    )
+                ),
+                array(
+                    "type" => "spacer",
+                    "size" => "sm"
+                )
+            )
+        );
+
+        $message = array(
+            "type" => "bubble",
+            "styles" => array(
+                "header" => array(
+                    "backgroundColor" => "#8ec81b"
+                )
+            ),
+            "header" => $header,
+            "body" => $body,
+            "footer" => $footer,
+            "flex" => 0
+        );
+        return $message;
+    }
+    
     /**
      * 新規者情報投稿メッセージ
      *
@@ -348,4 +423,7 @@ class LineBotMassage
                         "また空いてる日があったら参加してね！"
         );
     }
+
+
 }
+
